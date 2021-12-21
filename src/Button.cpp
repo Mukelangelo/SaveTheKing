@@ -22,7 +22,9 @@ void Button::draw(sf::RenderWindow& window)
     auto text = sf::Text(m_text, m_font);
     text.setCharacterSize(20);
     text.setColor(sf::Color::White);
+
     //text.setPosition(m_button.getSize() / 2.0f + m_button.getPosition());
+
     text.setPosition(m_button.getPosition());
 
     auto textRect = text.getLocalBounds();

@@ -3,5 +3,5 @@
 int main()
 {
 	auto test = Window();
-	return 0;
+	return 1;
 }
