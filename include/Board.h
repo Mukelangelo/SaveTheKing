@@ -17,5 +17,4 @@ private:
 	// load all photos from memmory
 	void loadTextures();
 
-	sf::String m_texts[3] = { "Start game", "Help", "Exit" };
 };

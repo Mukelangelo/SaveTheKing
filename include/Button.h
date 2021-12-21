@@ -4,6 +4,7 @@
 class Button
 {
 public:
+	Button();
 	Button(const sf::Vector2f& size, sf::String text, const sf::Vector2f& pos);
 	bool handleClick(const sf::Vector2f& location);
 	void draw(sf::RenderWindow& window);

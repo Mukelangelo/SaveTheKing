@@ -1,5 +1,8 @@
 #include "Button.h"
 
+Button::Button()
+{}
+
 Button::Button(const sf::Vector2f& size, sf::String text, const sf::Vector2f& pos)
     : m_button(size), m_color(126, 214,223,255),
     m_font(sf::Font()), m_text(text)
