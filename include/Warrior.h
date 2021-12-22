@@ -6,7 +6,7 @@ class Warrior : MovingObject
 {
 public:
 	using MovingObject::MovingObject;
-	bool isOgre();
+	virtual bool onSpecialTile() override ; // on Orge
 
 private:
 };

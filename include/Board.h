@@ -15,6 +15,7 @@ private:
 	// all the pictures to load
 	//sf::Texture m_textures[NUM_OF_PICTURES];
 	// load all photos from memmory
+	
 	void loadTextures();
 
 };

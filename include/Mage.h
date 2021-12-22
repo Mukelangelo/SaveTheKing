@@ -6,7 +6,7 @@ class Mage : MovingObject
 {
 public:
 	using MovingObject::MovingObject;
-	bool isFire();
+	virtual bool onSpecialTile() override; // on Fire tile
 
 private:
 };

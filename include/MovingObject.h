@@ -11,6 +11,7 @@ public:
 	void move(sf::Time deltaTime);
 	void setLocation(const sf::Vector2f& loc);
 	void setDirection(sf::Keyboard::Key key);
+	virtual bool onSpecialTile();
 
 	~MovingObject() = default;
 
