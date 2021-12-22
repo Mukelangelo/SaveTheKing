@@ -1,21 +1,22 @@
-#include "Window.h"
+#include "Menu.h"
 
-Window::Window()
+Menu::Menu()
 	: m_window(sf::VideoMode(1600, 800), "Save The King")
 {
     for (int i = 0; i < 3; i++)
         m_buttons[i] = Button(sf::Vector2f(300, 80), m_texts[i], sf::Vector2f(800, 250 + i * 150));
+    m_gameStart = m_need_help = false;
     run();
 }
 
-void Window::run()
+void Menu::run()
 {
-    bool help_opened = false;
+    bool need_help = false;
     while (m_window.isOpen())
     {
         m_window.clear(sf::Color(179, 218, 255, 255));
         draw();
-        if (help_opened)
+        if (m_need_help)
         {
             auto help_bar = sf::RectangleShape(sf::Vector2f(1134, 735));
             help_bar.setPosition(sf::Vector2f(300, 50));
@@ -43,8 +44,8 @@ void Window::run()
                 switch (event.mouseButton.button)
                 {
                 case sf::Mouse::Button::Left:
-                    help_opened = false;
-                    handleButtons(location, help_opened);
+                    m_need_help = false;
+                    handleButtons(location);
                     break;
                 }
                 break;
@@ -54,13 +55,13 @@ void Window::run()
     }
 }
 
-void Window::draw()
+void Menu::draw()
 {
     for (int i = 0; i < 3; i++)
         m_buttons[i].draw(m_window);
 }
 
-void Window::handleButtons(const sf::Vector2f& location , bool& help_opened)
+void Menu::handleButtons(const sf::Vector2f& location)
 {
     for (int i = 0; i < MENU_BUTTONS; i++)
     {
@@ -69,11 +70,11 @@ void Window::handleButtons(const sf::Vector2f& location , bool& help_opened)
             switch (i)
             {
             case StartGame:
-                // run the game
+                m_gameStart = true;
                 break;
 
             case Help:
-                help_opened = true;
+                m_need_help = true;
                 break;
 
             case Exit:
@@ -86,7 +87,7 @@ void Window::handleButtons(const sf::Vector2f& location , bool& help_opened)
     }
 }
 
-void Window::open_help()
+void Menu::open_help()
 {
     auto help_bar = sf::RectangleShape(sf::Vector2f(841 , 442));
     help_bar.setPosition(sf::Vector2f(100, 100));

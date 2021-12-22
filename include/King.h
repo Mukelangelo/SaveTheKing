@@ -1,8 +1,9 @@
 #pragma once
-
+#include "macros.h"
 #include "MovingObject.cpp"
 
-class King : MovingObject
+
+class King : public MovingObject
 {
 public:
 	King(sf::vector2f throneLoc);

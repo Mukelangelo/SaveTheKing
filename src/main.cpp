@@ -1,7 +1,7 @@
-#include "Window.h"
+#include "Menu.h"
 
 int main()
 {
-	auto test = Window();
+	auto menu = Menu();
 	return 0;
 }
