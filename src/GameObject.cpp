@@ -13,3 +13,9 @@ sf::Vector2f GameObject::getLocation() const
 {
 	return m_location;
 }
+
+/*sf::Sprite getSprite() const
+{
+	return m_sprite;
+}
+*/

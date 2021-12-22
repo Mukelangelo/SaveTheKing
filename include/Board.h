@@ -14,6 +14,7 @@ public:
 
 private:
 	sf::Vector2f m_location;
-	std::vector < std::vector < StaticObject >> m_matrix;
+	std::vector < std::vector < char >> m_matrix;
+
 	sf::Sprite charToSprite(char c);
 };

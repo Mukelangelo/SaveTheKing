@@ -11,7 +11,7 @@ Controller::Controller(std::string fileName)
 
 void Controller::initVector()
 {
-	m_character.push_back(std::make_unique<King>(sf::Vector2f()));
+	m_character.push_back(std::make_unique<King>());
 }
 
 void Controller::run()
