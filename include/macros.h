@@ -3,8 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 constexpr auto MENU_BUTTONS = 3;
-constexpr auto NUM_OF_STATIC = 10;
-constexpr auto NUM_OF_MOVING = 10;
+constexpr auto NUM_OF_PICS = 10;
 
 constexpr auto StartGame = 0;
 constexpr auto Help = 1;
@@ -44,7 +43,6 @@ constexpr auto load_Orge = 7;
 constexpr auto load_Teleport = 8;
 constexpr auto load_Gate = 9;
 
-const std::string MovingObjectTextures[NUM_OF_MOVING] = { "king.jpg", "mage.jpeg", "warrior.jpg", "thief.jpg" };
-
+const std::string objectTextures[NUM_OF_PICS] = { "king.jpg", "mage.jpeg", "warrior.jpg", "thief.jpg",
+													"wall.jpg", "throne.jpg", "fire.jpg", "orge.jpg", "teleport.jpg", "gate.jpg" };
 // add key
-const std::string staticObjectTextures[NUM_OF_STATIC] = { "wall.jpg", "throne.jpg", "fire.jpg", "orge.jpg", "teleport.jpg", "gate.jpg" };
