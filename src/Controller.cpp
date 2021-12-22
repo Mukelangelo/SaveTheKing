@@ -5,7 +5,8 @@ bool key, won;
 
 Controller::Controller(sf::RenderWindow& window)
 :m_board() , m_window(&window)
-{}
+{
+}
 
 void Controller::run()
 {    
