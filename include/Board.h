@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Button.h"
+#include "StaticObject.h"
 #include <vector>
 #include <iostream>
 
@@ -8,14 +9,11 @@ class Board {
 public:
 	// default c-stor
 	Board();
-	Board(int width, int height, sf::Vector2f location);
-	void drawMenu(sf::RenderWindow& window);
+	Board(std::string fileName, sf::Vector2f location);
+	void drawBoard(sf::RenderWindow& window);
 
 private:
-	// all the pictures to load
-	//sf::Texture m_textures[NUM_OF_PICTURES];
-	// load all photos from memmory
-	
-	void loadTextures();
-
+	sf::Vector2f m_location;
+	std::vector < std::vector < StaticObject >> m_matrix;
+	sf::Sprite charToSprite(char c);
 };

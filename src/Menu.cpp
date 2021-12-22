@@ -98,7 +98,7 @@ void Menu::handleHover(const sf::Vector2f& location)
     {
         if (m_buttons[i].getGlobalBounds().contains(location))
         {
-            m_buttons[i].setColor(sf::Color(0, 76, 153));
+            m_buttons[i].setColor(sf::Color(0, 137, 255));
             m_lastHover = i;
         }
     }

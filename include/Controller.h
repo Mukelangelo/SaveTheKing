@@ -12,14 +12,16 @@ public:
 	// default c-stor
 	Controller(std::string fileName);
 	// run the game
-	void init_vector();
+	void initVector();
 	void run();
-	void drawMenu(sf::RenderWindow& window);
+	//void drawMenu(sf::RenderWindow& window);
 
 private:
 	
+	sf::Texture m_textures[NUM_OF_STATIC];
 	std::vector< std::unique_ptr <MovingObject > > m_character; 
 	// vector of pointers to all moveable characters.
 	Board m_board;
+	void loadTextures();
 };
 
