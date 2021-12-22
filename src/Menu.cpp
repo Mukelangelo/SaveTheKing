@@ -4,7 +4,7 @@ Menu::Menu()
 	: m_window(sf::VideoMode(1600, 800), "Save The King")
 {
     for (int i = 0; i < 3; i++)
-        m_buttons[i] = Button(sf::Vector2f(300, 80), m_texts[i], sf::Vector2f(800, 250 + i * 150));
+        m_buttons[i] = Button(sf::Vector2f(300, 80), m_texts[i], sf::Vector2f(800, 330 + i * 150));
     m_gameStart = m_need_help = false;
     m_help_bar = sf::RectangleShape(sf::Vector2f(1134, 735));
     m_help_bar.setPosition(sf::Vector2f(300, 50));
@@ -13,6 +13,9 @@ Menu::Menu()
     auto texture = sf::Texture();
     texture.loadFromFile("help.png");
     m_help_bar.setTexture(&texture);
+    auto bg_texture = sf::Texture();
+    bg_texture.loadFromFile("bg.png");
+    m_bg = sf::Sprite(bg_texture);
     run();
 }
 
@@ -22,6 +25,7 @@ void Menu::run()
     while (m_window.isOpen())
     {
         m_window.clear(sf::Color(179, 218, 255, 255));
+        m_window.draw(m_bg);
         draw();
         if (m_need_help)
             m_window.draw(m_help_bar);
