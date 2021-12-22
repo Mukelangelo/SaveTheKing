@@ -20,14 +20,7 @@ void Window::run()
         draw();
         if (help_opened)
         {
-            auto help_bar = sf::RectangleShape(sf::Vector2f(841, 442));
-            help_bar.setPosition(sf::Vector2f(450, 200));
-            help_bar.setOutlineThickness(3);
-            help_bar.setOutlineColor(sf::Color::Black);
-            auto texture = sf::Texture();
-            texture.loadFromFile("help.png");
-            help_bar.setTexture(&texture);
-            m_window.draw(help_bar);
+            open_help();
         }
         m_window.display();
         
@@ -95,9 +88,12 @@ void Window::handleButtons(const sf::Vector2f& location)
 
 void Window::open_help()
 {
-    auto help_bar = sf::RectangleShape(sf::Vector2f(841 , 442));
-    help_bar.setPosition(sf::Vector2f(100, 100));
+    auto help_bar = sf::RectangleShape(sf::Vector2f(841, 442));
+    help_bar.setPosition(sf::Vector2f(450, 200));
+    help_bar.setOutlineThickness(3);
+    help_bar.setOutlineColor(sf::Color::Black);
     auto texture = sf::Texture();
     texture.loadFromFile("help.png");
     help_bar.setTexture(&texture);
+    m_window.draw(help_bar);
 }
