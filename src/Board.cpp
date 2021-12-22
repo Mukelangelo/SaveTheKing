@@ -11,13 +11,10 @@ Board::Board(std::string fileName, sf::Vector2f location)
 	
 }
 
-
+/*
 sf::Sprite charToSprite(char c)
 {
-	switch (c)
-	{
-		case 
-	default:
-		break;
-	}
+	return 
 }
+
+*/
