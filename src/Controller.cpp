@@ -3,17 +3,19 @@
 int stepCounter;
 bool key, won;
 
-Controller::Controller(std::string fileName)
+Controller::Controller(sf::RenderWindow& window, std::string fileName);
 	:m_board(fileName)
 {
-	init_vector();
+	m_window = window;
+	run();
+	//init_vector();
 }
 
-void Controller::initVector()
+/*void Controller::initVector()
 {
 	m_character.push_back(std::make_unique<King>());
 }
-
+*/
 void Controller::run()
 {
 	

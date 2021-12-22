@@ -10,7 +10,7 @@ List of missions :
 	class Controller {
 public:
 	// default c-stor
-	Controller(std::string fileName);
+	Controller(sf::RenderWindow& window,std::string fileName);
 	// run the game
 	void initVector();
 	void run();
@@ -23,5 +23,6 @@ private:
 	// vector of pointers to all moveable characters.
 	Board m_board;
 	void loadTextures();
+	
 };
 
