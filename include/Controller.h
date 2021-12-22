@@ -1,6 +1,9 @@
 #pragma once
 #include <vector>
 #include <memory>
+#include "MovingObject.h"
+#include "StaticObject.h"
+#include "Board.h"
 
 /*
 List of missions : 
@@ -18,7 +21,7 @@ public:
 
 private:
 	
-	sf::Texture m_textures[NUM_OF_STATIC];
+	sf::Texture m_textures[NUM_OF_PICS];
 	std::vector< std::unique_ptr <MovingObject > > m_character; 
 	// vector of pointers to all moveable characters.
 	Board m_board;
