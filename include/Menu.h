@@ -2,6 +2,7 @@
 
 //#include "macros.h"
 #include "Controller.h"
+#include "Button.h"
 
 class Menu
 {
@@ -12,8 +13,7 @@ public:
 	void game();
 
 private:
-
-	Controller m_game;
+	Controller m_controller;
 	sf::RenderWindow m_window;
 	Board m_board;
 	void handleButtons(const sf::Vector2f& location);

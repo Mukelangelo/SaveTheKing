@@ -1,7 +1,7 @@
 #pragma once
 
-
 #include "StaticObject.h"
+#include "MovingObject.h"
 #include <vector>
 #include <iostream>
 

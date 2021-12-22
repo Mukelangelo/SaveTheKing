@@ -5,13 +5,11 @@ class MovingObject : public GameObject
 {
 public:
 	using GameObject::GameObject;
-	//MovingObject(const sf::Vector2f& loc);
-	//MovingObject(int startR, int startC);
 
-	void move(sf::Time deltaTime);
+	void movePlayer(sf::Time deltaTime);
 	void setLocation(const sf::Vector2f& loc);
 	void setDirection(sf::Keyboard::Key key);
-	virtual bool onSpecialTile();
+	virtual bool onSpecialTile() = 0;
 
 	~MovingObject() = default;
 

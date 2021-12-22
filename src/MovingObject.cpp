@@ -1,6 +1,6 @@
 #include "MovingObject.h"
 
-void MovingObject::move(sf::Time deltaTime)
+void MovingObject::movePlayer(sf::Time deltaTime)
 {
 	const auto speedPerSecond = 10.f;
 	m_sprite.move(m_direction * speedPerSecond * deltaTime.asSeconds());

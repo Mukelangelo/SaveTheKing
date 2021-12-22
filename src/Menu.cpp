@@ -1,7 +1,7 @@
 #include "Menu.h"
 
 Menu::Menu()
-	: m_window(sf::VideoMode(1600, 800), "Save The King"), m_game(Controller())
+	: m_window(sf::VideoMode(1600, 800), "Save The King"), m_controller(m_window)
 {
     for (int i = 0; i < 3; i++)
         m_buttons[i] = Button(sf::Vector2f(300, 80), m_texts[i], sf::Vector2f(800, 330 + i * 150));
@@ -68,7 +68,7 @@ void Menu::run()
 
 void Menu::game()
 {
-    m_game.run();
+    m_controller.run();
 }
 
 void Menu::draw()
