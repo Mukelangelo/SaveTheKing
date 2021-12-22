@@ -19,6 +19,7 @@ private:
 	Button m_buttons[MENU_BUTTONS];
 	bool m_need_help;
 	bool m_gameStart;
-	int m_lastHover;
+	int m_lastHover = 0;
 	sf::RectangleShape m_help_bar;
+	sf::Sprite m_bg;
 };
