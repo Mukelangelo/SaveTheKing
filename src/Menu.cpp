@@ -6,6 +6,13 @@ Menu::Menu()
     for (int i = 0; i < 3; i++)
         m_buttons[i] = Button(sf::Vector2f(300, 80), m_texts[i], sf::Vector2f(800, 250 + i * 150));
     m_gameStart = m_need_help = false;
+    m_help_bar = sf::RectangleShape(sf::Vector2f(1134, 735));
+    m_help_bar.setPosition(sf::Vector2f(300, 50));
+    m_help_bar.setOutlineThickness(3);
+    m_help_bar.setOutlineColor(sf::Color::Black);
+    auto texture = sf::Texture();
+    texture.loadFromFile("help.png");
+    m_help_bar.setTexture(&texture);
     run();
 }
 
@@ -17,16 +24,8 @@ void Menu::run()
         m_window.clear(sf::Color(179, 218, 255, 255));
         draw();
         if (m_need_help)
-        {
-            auto help_bar = sf::RectangleShape(sf::Vector2f(1134, 735));
-            help_bar.setPosition(sf::Vector2f(300, 50));
-            help_bar.setOutlineThickness(3);
-            help_bar.setOutlineColor(sf::Color::Black);
-            auto texture = sf::Texture();
-            texture.loadFromFile("help.png");
-            help_bar.setTexture(&texture);
-            m_window.draw(help_bar);
-        }
+            m_window.draw(m_help_bar);
+
         m_window.display();
 
         for (auto event = sf::Event{}; m_window.pollEvent(event);)
@@ -87,11 +86,4 @@ void Menu::handleButtons(const sf::Vector2f& location)
     }
 }
 
-void Menu::open_help()
-{
-    auto help_bar = sf::RectangleShape(sf::Vector2f(841 , 442));
-    help_bar.setPosition(sf::Vector2f(100, 100));
-    auto texture = sf::Texture();
-    texture.loadFromFile("help.png");
-    help_bar.setTexture(&texture);
-}
+    
