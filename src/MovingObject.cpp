@@ -2,7 +2,7 @@
 
 void MovingObject::movePlayer(sf::Time deltaTime)
 {
-	const auto speedPerSecond = 10.f;
+	const auto speedPerSecond = 50.f;
 	m_sprite.move(m_direction * speedPerSecond * deltaTime.asSeconds());
 }
 

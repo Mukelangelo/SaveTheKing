@@ -3,6 +3,9 @@
 #include <memory>
 #include "Board.h"
 #include "macros.h"
+#include "King.h"
+#include <cmath>
+#include <ctime>
 
 /*
 List of missions : 

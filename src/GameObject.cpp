@@ -2,7 +2,9 @@
 
 GameObject::GameObject(int picNum, sf::Vector2f loc, const sf::Texture& texture)
 	: m_location(loc), m_sprite(sf::Sprite(texture))
-{}
+{
+	
+}
 
 void GameObject::draw(sf::RenderWindow& window)
 { 

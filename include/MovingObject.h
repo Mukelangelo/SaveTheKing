@@ -9,7 +9,7 @@ public:
 	void movePlayer(sf::Time deltaTime);
 	void setLocation(const sf::Vector2f& loc);
 	void setDirection(sf::Keyboard::Key key);
-	virtual bool onSpecialTile() = 0;
+	//virtual bool onSpecialTile();
 
 	~MovingObject() = default;
 

@@ -9,18 +9,6 @@ constexpr auto StartGame = 0;
 constexpr auto Help = 1;
 constexpr auto Exit = 2;
 
-constexpr auto King = 'K';
-constexpr auto Thief = 'T';
-constexpr auto Mage = 'M';
-constexpr auto Warrior = 'W';
-constexpr auto Orge = '!';
-constexpr auto Wall = '=';
-constexpr auto Fire = '*';
-constexpr auto Throne = '@';
-constexpr auto Teleport = 'X';
-constexpr auto Gate = '#';
-constexpr auto Key = 'F';
-constexpr auto blank = ' ';
 
 /*enum load
 {

@@ -6,8 +6,9 @@ King::King(sf::Vector2f throneLoc, sf::Vector2f loc, const sf::Texture& texture)
 }
 
 
-bool King::onSpecialTile()
+/*bool King::onSpecialTile()
 {
 	if (m_location == m_throne)
 		return true;
 }
+*/
