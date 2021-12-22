@@ -25,13 +25,19 @@ void Menu::run()
         draw();
         if (m_need_help)
             m_window.draw(m_help_bar);
-
         m_window.display();
 
         for (auto event = sf::Event{}; m_window.pollEvent(event);)
         {
             switch (event.type)
             {
+            case sf::Event::MouseMoved:
+            {
+                auto loc = m_window.mapPixelToCoords(
+                    { event.mouseMove.x, event.mouseMove.y });
+                handleHover(loc);
+                break;
+            }
             case sf::Event::Closed:
                 m_window.close();
                 break;
@@ -48,7 +54,6 @@ void Menu::run()
                     break;
                 }
                 break;
-
             }
         }
     }
@@ -56,7 +61,7 @@ void Menu::run()
 
 void Menu::draw()
 {
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < MENU_BUTTONS; i++)
         m_buttons[i].draw(m_window);
 }
 
@@ -86,4 +91,15 @@ void Menu::handleButtons(const sf::Vector2f& location)
     }
 }
 
-    
+void Menu::handleHover(const sf::Vector2f& location)
+{
+    m_buttons[m_lastHover].setColor();
+    for (int i = 0; i < MENU_BUTTONS; i++)
+    {
+        if (m_buttons[i].getGlobalBounds().contains(location))
+        {
+            m_buttons[i].setColor(sf::Color(0, 76, 153));
+            m_lastHover = i;
+        }
+    }
+}

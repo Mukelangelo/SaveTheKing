@@ -55,3 +55,13 @@ void Button::setColor(sf::Color color)
 {
     m_button.setFillColor(color);
 }
+
+void Button::setColor()
+{
+    m_button.setFillColor(m_color);
+}
+
+sf::FloatRect Button::getGlobalBounds() const
+{
+    return m_button.getGlobalBounds();
+}

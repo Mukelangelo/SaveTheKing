@@ -14,6 +14,8 @@ public:
 	sf::String getString() const;
 	// set color to the button
 	void setColor(sf::Color color);
+	void setColor();
+	sf::FloatRect getGlobalBounds() const;
 
 private:
 	sf::RectangleShape m_button;
