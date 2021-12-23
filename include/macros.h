@@ -2,6 +2,8 @@
 
 #include <SFML/Graphics.hpp>
 
+constexpr auto WINDOW_WIDTH = 1600;
+constexpr auto WINDOW_HEIGHT = 800;
 constexpr auto MENU_BUTTONS = 3;
 constexpr auto NUM_OF_PICS = 10;
 constexpr auto PLAYABLE = 4;
