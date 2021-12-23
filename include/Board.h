@@ -16,5 +16,5 @@ private:
 	sf::Vector2f m_location;
 	std::vector < std::vector < char >> m_matrix;
 
-	sf::Sprite charToSprite(char c);
+	//sf::Sprite charToSprite(char c);
 };

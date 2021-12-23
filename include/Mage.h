@@ -1,12 +1,13 @@
 #pragma once
 
-#include "MovingObject.cpp"
+#include "MovingObject.h"
 
-class Mage : MovingObject
+
+class Mage : public MovingObject
 {
 public:
-	using MovingObject::MovingObject;
-	virtual bool onSpecialTile() override; // on Fire tile
+	Mage(sf::Vector2f loc, const sf::Texture& texture);
+	//virtual bool onSpecialTile() ; // on Throne
 
 private:
 };

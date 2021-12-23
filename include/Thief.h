@@ -1,12 +1,13 @@
 #pragma once
 
-#include "MovingObject.cpp"
+#include "MovingObject.h"
 
-class Thief : MovingObject
+
+class Thief : public MovingObject
 {
 public:
-	using MovingObject::MovingObject;
-	virtual bool onSpecialTile() override ; // on Gate tile
+	Thief(sf::Vector2f loc, const sf::Texture& texture);
+	//virtual bool onSpecialTile() ; // on Throne
 	bool hasKey();
 
 private:

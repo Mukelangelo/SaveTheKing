@@ -4,8 +4,12 @@
 #include "Board.h"
 #include "macros.h"
 #include "King.h"
+#include "Mage.h"
+#include "Warrior.h"
+#include "Thief.h"
 #include <cmath>
 #include <ctime>
+
 
 /*
 List of missions : 
@@ -20,6 +24,7 @@ public:
 	void initVector();
 	void run();
 	//void drawMenu(sf::RenderWindow& window);
+	~Controller();
 
 private:
 	
@@ -29,6 +34,8 @@ private:
 	// vector of pointers to all moveable characters.
 	Board m_board;
 	void loadTextures();
+	void switchCharacter();
+	int m_currChar;
 	
 };
 

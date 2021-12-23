@@ -5,4 +5,7 @@
 											  "GameObject.cpp"
 											  "MovingObject.cpp"
 											  "Controller.cpp"
-											  "King.cpp")
+											  "King.cpp"
+											  "Mage.cpp"
+											  "Warrior.cpp"
+											  "Thief.cpp")

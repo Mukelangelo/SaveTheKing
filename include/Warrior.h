@@ -1,12 +1,13 @@
 #pragma once
 
-#include "MovingObject.cpp"
+#include "MovingObject.h"
 
-class Warrior : MovingObject
+
+class Warrior : public MovingObject
 {
 public:
-	using MovingObject::MovingObject;
-	virtual bool onSpecialTile() override ; // on Orge
+	Warrior(sf::Vector2f loc, const sf::Texture& texture);
+	//virtual bool onSpecialTile() ; // on Throne
 
 private:
 };

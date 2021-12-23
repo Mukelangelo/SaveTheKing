@@ -4,6 +4,7 @@
 
 constexpr auto MENU_BUTTONS = 3;
 constexpr auto NUM_OF_PICS = 10;
+constexpr auto PLAYABLE = 4;
 
 constexpr auto StartGame = 0;
 constexpr auto Help = 1;
