@@ -38,18 +38,8 @@ void Board::buildTiles()
 		{
 			if (m_matrix[i][j] != ' ')
 			{
-				if (checkPlayable(m_matrix[i][j]))
-				{
-					m_character->push_back(std::make_unique< MovingObject >(
-						sf::Vector2f(m_location.x + (j * tileWidth) + 25, m_location.y + (i * tileHeight) + 25),
-						getTexture(m_matrix[i][j])));
-				}
-				else
-				{
-					m_tiles.push_back(std::make_unique< StaticObject >(
-						sf::Vector2f(m_location.x + (j * tileWidth) + 25, m_location.y + (i * tileHeight) + 25),
-						getTexture(m_matrix[i][j])));
-				}
+				auto locationVector = sf::Vector2f(m_location.x + (j * tileWidth) + 25, m_location.y + (i * tileHeight) + 25);
+				createObject(m_matrix[i][j], locationVector, getTexture(m_matrix[i][j]));
 			}
 		}
 	}
@@ -84,4 +74,49 @@ sf::Texture& Board::getTexture(char c)
 bool Board::checkPlayable(char c)
 {
 	return (c == 'K') || (c == 'M') || (c == 'W') || (c == 'T');
+}
+
+static std::unique_ptr<MovingObject> createMovableObject(char c, const sf::Vector2f& vect, const sf::Texture& texture)
+{
+	switch (c)
+	{
+	case 'K': return std::make_unique<King>(vect, texture);
+	case 'M': return std::make_unique<Mage>(vect, texture);
+	case 'W': return std::make_unique<Warrior>(vect, texture);
+	case 'T': return std::make_unique<Thief>(vect, texture);
+	}
+	return nullptr;
+}
+
+static std::unique_ptr<StaticObject> createUnmovableObject(char c, const sf::Vector2f& vect, const sf::Texture& texture)
+{
+	switch (c)
+	{
+	case 'X': return std::make_unique<Teleport>(vect, texture);
+	case 'F': return std::make_unique<Key>(vect, texture);
+	case '=': return std::make_unique<Wall>(vect, texture);
+	case '@': return std::make_unique<Throne>(vect, texture);
+	case '#': return std::make_unique<Gate>(vect, texture);
+	case '!': return std::make_unique<Ogre>(vect, texture);
+	case '*': return std::make_unique<Fire>(vect, texture);
+	}
+	return nullptr;
+}
+
+void Board::createObject(char c, const sf::Vector2f& vect, const sf::Texture& texture)
+{
+	std::unique_ptr<MovingObject> movable = createMovableObject(c, vect, texture);
+	if (movable)
+	{
+		m_character->push_back(std::move(movable));
+		return;
+	}
+
+	std::unique_ptr<StaticObject> unmovable = createUnmovableObject(c, vect, texture);
+	if (unmovable)
+	{
+		m_tiles.push_back(std::move(unmovable));
+		return;
+	}
+	exit(EXIT_FAILURE);
 }

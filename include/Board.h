@@ -32,6 +32,22 @@ public:
 	Board(int width, int height, sf::Vector2f location,
 		std::vector < std::unique_ptr <MovingObject >>& vect, sf::Texture textures[]);
 	void draw(sf::RenderWindow& window);
+	enum ObjectType
+	{
+		KingChar = 'K',
+		MageChar = 'M',
+		WarriorChar = 'W',
+		ThiefChar = 'T',
+		TeleportChar = 'X',
+		KeyChar = 'F',
+		WallChar = '=',
+		ThroneChar = '@',
+		OgreChar = '!',
+		GateChar = '#',
+		FireChar = '*'
+	};
+	sf::Texture& getTexture(char c);
+	void createObject(char c, const sf::Vector2f& vect, const sf::Texture& texture);
 
 private:
 	std::fstream m_file;
@@ -46,7 +62,7 @@ private:
 
 	// create all the tiles to present on screen
 	void buildTiles();
-	sf::Texture& getTexture(char c);
+	
 	bool checkPlayable(char c);
 
 	std::vector< std::unique_ptr <MovingObject > >* m_character;
