@@ -18,19 +18,15 @@ Board::Board(int width, int height, sf::Vector2f location,
 		{
 			std::vector<char> row;
 			for (char& c : line)
-				if (c != '\n')// && c != ' ')
+				if (c != '\n')
 					row.push_back(c);
 			m_matrix.push_back(row);
 		}
-		m_rows = m_matrix[0].size();
-		m_cols = m_matrix.size();
+		m_cols = m_matrix[0].size();
+		m_rows = m_matrix.size();
 		buildTiles();
 		m_file.close();
 	}
-	m_character->push_back(std::make_unique< King >(sf::Vector2f(1, 1), sf::Vector2f(2, 2), m_textures[load_King]));
-	m_character->push_back(std::make_unique< Mage >(sf::Vector2f(200, 200), m_textures[load_Mage]));
-	m_character->push_back(std::make_unique< Warrior >(sf::Vector2f(300, 200), m_textures[load_Warrior]));
-	m_character->push_back(std::make_unique< Thief >(sf::Vector2f(400, 350), m_textures[load_Thief]));
 }
 
 void Board::buildTiles()
@@ -41,11 +37,13 @@ void Board::buildTiles()
 		std::vector<sf::Sprite> tileRow;
 		for (int j = 0; j < m_cols; j++)
 		{
-			auto tile = sf::Sprite(m_textures[0]);
-			tile.setPosition(sf::Vector2f(m_location.x + (j * tileWidth) + 25, m_location.y + (i * tileHeight) + 25));
-			tileRow.push_back(tile);
+			if (m_matrix[i][j] != ' ')
+			{
+				m_character->push_back(std::make_unique< Mage >(
+					sf::Vector2f(m_location.x + (j * tileWidth) + 25, m_location.y + (i * tileHeight) + 25),
+					getTexture(m_matrix[i][j])));
+			}
 		}
-		m_tiles.push_back(tileRow);
 	}
 }
 
@@ -60,3 +58,13 @@ void Board::draw(sf::RenderWindow& window)
 	}
 }
 
+sf::Texture& Board::getTexture(char c)
+{
+	switch (c)
+	{
+	case 'K': return m_textures[load_King];
+	case 'M': return m_textures[load_Mage];
+	case 'W': return m_textures[load_Warrior];
+	case 'T': return m_textures[load_Thief];
+	}
+}

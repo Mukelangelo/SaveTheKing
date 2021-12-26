@@ -6,7 +6,7 @@
 class King : public MovingObject
 {
 public:
-	King(sf::Vector2f throneLoc, sf::Vector2f loc, const sf::Texture& texture);
+	King(sf::Vector2f loc, const sf::Texture& texture);
 	//virtual bool onSpecialTile() ; // on Throne
 
 private:

@@ -40,6 +40,7 @@ private:
 
 	// create all the tiles to present on screen
 	void buildTiles();
+	sf::Texture& getTexture(char c);
 
 	std::vector< std::unique_ptr <MovingObject > >* m_character;
 	sf::Texture* m_textures;
