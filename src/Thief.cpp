@@ -1,7 +1,7 @@
 #include "Thief.h"
 
 Thief::Thief(sf::Vector2f loc, const sf::Texture& texture)
-	:MovingObject(load_Thief, loc, texture)
+	:MovingObject(loc, texture)
 {}
 
 

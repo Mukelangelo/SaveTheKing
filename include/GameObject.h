@@ -5,7 +5,7 @@
 class GameObject
 {
 public:
-	GameObject(int picNum, sf::Vector2f loc, const sf::Texture& texture); 
+	GameObject(sf::Vector2f loc, const sf::Texture& texture); 
 	void draw(sf::RenderWindow& window);
 	sf::Vector2f getLocation() const;
 	//sf::Sprite getSprite() const;

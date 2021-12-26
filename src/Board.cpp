@@ -34,14 +34,22 @@ void Board::buildTiles()
 	int tileWidth = m_width / m_cols, tileHeight = m_height / m_rows;
 	for (int i = 0; i < m_rows; i++)
 	{
-		std::vector<sf::Sprite> tileRow;
 		for (int j = 0; j < m_cols; j++)
 		{
 			if (m_matrix[i][j] != ' ')
 			{
-				m_character->push_back(std::make_unique< Mage >(
-					sf::Vector2f(m_location.x + (j * tileWidth) + 25, m_location.y + (i * tileHeight) + 25),
-					getTexture(m_matrix[i][j])));
+				if (checkPlayable(m_matrix[i][j]))
+				{
+					m_character->push_back(std::make_unique< MovingObject >(
+						sf::Vector2f(m_location.x + (j * tileWidth) + 25, m_location.y + (i * tileHeight) + 25),
+						getTexture(m_matrix[i][j])));
+				}
+				else
+				{
+					m_tiles.push_back(std::make_unique< StaticObject >(
+						sf::Vector2f(m_location.x + (j * tileWidth) + 25, m_location.y + (i * tileHeight) + 25),
+						getTexture(m_matrix[i][j])));
+				}
 			}
 		}
 	}
@@ -51,11 +59,8 @@ void Board::draw(sf::RenderWindow& window)
 {
 	for (int i = 0; i < m_character[0].size(); i++)
 		m_character[0][i]->draw(window);
-	for (int i = 0; i < m_tiles.size(); i++)
-	{
-		for (int j = 0; j < m_tiles[i].size(); j++)
-			window.draw(m_tiles[i][j]);
-	}
+	for (int j = 0; j < m_tiles.size(); j++)
+		m_tiles[j]->draw(window);
 }
 
 sf::Texture& Board::getTexture(char c)
@@ -66,5 +71,17 @@ sf::Texture& Board::getTexture(char c)
 	case 'M': return m_textures[load_Mage];
 	case 'W': return m_textures[load_Warrior];
 	case 'T': return m_textures[load_Thief];
+	case 'X': return m_textures[load_Teleport];
+	case 'F': return m_textures[0];
+	case '=': return m_textures[load_Wall];
+	case '@': return m_textures[load_Throne];
+	case '#': return m_textures[load_Gate];
+	case '!': return m_textures[load_Orge];
+	case '*': return m_textures[load_Fire];
 	}
+}
+
+bool Board::checkPlayable(char c)
+{
+	return (c == 'K') || (c == 'M') || (c == 'W') || (c == 'T');
 }

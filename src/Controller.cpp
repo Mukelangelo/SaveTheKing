@@ -7,7 +7,7 @@ Controller::Controller(sf::RenderWindow& window)
     :m_board(), m_window(&window), m_currChar(0)
 {
     loadTextures();
-    m_board = Board(600, 600, sf::Vector2f(600, 100), m_character, m_textures);
+    m_board = Board(WINDOW_WIDTH, WINDOW_HEIGHT, sf::Vector2f(0, 0), m_character, m_textures);
 }
 
 void Controller::run()

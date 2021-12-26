@@ -34,6 +34,6 @@ constexpr auto load_Orge = 7;
 constexpr auto load_Teleport = 8;
 constexpr auto load_Gate = 9;
 
-const std::string objectTextures[NUM_OF_PICS] = { "king.jpg", "mage.jpeg", "warrior.jpg", "thief.jpg",
+const std::string objectTextures[NUM_OF_PICS] = { "king.png", "mage.png", "warrior.png", "thief.png",
 													"wall.jpg", "throne.jpg", "fire.jpg", "orge.jpg", "teleport.jpg", "gate.jpg" };
 // add key

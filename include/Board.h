@@ -2,15 +2,21 @@
 
 #include <vector>
 #include <fstream>
+#include <memory>
 #include "macros.h"
 #include "MovingObject.h"
-
+#include "StaticObject.h"
 #include "King.h"
 #include "Mage.h"
 #include "Warrior.h"
 #include "Thief.h"
-
-#include <memory>
+#include "Teleport.h"
+#include "Key.h"
+#include "Wall.h"
+#include "Throne.h"
+#include "Gate.h"
+#include "Ogre.h"
+#include "Fire.h"
 
 /*
 List of missions :
@@ -32,7 +38,7 @@ private:
 	// save the characters on the board
 	std::vector< std::vector<char> > m_matrix;
 	// draw and represent each character on the coard
-	std::vector < std::vector < sf::Sprite > > m_tiles;
+	//std::vector < std::vector < sf::Sprite > > m_tiles;
 	// location of the board on the screen
 	sf::Vector2f m_location;
 	// sizes of the board
@@ -41,7 +47,9 @@ private:
 	// create all the tiles to present on screen
 	void buildTiles();
 	sf::Texture& getTexture(char c);
+	bool checkPlayable(char c);
 
 	std::vector< std::unique_ptr <MovingObject > >* m_character;
+	std::vector< std::unique_ptr <StaticObject > > m_tiles;
 	sf::Texture* m_textures;
 };

@@ -1,12 +1,6 @@
 #pragma once
-#include <vector>
-#include <memory>
+
 #include "Board.h"
-#include "macros.h"
-#include "King.h"
-#include "Mage.h"
-#include "Warrior.h"
-#include "Thief.h"
 #include <cmath>
 #include <ctime>
 
@@ -22,7 +16,6 @@ public:
 	Controller(sf::RenderWindow& window);
 	// run the game
 	void run();
-	//void drawMenu(sf::RenderWindow& window);
 	~Controller();
 
 private:

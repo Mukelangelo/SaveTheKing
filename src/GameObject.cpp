@@ -1,6 +1,6 @@
 #include "GameObject.h"
 
-GameObject::GameObject(int picNum, sf::Vector2f loc, const sf::Texture& texture)
+GameObject::GameObject(sf::Vector2f loc, const sf::Texture& texture)
 	: m_location(loc), m_sprite(sf::Sprite(texture))
 {
 	m_sprite.setPosition(m_location);
