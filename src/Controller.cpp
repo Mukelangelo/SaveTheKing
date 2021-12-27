@@ -52,12 +52,14 @@ void Controller::run()
                     m_character[m_currChar]->setDirection(sf::Keyboard::Up);
 
                 deltaTime = clock.restart();
-                for (int i = 0; i < m_character.size(); i++)
+
+                for (auto& character : m_character)
                 {
-                    if (m_character[m_currChar]->checkCollision(*m_character[i]))
+                    if (m_character[m_currChar]->checkCollision(*character))
                     {
-                        block = true;
-                        break;
+                        m_character[m_currChar]->handleCollision(*character);
+                        //block = true;
+                       // break;
                     }
                 }
                 if(!block)
