@@ -12,7 +12,6 @@ Controller::Controller(sf::RenderWindow& window)
 
 void Controller::run()
 {
-    auto block = false;
     sf::Event event;
     const sf::Time TimerLimit = sf::seconds(0.2f);
     sf::Clock clock;
@@ -51,20 +50,12 @@ void Controller::run()
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
                     m_character[m_currChar]->setDirection(sf::Keyboard::Up);
 
-                deltaTime = clock.restart();
-
-                for (auto& character : m_character)
-                {
-                    if (m_character[m_currChar]->checkCollision(*character))
-                    {
-                        m_character[m_currChar]->handleCollision(*character);
-                        //block = true;
-                       // break;
-                    }
-                }
-                if(!block)
-                    m_character[m_currChar]->movePlayer(deltaTime); 
-                block = false;
+                //if (!handleCollisions())
+                //{
+                    deltaTime = clock.restart();
+                    m_character[m_currChar]->movePlayer(deltaTime);
+                //}
+    
             }
         }
     }
@@ -79,6 +70,16 @@ void Controller::loadTextures()
 {
     for (int i = 0; i < NUM_OF_PICS; i++)
         m_textures[i].loadFromFile(objectTextures[i]);
+}
+
+bool Controller::handleCollisions()
+{
+    for (auto& character : m_character)
+    {
+        if (m_character[m_currChar]->checkCollision(*character))
+            return true;
+    }
+    return false;
 }
 
 Controller::~Controller()

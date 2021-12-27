@@ -1,5 +1,9 @@
 #include "MovingObject.h"
 
+MovingObject::MovingObject(sf::Vector2f loc, const sf::Texture& texture)
+	: GameObject(loc, texture)
+{}
+
 void MovingObject::movePlayer(sf::Time deltaTime)
 {
 	const auto speedPerSecond = 100.f;

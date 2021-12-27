@@ -4,7 +4,8 @@
 class MovingObject : public GameObject
 {
 public:
-	using GameObject::GameObject;
+	//using GameObject::GameObject;
+	MovingObject(sf::Vector2f loc, const sf::Texture& texture);
 
 	void movePlayer(sf::Time deltaTime);
 	void setLocation(const sf::Vector2f& loc);

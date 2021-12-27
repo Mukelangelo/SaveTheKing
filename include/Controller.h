@@ -27,6 +27,7 @@ private:
 	Board m_board;
 	void loadTextures();
 	void switchCharacter();
+	bool handleCollisions();
 	int m_currChar;
 
 };
