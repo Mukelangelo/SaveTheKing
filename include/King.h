@@ -10,5 +10,5 @@ public:
 	//virtual bool onSpecialTile() ; // on Throne
 
 private:
-	sf::Vector2f m_throne; // do we really need it here?
+	//sf::Vector2f m_throne; // do we really need it here?
 };
