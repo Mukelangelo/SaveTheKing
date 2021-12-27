@@ -27,6 +27,8 @@ Board::Board(int width, int height, sf::Vector2f location,
 		buildTiles();
 		m_file.close();
 	}
+	//m_texture.loadFromFile("gamebg.png");
+	//m_bg = sf::Sprite(m_texture);
 }
 
 void Board::buildTiles()
@@ -47,6 +49,7 @@ void Board::buildTiles()
 
 void Board::draw(sf::RenderWindow& window)
 {
+	//window.draw(m_bg);
 	for (int i = 0; i < m_character[0].size(); i++)
 		m_character[0][i]->draw(window);
 	for (int j = 0; j < m_tiles.size(); j++)

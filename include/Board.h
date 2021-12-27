@@ -54,4 +54,6 @@ private:
 	std::vector< std::unique_ptr <MovingObject > >* m_character;
 	std::vector< std::unique_ptr <StaticObject > > m_tiles;
 	sf::Texture* m_textures;
+	sf::Sprite m_bg;
+	sf::Texture m_texture;
 };
