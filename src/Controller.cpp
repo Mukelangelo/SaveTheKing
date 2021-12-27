@@ -12,6 +12,7 @@ Controller::Controller(sf::RenderWindow& window)
 
 void Controller::run()
 {
+    auto block = false;
     sf::Event event;
     const sf::Time TimerLimit = sf::seconds(0.2f);
     sf::Clock clock;
@@ -51,8 +52,17 @@ void Controller::run()
                     m_character[m_currChar]->setDirection(sf::Keyboard::Up);
 
                 deltaTime = clock.restart();
-                m_character[m_currChar]->movePlayer(deltaTime);
-                
+                for (int i = 0; i < m_character.size(); i++)
+                {
+                    if (m_character[m_currChar]->checkCollision(*m_character[i]))
+                    {
+                        block = true;
+                        break;
+                    }
+                }
+                if(!block)
+                    m_character[m_currChar]->movePlayer(deltaTime); 
+                block = false;
             }
         }
     }

@@ -9,6 +9,8 @@ GameObject::GameObject(sf::Vector2f loc, const sf::Texture& texture)
 
 bool GameObject::checkCollision(const GameObject& other)
 {
+	if (&other == this)
+		return false;
 	return m_sprite.getGlobalBounds().intersects(other.getSprite().getGlobalBounds());
 }
 
