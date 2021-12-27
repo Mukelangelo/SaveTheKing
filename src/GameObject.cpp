@@ -7,6 +7,11 @@ GameObject::GameObject(sf::Vector2f loc, const sf::Texture& texture)
 	m_sprite.setScale(sf::Vector2f(0.8, 0.8));
 }
 
+bool GameObject::checkCollision(const GameObject& other)
+{
+	return m_sprite.getGlobalBounds().intersects(other.getSprite().getGlobalBounds());
+}
+
 void GameObject::draw(sf::RenderWindow& window)
 { 
 	window.draw(m_sprite);
@@ -15,4 +20,9 @@ void GameObject::draw(sf::RenderWindow& window)
 sf::Vector2f GameObject::getLocation() const
 {
 	return m_location;
+}
+
+sf::Sprite GameObject::getSprite() const
+{
+	return m_sprite;
 }

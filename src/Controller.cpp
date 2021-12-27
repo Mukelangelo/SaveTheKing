@@ -13,7 +13,7 @@ Controller::Controller(sf::RenderWindow& window)
 void Controller::run()
 {
     sf::Event event;
-    const sf::Time bilbal = sf::seconds(0.2f);
+    const sf::Time TimerLimit = sf::seconds(0.2f);
     sf::Clock clock;
     while (m_window->isOpen()) {
 
@@ -23,7 +23,7 @@ void Controller::run()
 
         while (m_window->pollEvent(event))
         {
-            if (clock.getElapsedTime() > bilbal)
+            if (clock.getElapsedTime() > TimerLimit)
                 clock.restart();
 
             if ((event.type == sf::Event::Closed) ||
@@ -52,6 +52,7 @@ void Controller::run()
 
                 deltaTime = clock.restart();
                 m_character[m_currChar]->movePlayer(deltaTime);
+                
             }
         }
     }

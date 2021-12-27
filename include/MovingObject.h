@@ -9,6 +9,8 @@ public:
 	void movePlayer(sf::Time deltaTime);
 	void setLocation(const sf::Vector2f& loc);
 	void setDirection(sf::Keyboard::Key key);
+	// should be in GameObject , here only for the beta version
+	virtual void handleCollision(MovingObject& player) = 0;
 	//virtual bool onSpecialTile();
 
 	~MovingObject() = default;
