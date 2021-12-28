@@ -13,14 +13,12 @@ List of missions :
 class Controller {
 public:
 	// default c-stor
-	Controller(sf::RenderWindow& window);
+	Controller();
 	// run the game
-	void run();
+	void run(sf::RenderWindow& window);
 	~Controller();
 
 private:
-
-	sf::RenderWindow* m_window;
 	sf::Texture m_textures[NUM_OF_PICS];
 	std::vector< std::unique_ptr <MovingObject > > m_character;
 	// vector of pointers to all moveable characters.

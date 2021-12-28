@@ -3,25 +3,25 @@
 int stepCounter;
 bool key, won;
 
-Controller::Controller(sf::RenderWindow& window)
-    :m_board(), m_window(&window), m_currChar(0)
+Controller::Controller()
+    :m_board(), m_currChar(0)
 {
     loadTextures();
     m_board = Board(WINDOW_WIDTH, WINDOW_HEIGHT, sf::Vector2f(0, 0), m_character, m_textures);
 }
 
-void Controller::run()
+void Controller::run(sf::RenderWindow& window)
 {
     sf::Event event;
     const sf::Time TimerLimit = sf::seconds(0.2f);
     sf::Clock clock;
-    while (m_window->isOpen()) {
+    while (window.isOpen()) {
 
-        m_window->clear(sf::Color(179, 218, 255, 255));
-        m_board.draw(*m_window);
-        m_window->display();
+        window.clear(sf::Color(179, 218, 255, 255));
+        m_board.draw(window);
+        window.display();
 
-        while (m_window->pollEvent(event))
+        while (window.pollEvent(event))
         {
             if (clock.getElapsedTime() > TimerLimit)
                 clock.restart();
@@ -29,7 +29,7 @@ void Controller::run()
             if ((event.type == sf::Event::Closed) ||
                 ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape)))
             {
-                m_window->close();
+                window.close();
                 break;
             }
             sf::Time deltaTime;
@@ -49,12 +49,17 @@ void Controller::run()
 
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
                     m_character[m_currChar]->setDirection(sf::Keyboard::Up);
-
-                //if (!handleCollisions())
-                //{
+                
+                if (!handleCollisions())
+                {
                     deltaTime = clock.restart();
                     m_character[m_currChar]->movePlayer(deltaTime);
-                //}
+                    if (handleCollisions())
+                    {
+                        deltaTime = clock.restart();
+                       m_character[m_currChar]->movePlayer(deltaTime);
+                    }
+                }
     
             }
         }
