@@ -7,7 +7,6 @@ class Throne : public StaticObject
 {
 public:
 	using StaticObject::StaticObject;
-	void handleCollision(MovingObject& gameObject);
-
+	virtual void handleCollision(GameObject& player) override;
 private:
 };

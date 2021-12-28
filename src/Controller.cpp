@@ -49,8 +49,11 @@ void Controller::run(sf::RenderWindow& window)
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
                     m_character[m_currChar]->setDirection(sf::Keyboard::Up);
                 
-                deltaTime = clock.restart();
-                m_character[m_currChar]->movePlayer(deltaTime);
+                if(handleCollisions())
+                {
+                    deltaTime = clock.restart();
+                    m_character[m_currChar]->movePlayer(deltaTime);
+                }    
             }
         }
         window.clear(sf::Color(179, 218, 255, 255));
@@ -75,9 +78,19 @@ bool Controller::handleCollisions()
     for (auto& character : m_character)
     {
         if (m_character[m_currChar]->checkCollision(*character))
-            return true;
+        {
+            m_character[m_currChar]->handleCollision(*character);
+                 
+        }
     }
-    return false;
+    for (auto& tile : m_tiles)
+    {
+        if (m_character[m_currChar]->checkCollision(*tile))
+        {
+            m_character[m_currChar]->handleCollision(*tile);
+        }
+    }
+    return true;
 }
 
 Controller::~Controller()

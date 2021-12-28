@@ -15,5 +15,5 @@ Thief::Thief(sf::Vector2f loc, const sf::Texture& texture)
 void Thief::handleCollision(MovingObject& player)
 {
 	if (&player == this) return;
-	player.handleCollision(*this);
+	//player.handleCollision(*this);
 }

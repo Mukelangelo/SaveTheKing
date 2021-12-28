@@ -23,4 +23,3 @@ const std::string objectTextures[NUM_OF_PICS] = { "king.png", "mage.png", "warri
 													"wall.png", "throne.png", "fire.png", "ogre.png", "teleport.png", "gate.png" };
 // add key
 
-// ogre + gate need normal resize

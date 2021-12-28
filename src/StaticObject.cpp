@@ -1,7 +1,6 @@
 #include "StaticObject.h"
 
-void StaticObject::handleCollision(GameObject& gameObject)
+void StaticObject::handleCollision(GameObject& player)
 {
-	if (&gameObject == this) return;
-	gameObject.handleCollision(*this);
+
 }

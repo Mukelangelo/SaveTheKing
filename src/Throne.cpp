@@ -1,6 +1,11 @@
 #include "Throne.h"
 
-void Throne::handleCollision(MovingObject& gameObject)
+void Throne::handleCollision(GameObject& player)
 {
-	m_sprite.scale(2,2);
+	if (typeid(player) == typeid(King))
+	{
+		m_sprite.setColor(sf::Color::Transparent);
+	}
+	
 }
+

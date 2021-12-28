@@ -7,7 +7,7 @@ King::King(sf::Vector2f loc, const sf::Texture& texture)
 void King::handleCollision(MovingObject& player)
 {
 	if (&player == this) return;
-	player.handleCollision(*this);
+	//player.handleCollision(*this);
 }
 
 /*void handleCollision(GameObject& gameObject) override

@@ -6,6 +6,7 @@ class StaticObject : public GameObject
 {
 public:
 	using GameObject::GameObject;
-	void handleCollision(GameObject& gameObject) override;
+	virtual void handleCollision(GameObject& player) override;
+	
 protected:
 };

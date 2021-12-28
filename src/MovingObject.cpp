@@ -46,6 +46,7 @@ sf::Vector2f MovingObject::getLastLoc()
 
 void MovingObject::handleCollision(GameObject& gameObject)
 {
-	if (&gameObject == this) return;
+	if (&gameObject == this) 
+		return ; // can move
 	gameObject.handleCollision(*this);
 }

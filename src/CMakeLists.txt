@@ -10,4 +10,7 @@
 											  "Warrior.cpp"
 											  "Thief.cpp"
 											  "StaticObject.cpp"
-											  "Throne.cpp")
+											  "Throne.cpp"
+											  "Fire.cpp"
+											  "Ogre.cpp"
+											  "Gate.cpp")
