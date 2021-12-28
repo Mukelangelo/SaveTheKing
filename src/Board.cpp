@@ -6,7 +6,8 @@ Board::Board()
 
 Board::Board(int width, int height, sf::Vector2f location,
 	std::vector < std::unique_ptr <MovingObject >>& vect, sf::Texture textures[])
-	: m_height(height), m_width(width), m_location(location), m_rows(0), m_cols(0), m_character(&vect), m_textures(textures)
+	: m_height(height), m_width(width), m_location(location), m_rows(0), m_cols(0), m_character(&vect), m_textures(textures),
+		m_texture(sf::Texture()), m_bg(sf::Sprite())
 {
 	m_file.open("Board.txt", std::ios::in);
 	// check if a file exist and not empty
@@ -27,20 +28,21 @@ Board::Board(int width, int height, sf::Vector2f location,
 		buildTiles();
 		m_file.close();
 	}
-	//m_texture.loadFromFile("gamebg.png");
-	//m_bg = sf::Sprite(m_texture);
+	m_texture.loadFromFile("gamebg.png");
+	//m_bg.setTexture(m_texture);
 }
 
 void Board::buildTiles()
 {
-	int tileWidth = m_width / m_cols, tileHeight = m_height / m_rows;
+	auto size = float(m_height - 10) / ((m_rows > m_cols ? m_rows : m_cols) + 1);
+	int tileWidth = m_width / (m_cols+1), tileHeight = m_height / (m_rows+1);
 	for (int i = 0; i < m_rows; i++)
 	{
 		for (int j = 0; j < m_cols; j++)
 		{
 			if (m_matrix[i][j] != ' ')
 			{
-				auto locationVector = sf::Vector2f(m_location.x + (j * tileWidth) + 25, m_location.y + (i * tileHeight) + 25);
+				auto locationVector = sf::Vector2f(m_location.x + (j * tileWidth) + 30, m_location.y + (i * tileHeight) + 30);
 				createObject(m_matrix[i][j], locationVector, getTexture(m_matrix[i][j]));
 			}
 		}
@@ -49,7 +51,8 @@ void Board::buildTiles()
 
 void Board::draw(sf::RenderWindow& window)
 {
-	//window.draw(m_bg);
+	m_bg.setTexture(m_texture);
+	window.draw(m_bg);
 	for (int i = 0; i < m_character[0].size(); i++)
 		m_character[0][i]->draw(window);
 	for (int j = 0; j < m_tiles.size(); j++)
@@ -72,11 +75,6 @@ sf::Texture& Board::getTexture(char c)
 	case '!': return m_textures[load_Orge];
 	case '*': return m_textures[load_Fire];
 	}
-}
-
-bool Board::checkPlayable(char c)
-{
-	return (c == 'K') || (c == 'M') || (c == 'W') || (c == 'T');
 }
 
 static std::unique_ptr<MovingObject> createMovableObject(char c, const sf::Vector2f& vect, const sf::Texture& texture)

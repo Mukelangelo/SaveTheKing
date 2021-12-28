@@ -4,7 +4,7 @@ GameObject::GameObject(sf::Vector2f loc, const sf::Texture& texture)
 	: m_location(loc), m_sprite(sf::Sprite(texture))
 {
 	m_sprite.setPosition(m_location);
-	m_sprite.setScale(sf::Vector2f(0.8, 0.8));
+	m_sprite.setScale(sf::Vector2f(0.75, 0.75));
 }
 
 bool GameObject::checkCollision(const GameObject& other)

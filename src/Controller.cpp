@@ -7,31 +7,30 @@ Controller::Controller()
     :m_board(), m_currChar(0)
 {
     loadTextures();
-    m_board = Board(WINDOW_WIDTH, WINDOW_HEIGHT, sf::Vector2f(0, 0), m_character, m_textures);
+   // m_board = Board(WINDOW_WIDTH, WINDOW_HEIGHT, sf::Vector2f(0, 0), m_character, m_textures);
 }
 
 void Controller::run(sf::RenderWindow& window)
 {
+    m_board = Board(WINDOW_WIDTH, WINDOW_HEIGHT, sf::Vector2f(0, 0), m_character, m_textures);
     sf::Event event;
-    const sf::Time TimerLimit = sf::seconds(0.2f);
+    const sf::Time timerLimit = sf::seconds(0.2f);
     sf::Clock clock;
     while (window.isOpen()) {
 
-        window.clear(sf::Color(179, 218, 255, 255));
-        m_board.draw(window);
-        window.display();
-
         while (window.pollEvent(event))
         {
-            if (clock.getElapsedTime() > TimerLimit)
+            if (clock.getElapsedTime() > timerLimit)
                 clock.restart();
 
             if ((event.type == sf::Event::Closed) ||
                 ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape)))
             {
+                //return
                 window.close();
                 break;
             }
+
             sf::Time deltaTime;
             if (event.type == sf::Event::KeyPressed)
             {
@@ -50,19 +49,13 @@ void Controller::run(sf::RenderWindow& window)
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
                     m_character[m_currChar]->setDirection(sf::Keyboard::Up);
                 
-                if (!handleCollisions())
-                {
-                    deltaTime = clock.restart();
-                    m_character[m_currChar]->movePlayer(deltaTime);
-                    if (handleCollisions())
-                    {
-                        deltaTime = clock.restart();
-                       m_character[m_currChar]->movePlayer(deltaTime);
-                    }
-                }
-    
+                deltaTime = clock.restart();
+                m_character[m_currChar]->movePlayer(deltaTime);
             }
         }
+        window.clear(sf::Color(179, 218, 255, 255));
+        m_board.draw(window);
+        window.display();
     }
 }
 

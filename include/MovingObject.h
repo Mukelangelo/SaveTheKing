@@ -13,9 +13,12 @@ public:
 	// should be in GameObject , here only for the beta version
 	virtual void handleCollision(MovingObject& player) = 0;
 	//virtual bool onSpecialTile();
-
+	sf::Vector2f getDirection();
+	void setLastLoc(sf::Vector2f loc);
+	sf::Vector2f getLastLoc();
 	~MovingObject() = default;
 
 protected:
 	sf::Vector2f m_direction;
+	sf::Vector2f m_lastLoc;
 };

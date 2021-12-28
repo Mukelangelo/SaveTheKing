@@ -36,6 +36,10 @@ void Menu::run()
 
         for (auto event = sf::Event{}; m_window.pollEvent(event);)
         {
+            if ((event.type == sf::Event::Closed) ||
+                ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape)))
+                m_window.close();
+
             switch (event.type)
             {
             case sf::Event::MouseMoved:
@@ -45,9 +49,6 @@ void Menu::run()
                 handleHover(loc);
                 break;
             }
-            case sf::Event::Closed:
-                m_window.close();
-                break;
 
             case sf::Event::MouseButtonPressed:
                 auto location = m_window.mapPixelToCoords(
@@ -69,6 +70,7 @@ void Menu::run()
 void Menu::game()
 {
     m_controller.run(m_window);
+    m_gameStart = false;
 }
 
 void Menu::draw()

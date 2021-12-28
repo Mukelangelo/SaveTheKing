@@ -1,12 +1,12 @@
 #include "MovingObject.h"
 
 MovingObject::MovingObject(sf::Vector2f loc, const sf::Texture& texture)
-	: GameObject(loc, texture)
+	: GameObject(loc, texture), m_lastLoc(loc)
 {}
 
 void MovingObject::movePlayer(sf::Time deltaTime)
 {
-	const auto speedPerSecond = 120.f;
+	const auto speedPerSecond = 80.f;
 	m_sprite.move(m_direction * speedPerSecond * deltaTime.asSeconds());
 }
 
@@ -28,4 +28,18 @@ void MovingObject::setDirection(sf::Keyboard::Key key)
 	case sf::Keyboard::Key::Right:
 		m_direction = sf::Vector2f(1, 0); break;
 	}
+}
+
+sf::Vector2f MovingObject::getDirection()
+{
+	return m_direction;
+}
+
+void MovingObject::setLastLoc(sf::Vector2f loc)
+{
+	m_lastLoc = loc;
+}
+sf::Vector2f MovingObject::getLastLoc()
+{
+	return m_lastLoc;
 }
