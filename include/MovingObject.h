@@ -12,6 +12,7 @@ public:
 	void setDirection(sf::Keyboard::Key key);
 	// should be in GameObject , here only for the beta version
 	virtual void handleCollision(MovingObject& player) = 0;
+	void handleCollision(GameObject& gameObject) override;
 	//virtual bool onSpecialTile();
 	sf::Vector2f getDirection();
 	void setLastLoc(sf::Vector2f loc);

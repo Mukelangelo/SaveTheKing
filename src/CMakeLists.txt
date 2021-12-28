@@ -8,4 +8,6 @@
 											  "King.cpp"
 											  "Mage.cpp"
 											  "Warrior.cpp"
-											  "Thief.cpp")
+											  "Thief.cpp"
+											  "StaticObject.cpp"
+											  "Throne.cpp")
