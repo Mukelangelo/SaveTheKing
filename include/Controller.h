@@ -21,6 +21,7 @@ public:
 private:
 	sf::Texture m_textures[NUM_OF_PICS];
 	std::vector< std::unique_ptr <MovingObject > > m_character;
+	std::vector< std::unique_ptr <StaticObject > > m_tiles;
 	// vector of pointers to all moveable characters.
 	Board m_board;
 	void loadTextures();

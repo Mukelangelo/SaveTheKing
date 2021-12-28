@@ -5,9 +5,11 @@ Board::Board()
 {}
 
 Board::Board(int width, int height, sf::Vector2f location,
-	std::vector < std::unique_ptr <MovingObject >>& vect, sf::Texture textures[])
+	std::vector < std::unique_ptr <MovingObject >>& vect, 
+	std::vector < std::unique_ptr <StaticObject >>& tiles
+	,sf::Texture textures[])
 	: m_height(height), m_width(width), m_location(location), m_rows(0), m_cols(0), m_character(&vect), m_textures(textures),
-		m_texture(sf::Texture()), m_bg(sf::Sprite())
+	  m_tiles(&tiles), m_texture(sf::Texture()), m_bg(sf::Sprite())
 {
 	m_file.open("Board.txt", std::ios::in);
 	// check if a file exist and not empty
@@ -55,8 +57,8 @@ void Board::draw(sf::RenderWindow& window)
 	window.draw(m_bg);
 	for (int i = 0; i < m_character[0].size(); i++)
 		m_character[0][i]->draw(window);
-	for (int j = 0; j < m_tiles.size(); j++)
-		m_tiles[j]->draw(window);
+	for (int j = 0; j < m_tiles[0].size(); j++)
+		m_tiles[0][j]->draw(window);
 }
 
 sf::Texture& Board::getTexture(char c)
@@ -116,7 +118,7 @@ void Board::createObject(char c, const sf::Vector2f& vect, const sf::Texture& te
 	std::unique_ptr<StaticObject> unmovable = createUnmovableObject(c, vect, texture);
 	if (unmovable)
 	{
-		m_tiles.push_back(std::move(unmovable));
+		m_tiles->push_back(std::move(unmovable));
 		return;
 	}
 	exit(EXIT_FAILURE);

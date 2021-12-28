@@ -30,7 +30,9 @@ public:
 	// default c-stor
 	Board();
 	Board(int width, int height, sf::Vector2f location,
-		std::vector < std::unique_ptr <MovingObject >>& vect, sf::Texture textures[]);
+		std::vector < std::unique_ptr <MovingObject >>& vect,
+		std::vector < std::unique_ptr <StaticObject >>& tiles,
+		sf::Texture textures[]);
 	void draw(sf::RenderWindow& window);
 	sf::Texture& getTexture(char c);
 	void createObject(char c, const sf::Vector2f& vect, const sf::Texture& texture);
@@ -50,7 +52,7 @@ private:
 	void buildTiles();
 
 	std::vector< std::unique_ptr <MovingObject > >* m_character;
-	std::vector< std::unique_ptr <StaticObject > > m_tiles;
+	std::vector< std::unique_ptr <StaticObject > >* m_tiles;
 	sf::Texture* m_textures;
 
 	sf::Sprite m_bg;

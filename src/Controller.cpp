@@ -12,7 +12,7 @@ Controller::Controller()
 
 void Controller::run(sf::RenderWindow& window)
 {
-    m_board = Board(WINDOW_WIDTH, WINDOW_HEIGHT, sf::Vector2f(0, 0), m_character, m_textures);
+    m_board = Board(WINDOW_WIDTH, WINDOW_HEIGHT, sf::Vector2f(0, 0), m_character, m_tiles, m_textures);
     sf::Event event;
     const sf::Time timerLimit = sf::seconds(0.2f);
     sf::Clock clock;
