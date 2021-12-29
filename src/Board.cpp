@@ -31,23 +31,40 @@ Board::Board(int width, int height, sf::Vector2f location,
 		m_file.close();
 	}
 	m_texture.loadFromFile("gamebg.png");
+	resizeObjects();
 	//m_bg.setTexture(m_texture);
 }
 
 void Board::buildTiles()
 {
 	auto size = float(m_height - 10) / ((m_rows > m_cols ? m_rows : m_cols) + 1);
-	int tileWidth = m_width / (m_cols+1), tileHeight = m_height / (m_rows+1);
+	int tileWidth = m_width / (m_cols + 1), tileHeight = m_height / (m_rows + 1);
 	for (int i = 0; i < m_rows; i++)
 	{
 		for (int j = 0; j < m_cols; j++)
 		{
 			if (m_matrix[i][j] != ' ')
 			{
-				auto locationVector = sf::Vector2f(m_location.x + (j * tileWidth) + 30, m_location.y + (i * tileHeight) + 30);
+				auto locationVector = sf::Vector2f(m_location.x + (j * tileWidth) + 50, m_location.y + (i * tileHeight) + 50);
 				createObject(m_matrix[i][j], locationVector, getTexture(m_matrix[i][j]));
 			}
 		}
+	}
+}
+
+void Board::resizeObjects()
+{
+	auto newHeight = m_height / (m_rows+1);
+	auto newWidth = m_width / (m_cols+1);
+
+	for (auto& moveable : *m_character)
+	{
+		moveable->setSpriteScale(newHeight, newWidth);
+	}
+
+	for (auto& unmoveable : *m_tiles)
+	{
+		unmoveable->setSpriteScale(newHeight, newWidth);
 	}
 }
 
