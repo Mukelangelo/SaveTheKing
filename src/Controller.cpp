@@ -48,11 +48,10 @@ void Controller::run(sf::RenderWindow& window)
 
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
                     m_character[m_currChar]->setDirection(sf::Keyboard::Up);
-                
-                if(handleCollisions())
+                deltaTime = clock.restart();
+                if(ManageCollisions(deltaTime))
                 {
-                    deltaTime = clock.restart();
-                    m_character[m_currChar]->movePlayer(deltaTime);
+                    
                 }    
             }
         }
@@ -73,21 +72,27 @@ void Controller::loadTextures()
         m_textures[i].loadFromFile(objectTextures[i]);
 }
 
-bool Controller::handleCollisions()
+bool Controller::ManageCollisions(sf::Time deltaTime)
 {
+    auto CurrLocation = m_character[m_currChar]->getLocation();
+    m_character[m_currChar]->movePlayer(deltaTime);
+
     for (auto& character : m_character)
     {
         if (m_character[m_currChar]->checkCollision(*character))
         {
-            m_character[m_currChar]->handleCollision(*character);
-                 
+            m_character[m_currChar]->handleCollision(*character);       
         }
     }
-    for (auto& tile : m_tiles)
+    for (auto& tile : m_tiles )
     {
-        if (m_character[m_currChar]->checkCollision(*tile))
+        if (tile != nullptr && m_character[m_currChar]->checkCollision(*tile))
         {
             m_character[m_currChar]->handleCollision(*tile);
+            if (tile->isDispatch())
+                eraseObject(*tile);
+            else
+                m_character[m_currChar]->setLocation(CurrLocation);
         }
     }
     return true;
@@ -97,4 +102,24 @@ Controller::~Controller()
 {
     for (int i = 0; i < m_character.size(); i++)
         m_character[i].release();
+}
+
+void Controller::eraseObject(StaticObject& staticObj)
+{
+    auto staticPtr = m_tiles.begin();
+    for (; staticPtr != m_tiles.end(); staticPtr++)
+    {
+        if ((*staticPtr)->getLocation() == staticObj.getLocation())
+        {
+            //auto newStatic = std::make_unique<StaticObject>(staticObj.getLocation(), sf::Texture());
+            //staticPtr->swap(newStatic);
+            m_tiles.erase(staticPtr);
+            break;
+        }
+    }
+}
+
+void Controller::ChangeTile(StaticObject& staticObj)
+{
+
 }

@@ -2,9 +2,9 @@
 
 void Fire::handleCollision(GameObject& player)
 {
+	m_dispatched = false;
+	//m_collided = true;
 	if (typeid(player) == typeid(Mage))
-	{
-		m_sprite.setColor(sf::Color::Transparent);
-	}
+		m_dispatched == true;
 
 }

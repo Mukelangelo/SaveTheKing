@@ -13,4 +13,5 @@
 											  "Throne.cpp"
 											  "Fire.cpp"
 											  "Ogre.cpp"
-											  "Gate.cpp")
+											  "Gate.cpp"
+											  "Wall.cpp")
