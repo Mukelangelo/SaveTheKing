@@ -31,7 +31,11 @@ private:
 	bool manageCollisions(sf::Time& , sf::Clock&);
 	bool locationAllowed(MovingObject& shape);
 	int m_currChar;
+	bool m_won = false;
 
+	//std::vector< std::unique_ptr <StaticObject > > m_teleport;
+	//sf::Vector2f locateTeleport(const StaticObject& teleport);
+	//void readTeleports();
 
 };
 

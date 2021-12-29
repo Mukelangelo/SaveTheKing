@@ -5,7 +5,7 @@
 	//m_dispatched = true;
 }
 */
-bool StaticObject::isDispatch()
+CollisionStatus StaticObject::getDispatch()
 {
 	return m_dispatched;
 }

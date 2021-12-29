@@ -10,4 +10,5 @@ public:
 	virtual void handleCollision(GameObject& player) override;
 
 private:
+	//bool m_tpUsed = false;
 };

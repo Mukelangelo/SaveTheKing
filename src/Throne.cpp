@@ -2,11 +2,10 @@
 
 void Throne::handleCollision(GameObject& player)
 {
-	m_dispatched = false;
-	if (typeid(player) == typeid(King))
-	{
-		m_sprite.setColor(sf::Color::Transparent);
-		m_dispatched = true;
-	}
+	m_dispatched = CollisionStatus::Good;
+	if (typeid(player) != typeid(King))
+		m_dispatched = CollisionStatus::Not_Valid;
+	else if (typeid(player) == typeid(King))
+		m_dispatched = CollisionStatus::Won;
 }
 

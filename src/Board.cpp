@@ -1,7 +1,7 @@
 #include "Board.h"
 
 Board::Board()
-	:m_rows(0), m_cols(0), m_height(0), m_width(0), m_location(sf::Vector2f()), m_character(), m_textures()
+	:m_rows(0), m_cols(0), m_height(0), m_width(0), m_location(sf::Vector2f()), m_character(), m_textures(), m_tiles()
 {}
 
 Board::Board(int width, int height, sf::Vector2f location,

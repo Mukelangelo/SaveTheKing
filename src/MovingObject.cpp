@@ -6,7 +6,7 @@ MovingObject::MovingObject(sf::Vector2f loc, const sf::Texture& texture)
 
 void MovingObject::movePlayer(sf::Time deltaTime)
 {
-	const auto speedPerSecond = 80.f;
+	const auto speedPerSecond = 120.f;
 	m_sprite.move(m_direction * speedPerSecond * deltaTime.asSeconds());
 	m_location = m_sprite.getPosition();
 }

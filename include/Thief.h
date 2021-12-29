@@ -7,9 +7,8 @@ class Thief : public MovingObject
 {
 public:
 	Thief(sf::Vector2f loc, const sf::Texture& texture);
-	//virtual bool onSpecialTile() ; // on Throne
-	bool hasKey();
-
+	bool getKey();
+	void setKey(bool status);
 	virtual void handleCollision(MovingObject& player) override;
 
 private:

@@ -1,16 +1,18 @@
 #include "Thief.h"
 
 Thief::Thief(sf::Vector2f loc, const sf::Texture& texture)
-	:MovingObject(loc, texture)
+	:MovingObject(loc, texture), m_key(false)
 {}
 
-
-/*bool Thief::onSpecialTile()
+void Thief::setKey(bool status)
 {
-	if (m_location == m_throne)
-		return true;
+	m_key = status;
 }
-*/
+
+bool Thief::getKey()
+{
+	return m_key;
+}
 
 void Thief::handleCollision(MovingObject& player)
 {

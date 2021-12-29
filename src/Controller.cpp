@@ -53,14 +53,14 @@ void Controller::run(sf::RenderWindow& window)
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
                     m_character[m_currChar]->setDirection(sf::Keyboard::Up);
 
-
-                m_character[m_currChar]->setLastLoc(m_character[m_currChar]->getLocation());
                 if (!manageCollisions(deltaTime, clock))
-                {
                     m_character[m_currChar]->setLocation(m_character[m_currChar]->getLastLoc());
-                }
+
+                if (m_won)
+                    window.close();
             }
         }
+        
     }
 }
 
@@ -80,33 +80,37 @@ bool Controller::manageCollisions(sf::Time& deltaTime, sf::Clock& clock)
     m_character[m_currChar]->setLastLoc(m_character[m_currChar]->getLocation());
     deltaTime = clock.restart();
     m_character[m_currChar]->movePlayer(deltaTime);
-    if (!locationAllowed(*m_character[m_currChar]))
-    {
-        return false;
-    }
 
+    if (!locationAllowed(*m_character[m_currChar]))
+        return false;
 
     for (auto& character : m_character)
     {
-        if (m_character[m_currChar]->checkCollision(*character))
-        {
-            //m_character[m_currChar]->handleCollision(*character);  
+        if (m_character[m_currChar]->checkCollision(*character))  
             return false;
-        }
     }
     for (auto& tile : m_tiles )
     {
         if (tile != nullptr && m_character[m_currChar]->checkCollision(*tile))
         {
             m_character[m_currChar]->handleCollision(*tile);
-            if (typeid(*tile) == typeid(Wall))
-            {
-                return false;
-            }
-            if (tile->isDispatch())
+
+            if (tile->getDispatch() == CollisionStatus::Destroy)
                 eraseObject(*tile);
-            //else
-                //return false;
+
+            else if (tile->getDispatch() == CollisionStatus::Not_Valid)
+                return false;
+
+            else if (tile->getDispatch() == CollisionStatus::Won)
+            {
+                m_won = true;
+                return true;
+            }
+            /*else if (tile->getDispatch() == CollisionStatus::Teleport)
+            {
+                m_character[m_currChar]->setLocation(locateTeleport(*tile));
+                return true;
+            }*/
         }
     }
     return true;
@@ -147,3 +151,27 @@ bool Controller::locationAllowed(MovingObject& shape)
     }
     return true;
 }
+/*
+sf::Vector2f Controller::locateTeleport(const StaticObject& teleport)
+{
+    // every teleport built in a vector, the friend of a teleport is hes neighbor in the vecotr,
+    // if the position of a teleport in the array is odd hes friend in  index -1
+    // if the index is even hes friend in index +1
+    for (int i = 0; i < m_teleport.size(); ++i)
+    {
+            if (i % 2 == 0)
+                return m_teleport[++i]->getLocation();
+            else
+                return m_teleport[--i]->getLocation();
+    }
+    return sf::Vector2f();
+}
+
+void Controller::readTeleports()
+{
+    for (auto& tile : m_tiles)
+    {
+        if (typeid(tile) == typeid(Teleport))
+            m_teleport.push_back(tile);
+    }
+}*/

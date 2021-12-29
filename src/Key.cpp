@@ -2,8 +2,12 @@
 
 void Key::handleCollision(GameObject& player)
 {
-	m_dispatched = false;
-	//m_collided = true;
+	m_dispatched = CollisionStatus::Good;
 	if (typeid(player) == typeid(Thief))
-		m_dispatched = true;
+	{
+		Thief* thiefptr = dynamic_cast<Thief*> (&player);
+		(*thiefptr).setKey(true);
+		m_dispatched = CollisionStatus::Destroy;
+	}
+		
 }
