@@ -39,12 +39,14 @@ public:
 
 private:
 	std::fstream m_file;
+	void resizeObjects();
 	// save the characters on the board
 	std::vector< std::vector<char> > m_matrix;
 	// draw and represent each character on the coard
-	//std::vector < std::vector < sf::Sprite > > m_tiles;
+	
 	// location of the board on the screen
 	sf::Vector2f m_location;
+
 	// sizes of the board
 	int m_rows, m_cols, m_height, m_width;
 

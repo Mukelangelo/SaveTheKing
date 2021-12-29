@@ -28,3 +28,8 @@ sf::Sprite GameObject::getSprite() const
 {
 	return m_sprite;
 }
+
+void GameObject::setSpriteScale(double ScaleX, double ScaleY)
+{
+	m_sprite.setScale((ScaleX / 100) , (ScaleY / 100) );
+}
