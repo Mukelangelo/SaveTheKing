@@ -11,7 +11,7 @@ bool GameObject::checkCollision(const GameObject& other)
 {
 	if (&other == this)
 		return false;
-	return m_sprite.getGlobalBounds().intersects(other.getSprite().getGlobalBounds());
+	return (m_sprite.getGlobalBounds().intersects(other.getSprite().getGlobalBounds()));
 }
 
 void GameObject::draw(sf::RenderWindow& window)

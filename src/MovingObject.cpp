@@ -8,10 +8,12 @@ void MovingObject::movePlayer(sf::Time deltaTime)
 {
 	const auto speedPerSecond = 80.f;
 	m_sprite.move(m_direction * speedPerSecond * deltaTime.asSeconds());
+	m_location = m_sprite.getPosition();
 }
 
 void MovingObject::setLocation(const sf::Vector2f& loc)
 {
+	m_sprite.setPosition(loc);
 	m_location = loc;
 }
 

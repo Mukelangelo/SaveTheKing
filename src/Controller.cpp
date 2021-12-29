@@ -12,11 +12,15 @@ Controller::Controller()
 
 void Controller::run(sf::RenderWindow& window)
 {
-    m_board = Board(WINDOW_WIDTH, WINDOW_HEIGHT, sf::Vector2f(0, 0), m_character, m_tiles, m_textures);
+    m_board = Board(WINDOW_WIDTH, WINDOW_HEIGHT - BAR_SIZE, sf::Vector2f(0, 0), m_character, m_tiles, m_textures);
     sf::Event event;
     const sf::Time timerLimit = sf::seconds(0.2f);
     sf::Clock clock;
     while (window.isOpen()) {
+
+        window.clear(sf::Color(179, 218, 255, 255));
+        m_board.draw(window);
+        window.display();
 
         while (window.pollEvent(event))
         {
@@ -51,15 +55,12 @@ void Controller::run(sf::RenderWindow& window)
 
 
                 m_character[m_currChar]->setLastLoc(m_character[m_currChar]->getLocation());
-                if(!manageCollisions(deltaTime , clock))
+                if (!manageCollisions(deltaTime, clock))
                 {
-                    //m_character[m_currChar]->setLocation(m_character[m_currChar]->getLastLoc());
-                }    
+                    m_character[m_currChar]->setLocation(m_character[m_currChar]->getLastLoc());
+                }
             }
         }
-        window.clear(sf::Color(179, 218, 255, 255));
-        m_board.draw(window);
-        window.display();
     }
 }
 
@@ -76,15 +77,14 @@ void Controller::loadTextures()
 
 bool Controller::manageCollisions(sf::Time& deltaTime, sf::Clock& clock)
 {
-    if (locationAllowed(*m_character[m_currChar]))
+    m_character[m_currChar]->setLastLoc(m_character[m_currChar]->getLocation());
+    deltaTime = clock.restart();
+    m_character[m_currChar]->movePlayer(deltaTime);
+    if (!locationAllowed(*m_character[m_currChar]))
     {
-        deltaTime = clock.restart();
-        m_character[m_currChar]->movePlayer(deltaTime);
-        std::cout << m_character[m_currChar]->getLocation().x << " " << m_character[m_currChar]->getLocation().y << "\n";
-        return true;
-    }
-    else
         return false;
+    }
+
 
     for (auto& character : m_character)
     {
@@ -101,13 +101,12 @@ bool Controller::manageCollisions(sf::Time& deltaTime, sf::Clock& clock)
             m_character[m_currChar]->handleCollision(*tile);
             if (typeid(*tile) == typeid(Wall))
             {
-                m_character[m_currChar]->setLocation(sf::Vector2f(0, 0));
-                return true;
+                return false;
             }
             if (tile->isDispatch())
                 eraseObject(*tile);
-            else
-                return false;
+            //else
+                //return false;
         }
     }
     return true;
@@ -139,13 +138,11 @@ void Controller::ChangeTile(StaticObject& staticObj)
 
 bool Controller::locationAllowed(MovingObject& shape) 
 {
-    sf::Vector2f temp = shape.getLocation();
-    int x = temp.x + 1;
-    int y = temp.y + 1;
-    if (x > WINDOW_WIDTH || x < 0) {
+    auto temp = shape.getSprite().getGlobalBounds();
+    if (temp.width + temp.left > WINDOW_WIDTH || temp.left < 0) {
         return false;
     }
-    if (y > WINDOW_HEIGHT || y < 0) {
+    if (temp.height + temp.top > WINDOW_HEIGHT - BAR_SIZE || temp.top < 0) {
         return false;
     }
     return true;
