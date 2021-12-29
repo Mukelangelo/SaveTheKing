@@ -37,15 +37,15 @@ Board::Board(int width, int height, sf::Vector2f location,
 
 void Board::buildTiles()
 {
-	auto size = float(m_height - 10) / ((m_rows > m_cols ? m_rows : m_cols) + 1);
-	int tileWidth = m_width / (m_cols + 1), tileHeight = m_height / (m_rows + 1);
+	//auto size = float(m_height - 10) / ((m_rows > m_cols ? m_rows : m_cols) + 1);
+	int tileWidth = m_width / m_cols , tileHeight = m_height / m_rows ;
 	for (int i = 0; i < m_rows; i++)
 	{
-		for (int j = 0; j < m_cols; j++)
+		for (int j = 0; j < m_cols ; j++)
 		{
 			if (m_matrix[i][j] != ' ')
 			{
-				auto locationVector = sf::Vector2f(m_location.x + (j * tileWidth) + 50, m_location.y + (i * tileHeight) + 50);
+				auto locationVector = sf::Vector2f(m_location.x + j * (tileWidth) , m_location.y + i * (tileHeight) );
 				createObject(m_matrix[i][j], locationVector, getTexture(m_matrix[i][j]));
 			}
 		}
@@ -54,17 +54,17 @@ void Board::buildTiles()
 
 void Board::resizeObjects()
 {
-	auto newHeight = m_height / (m_rows+1);
-	auto newWidth = m_width / (m_cols+1);
+	auto newHeight = m_height / m_rows;
+	auto newWidth = m_width / m_cols ;
 
 	for (auto& moveable : *m_character)
 	{
-		moveable->setSpriteScale(newHeight, newWidth);
+		moveable->setSpriteScale(newWidth,newHeight);
 	}
 
 	for (auto& unmoveable : *m_tiles)
 	{
-		unmoveable->setSpriteScale(newHeight, newWidth);
+		unmoveable->setSpriteScale(newWidth,newHeight);
 	}
 }
 
