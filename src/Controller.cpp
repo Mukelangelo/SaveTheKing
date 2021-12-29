@@ -1,5 +1,5 @@
 #include "Controller.h"
-
+#include <iostream>
 int stepCounter;
 bool key, won;
 
@@ -51,9 +51,9 @@ void Controller::run(sf::RenderWindow& window)
 
 
                 m_character[m_currChar]->setLastLoc(m_character[m_currChar]->getLocation());
-                if(!ManageCollisions(deltaTime , clock))
+                if(!manageCollisions(deltaTime , clock))
                 {
-                    m_character[m_currChar]->setLocation(m_character[m_currChar]->getLastLoc());
+                    //m_character[m_currChar]->setLocation(m_character[m_currChar]->getLastLoc());
                 }    
             }
         }
@@ -74,10 +74,17 @@ void Controller::loadTextures()
         m_textures[i].loadFromFile(objectTextures[i]);
 }
 
-bool Controller::ManageCollisions(sf::Time& deltaTime, sf::Clock& clock)
+bool Controller::manageCollisions(sf::Time& deltaTime, sf::Clock& clock)
 {
-    deltaTime = clock.restart();
-    m_character[m_currChar]->movePlayer(deltaTime);
+    if (locationAllowed(*m_character[m_currChar]))
+    {
+        deltaTime = clock.restart();
+        m_character[m_currChar]->movePlayer(deltaTime);
+        std::cout << m_character[m_currChar]->getLocation().x << " " << m_character[m_currChar]->getLocation().y << "\n";
+        return true;
+    }
+    else
+        return false;
 
     for (auto& character : m_character)
     {
@@ -92,6 +99,11 @@ bool Controller::ManageCollisions(sf::Time& deltaTime, sf::Clock& clock)
         if (tile != nullptr && m_character[m_currChar]->checkCollision(*tile))
         {
             m_character[m_currChar]->handleCollision(*tile);
+            if (typeid(*tile) == typeid(Wall))
+            {
+                m_character[m_currChar]->setLocation(sf::Vector2f(0, 0));
+                return true;
+            }
             if (tile->isDispatch())
                 eraseObject(*tile);
             else
@@ -123,4 +135,18 @@ void Controller::eraseObject(StaticObject& staticObj)
 void Controller::ChangeTile(StaticObject& staticObj)
 {
 
+}
+
+bool Controller::locationAllowed(MovingObject& shape) 
+{
+    sf::Vector2f temp = shape.getLocation();
+    int x = temp.x + 1;
+    int y = temp.y + 1;
+    if (x > WINDOW_WIDTH || x < 0) {
+        return false;
+    }
+    if (y > WINDOW_HEIGHT || y < 0) {
+        return false;
+    }
+    return true;
 }

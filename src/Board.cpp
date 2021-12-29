@@ -76,7 +76,7 @@ sf::Texture& Board::getTexture(char c)
 	case 'W': return m_textures[load_Warrior];
 	case 'T': return m_textures[load_Thief];
 	case 'X': return m_textures[load_Teleport];
-	case 'F': return m_textures[0];
+	case 'F': return m_textures[load_Key];
 	case '=': return m_textures[load_Wall];
 	case '@': return m_textures[load_Throne];
 	case '#': return m_textures[load_Gate];
