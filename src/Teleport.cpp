@@ -1,6 +1,6 @@
-#include "Fire.h"
+#include "Teleport.h"
 
-void Fire::handleCollision(GameObject& player)
+void Teleport::handleCollision(GameObject& player)
 {
 	m_dispatched = false;
 	if (typeid(player) == typeid(Mage))

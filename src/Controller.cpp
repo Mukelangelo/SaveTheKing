@@ -48,10 +48,12 @@ void Controller::run(sf::RenderWindow& window)
 
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
                     m_character[m_currChar]->setDirection(sf::Keyboard::Up);
-                deltaTime = clock.restart();
-                if(ManageCollisions(deltaTime))
+
+
+                m_character[m_currChar]->setLastLoc(m_character[m_currChar]->getLocation());
+                if(!ManageCollisions(deltaTime , clock))
                 {
-                    
+                    m_character[m_currChar]->setLocation(m_character[m_currChar]->getLastLoc());
                 }    
             }
         }
@@ -72,16 +74,17 @@ void Controller::loadTextures()
         m_textures[i].loadFromFile(objectTextures[i]);
 }
 
-bool Controller::ManageCollisions(sf::Time deltaTime)
+bool Controller::ManageCollisions(sf::Time& deltaTime, sf::Clock& clock)
 {
-    auto CurrLocation = m_character[m_currChar]->getLocation();
+    deltaTime = clock.restart();
     m_character[m_currChar]->movePlayer(deltaTime);
 
     for (auto& character : m_character)
     {
         if (m_character[m_currChar]->checkCollision(*character))
         {
-            m_character[m_currChar]->handleCollision(*character);       
+            //m_character[m_currChar]->handleCollision(*character);  
+            return false;
         }
     }
     for (auto& tile : m_tiles )
@@ -92,7 +95,7 @@ bool Controller::ManageCollisions(sf::Time deltaTime)
             if (tile->isDispatch())
                 eraseObject(*tile);
             else
-                m_character[m_currChar]->setLocation(CurrLocation);
+                return false;
         }
     }
     return true;
@@ -111,8 +114,6 @@ void Controller::eraseObject(StaticObject& staticObj)
     {
         if ((*staticPtr)->getLocation() == staticObj.getLocation())
         {
-            //auto newStatic = std::make_unique<StaticObject>(staticObj.getLocation(), sf::Texture());
-            //staticPtr->swap(newStatic);
             m_tiles.erase(staticPtr);
             break;
         }

@@ -28,7 +28,7 @@ private:
 	Board m_board;
 	void loadTextures();
 	void switchCharacter();
-	bool ManageCollisions(sf::Time);
+	bool ManageCollisions(sf::Time& , sf::Clock&);
 	int m_currChar;
 
 

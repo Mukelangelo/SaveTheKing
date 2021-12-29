@@ -55,10 +55,16 @@ void Board::draw(sf::RenderWindow& window)
 {
 	m_bg.setTexture(m_texture);
 	window.draw(m_bg);
+
+	// print the characters
 	for (int i = 0; i < m_character[0].size(); i++)
-		m_character[0][i]->draw(window);
+		if (m_character[0][i] != nullptr)
+			m_character[0][i]->draw(window);
+
+	// print the tiles
 	for (int j = 0; j < m_tiles[0].size(); j++)
-		m_tiles[0][j]->draw(window);
+		if(m_tiles[0][j] != nullptr)
+			m_tiles[0][j]->draw(window);
 }
 
 sf::Texture& Board::getTexture(char c)
@@ -114,12 +120,14 @@ void Board::createObject(char c, const sf::Vector2f& vect, const sf::Texture& te
 		m_character->push_back(std::move(movable));
 		return;
 	}
-
-	std::unique_ptr<StaticObject> unmovable = createUnmovableObject(c, vect, texture);
-	if (unmovable)
+	else
 	{
-		m_tiles->push_back(std::move(unmovable));
-		return;
+		std::unique_ptr<StaticObject> unmovable = createUnmovableObject(c, vect, texture);
+		if (unmovable)
+		{
+			m_tiles->push_back(std::move(unmovable));
+			return;
+		}
+		exit(EXIT_FAILURE);
 	}
-	exit(EXIT_FAILURE);
 }

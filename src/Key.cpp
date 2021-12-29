@@ -1,12 +1,9 @@
-#include "Gate.h"
+#include "Key.h"
 
-void Gate::handleCollision(GameObject& player)
+void Key::handleCollision(GameObject& player)
 {
 	m_dispatched = false;
 	//m_collided = true;
 	if (typeid(player) == typeid(Thief))
-	{
 		m_dispatched = true;
-	}
-
 }
