@@ -94,17 +94,22 @@ bool Controller::manageCollisions(sf::Time& deltaTime, sf::Clock& clock)
         if (tile != nullptr && m_character[m_currChar]->checkCollision(*tile))
         {
             m_character[m_currChar]->handleCollision(*tile);
-
-            if (tile->getDispatch() == CollisionStatus::Destroy)
-                eraseObject(*tile);
-
-            else if (tile->getDispatch() == CollisionStatus::Not_Valid)
+            switch (tile->getDispatch())
+            {                
+            case CollisionStatus::Not_Valid:
                 return false;
 
-            else if (tile->getDispatch() == CollisionStatus::Won)
-            {
+            case CollisionStatus::Won:
                 m_won = true;
                 return true;
+
+            case CollisionStatus::Ogre:
+                m_tiles.push_back(std::make_unique<Key>(tile->getLocation(), m_textures[load_Key]));
+                [[fallthrough]];
+            case CollisionStatus::Destroy:
+                eraseObject(*tile);
+                break;
+
             }
             /*else if (tile->getDispatch() == CollisionStatus::Teleport)
             {

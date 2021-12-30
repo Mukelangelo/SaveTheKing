@@ -7,5 +7,5 @@ void Ogre::handleCollision(GameObject& player)
 	if (typeid(player) != typeid(Warrior))
 		m_dispatched = CollisionStatus::Not_Valid;
 	else if (typeid(player) == typeid(Warrior))
-		m_dispatched = CollisionStatus::Destroy;
+		m_dispatched = CollisionStatus::Ogre;
 }

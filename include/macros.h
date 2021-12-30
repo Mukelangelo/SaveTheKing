@@ -22,7 +22,7 @@ enum LoadTextures
 
 enum class CollisionStatus
 {
-	Destroy, Good, Not_Valid, Won, Teleport
+	Destroy, Good, Not_Valid, Won, Teleport, Ogre
 };
 
 const std::string objectTextures[NUM_OF_PICS] = { "king.png", "mage.png", "warrior.png", "thief.png",
