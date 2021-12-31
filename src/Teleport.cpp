@@ -3,10 +3,9 @@
 void Teleport::handleCollision(GameObject& player)
 {
 	m_dispatched = CollisionStatus::Good;
-	if (typeid(player) == typeid(Mage) /* || m_tpUsed*/)
+	if (typeid(player) != typeid(Mage))
 	{
-		m_dispatched = CollisionStatus::Not_Valid;
+		m_dispatched = CollisionStatus::Teleport;
 		return;
 	}
-	//m_tpUsed = true;
 }

@@ -13,6 +13,7 @@ Controller::Controller()
 void Controller::run(sf::RenderWindow& window)
 {
     m_board = Board(WINDOW_WIDTH, WINDOW_HEIGHT - BAR_SIZE, sf::Vector2f(0, 0), m_character, m_tiles, m_textures);
+    readTeleports();
     sf::Event event;
     const sf::Time timerLimit = sf::seconds(0.2f);
     sf::Clock clock;
@@ -109,13 +110,11 @@ bool Controller::manageCollisions(sf::Time& deltaTime, sf::Clock& clock)
             case CollisionStatus::Destroy:
                 eraseObject(*tile);
                 break;
-
-            }
-            /*else if (tile->getDispatch() == CollisionStatus::Teleport)
-            {
+            
+            case CollisionStatus::Teleport:
                 m_character[m_currChar]->setLocation(locateTeleport(*tile));
                 return true;
-            }*/
+            }
         }
     }
     return true;
@@ -140,11 +139,6 @@ void Controller::eraseObject(StaticObject& staticObj)
     }
 }
 
-void Controller::ChangeTile(StaticObject& staticObj)
-{
-
-}
-
 bool Controller::locationAllowed(MovingObject& shape) 
 {
     auto temp = shape.getSprite().getGlobalBounds();
@@ -156,7 +150,7 @@ bool Controller::locationAllowed(MovingObject& shape)
     }
     return true;
 }
-/*
+
 sf::Vector2f Controller::locateTeleport(const StaticObject& teleport)
 {
     // every teleport built in a vector, the friend of a teleport is hes neighbor in the vecotr,
@@ -164,10 +158,13 @@ sf::Vector2f Controller::locateTeleport(const StaticObject& teleport)
     // if the index is even hes friend in index +1
     for (int i = 0; i < m_teleport.size(); ++i)
     {
+        if (teleport.getLocation() == m_teleport[i])
+        {
             if (i % 2 == 0)
-                return m_teleport[++i]->getLocation();
+                return m_teleport[++i];
             else
-                return m_teleport[--i]->getLocation();
+                return m_teleport[--i];
+        }
     }
     return sf::Vector2f();
 }
@@ -176,7 +173,7 @@ void Controller::readTeleports()
 {
     for (auto& tile : m_tiles)
     {
-        if (typeid(tile) == typeid(Teleport))
-            m_teleport.push_back(tile);
+        if (typeid(*tile) == typeid(Teleport))
+            m_teleport.push_back(sf::Vector2f(tile->getLocation()));
     }
-}*/
+}

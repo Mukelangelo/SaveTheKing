@@ -20,7 +20,6 @@ public:
 
 private:
 	void eraseObject(StaticObject& staticObj);
-	void ChangeTile(StaticObject& staticObj);
 	sf::Texture m_textures[NUM_OF_PICS];
 	std::vector< std::unique_ptr <MovingObject > > m_character;
 	std::vector< std::unique_ptr <StaticObject > > m_tiles;
@@ -33,9 +32,9 @@ private:
 	int m_currChar;
 	bool m_won = false;
 
-	//std::vector< std::unique_ptr <StaticObject > > m_teleport;
-	//sf::Vector2f locateTeleport(const StaticObject& teleport);
-	//void readTeleports();
+	std::vector< sf::Vector2f > m_teleport;
+	sf::Vector2f locateTeleport(const StaticObject& teleport);
+	void readTeleports();
 
 };
 
