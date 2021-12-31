@@ -18,9 +18,13 @@ public:
 	sf::Vector2f getDirection();
 	void setLastLoc(sf::Vector2f loc);
 	sf::Vector2f getLastLoc();
+
+	void teleported();
+	bool isTp();
 	~MovingObject() = default;
 
 protected:
 	sf::Vector2f m_direction;
 	sf::Vector2f m_lastLoc;
+	bool m_onTP = false;
 };

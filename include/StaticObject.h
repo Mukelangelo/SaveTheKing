@@ -8,6 +8,7 @@ public:
 	using GameObject::GameObject;
 	virtual void handleCollision(GameObject& player) =0;
 	CollisionStatus getDispatch();
+	~StaticObject() = default;
 	
 protected:
 	CollisionStatus m_dispatched ;

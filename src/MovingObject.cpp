@@ -52,3 +52,13 @@ void MovingObject::handleCollision(GameObject& gameObject)
 		return ; // can move
 	gameObject.handleCollision(*this);
 }
+
+void MovingObject::teleported()
+{
+	m_onTP = !m_onTP;
+}
+
+bool MovingObject::isTp()
+{
+	return m_onTP;
+}
