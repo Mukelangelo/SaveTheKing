@@ -7,7 +7,6 @@ Controller::Controller()
     :m_board(), m_currChar(0)
 {
     loadTextures();
-   // m_board = Board(WINDOW_WIDTH, WINDOW_HEIGHT, sf::Vector2f(0, 0), m_character, m_textures);
 }
 
 void Controller::run(sf::RenderWindow& window)
@@ -31,7 +30,6 @@ void Controller::run(sf::RenderWindow& window)
             if ((event.type == sf::Event::Closed) ||
                 ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape)))
             {
-                //return
                 window.close();
                 break;
             }
@@ -40,7 +38,11 @@ void Controller::run(sf::RenderWindow& window)
             if (event.type == sf::Event::KeyPressed)
             {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
+                {
                     switchCharacter();
+                    if(typeid(*m_character[m_currChar]) == typeid(Gnome))
+                        switchCharacter();
+                }   
 
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
                     m_character[m_currChar]->setDirection(sf::Keyboard::Right);
@@ -67,7 +69,7 @@ void Controller::run(sf::RenderWindow& window)
 
 void Controller::switchCharacter()
 {
-    m_currChar = ++m_currChar % PLAYABLE;
+    m_currChar = ++m_currChar % (PLAYABLE + 1);
 }
 
 void Controller::loadTextures()

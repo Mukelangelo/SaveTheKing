@@ -1,11 +1,15 @@
 #pragma once
 
-#include "MovingObject.cpp"
+#include "MovingObject.h"
 
-class Gnome : MovingObject
+
+class Gnome : public MovingObject
 {
 public:
-	using MovingObject::MovingObject;
+	Gnome(sf::Vector2f loc, const sf::Texture& texture);
+	//virtual bool onSpecialTile() ; // on Throne
+
+	virtual void handleCollision(MovingObject& player) override;
 
 private:
 };

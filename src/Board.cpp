@@ -99,6 +99,7 @@ sf::Texture& Board::getTexture(char c)
 	case '#': return m_textures[load_Gate];
 	case '!': return m_textures[load_Orge];
 	case '*': return m_textures[load_Fire];
+	case '^': return m_textures[load_Gnome];
 	}
 }
 
@@ -110,6 +111,7 @@ static std::unique_ptr<MovingObject> createMovableObject(char c, const sf::Vecto
 	case 'M': return std::make_unique<Mage>(vect, texture);
 	case 'W': return std::make_unique<Warrior>(vect, texture);
 	case 'T': return std::make_unique<Thief>(vect, texture);
+	case '^': return std::make_unique<Gnome>(vect, texture);
 	}
 	return nullptr;
 }
