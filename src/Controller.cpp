@@ -67,8 +67,10 @@ void Controller::run(sf::RenderWindow& window)
                 }
                 */
 
-                if (!manageCollisions(m_currChar , deltaTime, clock))
+                if (!manageCollisions(m_currChar, deltaTime, clock))
+                {
                     m_character[m_currChar]->setLocation(m_character[m_currChar]->getLastLoc());
+                }
 
                 if (m_won)
                     window.close();
@@ -127,7 +129,7 @@ bool Controller::manageCollisions(int currChar , sf::Time& deltaTime, sf::Clock&
 
             case CollisionStatus::Won:
                 m_won = true;
-                return true;
+                break;
 
             case CollisionStatus::Ogre:
                 m_tiles.push_back(std::make_unique<Key>(tile->getLocation(), m_textures[load_Key]));
@@ -139,9 +141,14 @@ bool Controller::manageCollisions(int currChar , sf::Time& deltaTime, sf::Clock&
             case CollisionStatus::Teleport:
                 m_character[currChar]->setLocation(locateTeleport(*tile));
                 return true;
+
+            case CollisionStatus::OnTeleport:
+                return true;
             }
         }
     }
+    if(m_character[currChar]->isTp())
+        m_character[currChar]->teleported();
     return true;
 }
 
@@ -167,12 +174,10 @@ void Controller::eraseObject(StaticObject& staticObj)
 bool Controller::locationAllowed(MovingObject& shape) 
 {
     auto temp = shape.getSprite().getGlobalBounds();
-    if (temp.width + temp.left > WINDOW_WIDTH || temp.left < 0) {
+    if (temp.width + temp.left > WINDOW_WIDTH || temp.left < 0 ||
+        temp.height + temp.top > WINDOW_HEIGHT - BAR_SIZE || temp.top < 0)
         return false;
-    }
-    if (temp.height + temp.top > WINDOW_HEIGHT - BAR_SIZE || temp.top < 0) {
-        return false;
-    }
+
     return true;
 }
 
