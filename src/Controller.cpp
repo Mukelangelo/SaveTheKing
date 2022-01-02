@@ -35,6 +35,7 @@ void Controller::run(sf::RenderWindow& window)
             }
 
             sf::Time deltaTime;
+            
             if (event.type == sf::Event::KeyPressed)
             {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
@@ -55,8 +56,18 @@ void Controller::run(sf::RenderWindow& window)
 
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
                     m_character[m_currChar]->setDirection(sf::Keyboard::Up);
+               
+                /*
+                int gnome = findGnome();
+                m_character[gnome]->setDirection(sf::Keyboard::Up);
 
-                if (!manageCollisions(deltaTime, clock))
+                if (!manageCollisions(gnome, deltaTime, clock))
+                {
+                    m_character[gnome]->setLocation(m_character[gnome]->getLastLoc());
+                }
+                */
+
+                if (!manageCollisions(m_currChar , deltaTime, clock))
                     m_character[m_currChar]->setLocation(m_character[m_currChar]->getLastLoc());
 
                 if (m_won)
@@ -78,25 +89,37 @@ void Controller::loadTextures()
         m_textures[i].loadFromFile(objectTextures[i]);
 }
 
-bool Controller::manageCollisions(sf::Time& deltaTime, sf::Clock& clock)
+int Controller::findGnome()
 {
-    m_character[m_currChar]->setLastLoc(m_character[m_currChar]->getLocation());
-    deltaTime = clock.restart();
-    m_character[m_currChar]->movePlayer(deltaTime);
+    for (int i = 0; i < m_character.size(); i++)
+    {
+        if (typeid(*m_character[i]) == typeid(Gnome))
+            return i;
+    }  
+}
 
-    if (!locationAllowed(*m_character[m_currChar]))
+bool Controller::manageCollisions(int currChar , sf::Time& deltaTime, sf::Clock& clock)
+{
+    
+    m_character[currChar]->setLastLoc(m_character[currChar]->getLocation());
+    deltaTime = clock.restart();
+    m_character[currChar]->movePlayer(deltaTime);
+
+
+    if (!locationAllowed(*m_character[currChar]))
         return false;
 
     for (auto& character : m_character)
     {
-        if (m_character[m_currChar]->checkCollision(*character))  
+        if (m_character[currChar]->checkCollision(*character))  
             return false;
     }
+
     for (auto& tile : m_tiles )
     {
-        if (tile != nullptr && m_character[m_currChar]->checkCollision(*tile))
+        if (tile != nullptr && m_character[currChar]->checkCollision(*tile))
         {
-            m_character[m_currChar]->handleCollision(*tile);
+            m_character[currChar]->handleCollision(*tile);
             switch (tile->getDispatch())
             {                
             case CollisionStatus::Not_Valid:
@@ -114,7 +137,7 @@ bool Controller::manageCollisions(sf::Time& deltaTime, sf::Clock& clock)
                 break;
             
             case CollisionStatus::Teleport:
-                m_character[m_currChar]->setLocation(locateTeleport(*tile));
+                m_character[currChar]->setLocation(locateTeleport(*tile));
                 return true;
             }
         }

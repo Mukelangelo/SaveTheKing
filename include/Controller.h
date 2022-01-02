@@ -27,10 +27,11 @@ private:
 	Board m_board;
 	void loadTextures();
 	void switchCharacter();
-	bool manageCollisions(sf::Time& , sf::Clock&);
+	bool manageCollisions(int charIndex , sf::Time& , sf::Clock&);
 	bool locationAllowed(MovingObject& shape);
 	int m_currChar;
 	bool m_won = false;
+	int findGnome();
 
 	std::vector< sf::Vector2f > m_teleport;
 	sf::Vector2f locateTeleport(const StaticObject& teleport);

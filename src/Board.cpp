@@ -45,7 +45,7 @@ void Board::buildTiles()
 		{
 			if (m_matrix[i][j] != ' ')
 			{
-				auto locationVector = sf::Vector2f(m_location.x + j * (tileWidth) + 5 , m_location.y + i * (tileHeight) + 5 );
+				auto locationVector = sf::Vector2f(m_location.x + j * (tileWidth) +3  , m_location.y + i * (tileHeight) +3 );
 				createObject(m_matrix[i][j], locationVector, getTexture(m_matrix[i][j]));
 			}
 		}
@@ -59,7 +59,7 @@ void Board::resizeObjects()
 
 	for (auto& moveable : *m_character)
 	{
-		moveable->setSpriteScale(newWidth - 5.0, newHeight - 5.0);
+		moveable->setSpriteScale(newWidth - 8.0, newHeight - 8.0);
 	}
 
 	for (auto& unmoveable : *m_tiles)

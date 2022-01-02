@@ -9,7 +9,7 @@ public:
 
 	void movePlayer(sf::Time deltaTime);
 	void setLocation(const sf::Vector2f& loc);
-	void setDirection(sf::Keyboard::Key key);
+	virtual void setDirection(sf::Keyboard::Key key);
 	
 	virtual void handleCollision(MovingObject& player) = 0;
 	virtual void handleCollision(GameObject& gameObject) ;
@@ -27,4 +27,5 @@ protected:
 	sf::Vector2f m_direction;
 	sf::Vector2f m_lastLoc;
 	bool m_onTP = false;
+	float m_speedPerSecond;
 };

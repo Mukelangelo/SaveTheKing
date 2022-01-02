@@ -2,12 +2,13 @@
 
 MovingObject::MovingObject(sf::Vector2f loc, const sf::Texture& texture)
 	: GameObject(loc, texture), m_lastLoc(loc)
-{}
+{
+	m_speedPerSecond = 130.f;
+}
 
 void MovingObject::movePlayer(sf::Time deltaTime)
 {
-	const auto speedPerSecond = 130.f;
-	m_sprite.move(m_direction * speedPerSecond * deltaTime.asSeconds());
+	m_sprite.move(m_direction * m_speedPerSecond * deltaTime.asSeconds());
 	m_location = m_sprite.getPosition();
 }
 
