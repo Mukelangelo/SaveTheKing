@@ -10,18 +10,6 @@ Controller::Controller()
     
 }
 
-void Controller::setHalo()
-{
-    m_playerHalo.setOutlineColor(sf::Color((10, 20, 255, 100)));
-    m_playerHalo.setOutlineThickness(4);
-    m_playerHalo.setFillColor(sf::Color::Transparent);
-    int sizeY, sizeX;
-    sizeX = m_character[m_currChar]->getSprite().getScale().x * 100;
-    sizeY = m_character[m_currChar]->getSprite().getScale().y * 100;
-    m_playerHalo.setSize(sf::Vector2f(sizeX, sizeY));
-    m_playerHalo.setPosition(m_character[m_currChar]->getLocation());
-}
-
 void Controller::run(sf::RenderWindow& window)
 {
     m_board = Board(WINDOW_WIDTH, WINDOW_HEIGHT - BAR_SIZE, sf::Vector2f(0, 0), m_character, m_tiles, m_textures);
@@ -80,6 +68,7 @@ void Controller::run(sf::RenderWindow& window)
                     window.close();
             }
         } 
+
         for (int i = 0; i < m_gnomes.size(); i++)
         {
             if (!manageCollisions(m_gnomes[i], deltaTimeGnomes, m_clocks[i]))
@@ -166,12 +155,6 @@ bool Controller::manageCollisions(int currChar , sf::Time& deltaTime, sf::Clock&
     return true;
 }
 
-Controller::~Controller()
-{
-    for (int i = 0; i < m_character.size(); i++)
-        m_character[i].release();
-}
-
 void Controller::eraseObject(StaticObject& staticObj)
 {
     auto staticPtr = m_tiles.begin();
@@ -220,4 +203,22 @@ void Controller::readTeleports()
         if (typeid(*tile) == typeid(Teleport))
             m_teleport.push_back(sf::Vector2f(tile->getLocation()));
     }
+}
+
+void Controller::setHalo()
+{
+    m_playerHalo.setOutlineColor(sf::Color((10, 20, 255, 100)));
+    m_playerHalo.setOutlineThickness(4);
+    m_playerHalo.setFillColor(sf::Color::Transparent);
+    int sizeY, sizeX;
+    sizeX = m_character[m_currChar]->getSprite().getScale().x * 100;
+    sizeY = m_character[m_currChar]->getSprite().getScale().y * 100;
+    m_playerHalo.setSize(sf::Vector2f(sizeX, sizeY));
+    m_playerHalo.setPosition(m_character[m_currChar]->getLocation());
+}
+
+Controller::~Controller()
+{
+    for (int i = 0; i < m_character.size(); i++)
+        m_character[i].release();
 }
