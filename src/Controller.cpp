@@ -7,6 +7,18 @@ Controller::Controller()
     :m_board(), m_currChar(0)
 {
     loadTextures();
+    
+}
+
+void Controller::setHalo()
+{
+    m_playerHalo.setOutlineColor(sf::Color::Blue);
+    m_playerHalo.setOutlineThickness(4);
+    m_playerHalo.setFillColor(sf::Color::Transparent);
+    int sizeY, sizeX;
+    sizeX = m_character[m_currChar]->getSprite().getScale().x * 100;
+    sizeY = m_character[m_currChar]->getSprite().getScale().y * 100;
+    m_playerHalo.setSize(sf::Vector2f(sizeX, sizeY));
 }
 
 void Controller::run(sf::RenderWindow& window)
@@ -14,15 +26,18 @@ void Controller::run(sf::RenderWindow& window)
     m_board = Board(WINDOW_WIDTH, WINDOW_HEIGHT - BAR_SIZE, sf::Vector2f(0, 0), m_character, m_tiles, m_textures);
     readTeleports();
     findGnome();
-
     sf::Event event;
     const sf::Time timerLimit = sf::seconds(0.2f);
     sf::Clock clock, clockGnome;
     sf::Time deltaTimePlayer, deltaTimeGnomes;
+
     while (window.isOpen()) {
 
+        setHalo();
+        m_playerHalo.setPosition(m_character[m_currChar]->getLocation());
         window.clear(sf::Color(179, 218, 255, 255));
         m_board.draw(window);
+        window.draw(m_playerHalo);
         window.display();
 
         while (window.pollEvent(event))
@@ -81,7 +96,7 @@ void Controller::run(sf::RenderWindow& window)
 
 void Controller::switchCharacter()
 {
-    m_currChar = ++m_currChar % (PLAYABLE + m_gnomes.size());
+    m_currChar = ++m_currChar % (PLAYABLE + m_gnomes.size()); 
 }
 
 void Controller::loadTextures()

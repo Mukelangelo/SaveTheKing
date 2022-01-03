@@ -19,6 +19,7 @@ public:
 	~Controller();
 
 private:
+	void setHalo();
 	void eraseObject(StaticObject& staticObj);
 	sf::Texture m_textures[NUM_OF_PICS];
 	std::vector< std::unique_ptr <MovingObject > > m_character;
@@ -38,5 +39,6 @@ private:
 	void readTeleports();
 
 	std::vector< int > m_gnomes;
+	sf::RectangleShape m_playerHalo;
 };
 
