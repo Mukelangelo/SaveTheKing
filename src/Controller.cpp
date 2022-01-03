@@ -17,7 +17,7 @@ void Controller::run(sf::RenderWindow& window)
 
     sf::Event event;
     const sf::Time timerLimit = sf::seconds(0.2f);
-    sf::Clock clock, clockGnome;
+    sf::Clock clock;
     sf::Time deltaTimePlayer, deltaTimeGnomes;
     while (window.isOpen()) {
 
@@ -29,9 +29,6 @@ void Controller::run(sf::RenderWindow& window)
         {
             if (clock.getElapsedTime() > timerLimit)
                 clock.restart();
-            
-            if (clockGnome.getElapsedTime() > timerLimit)
-                clockGnome.restart();
 
             if ((event.type == sf::Event::Closed) ||
                 ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape)))
@@ -70,7 +67,7 @@ void Controller::run(sf::RenderWindow& window)
         } 
         for (int i = 0; i < m_gnomes.size(); i++)
         {
-            if (!manageCollisions(m_gnomes[i], deltaTimeGnomes, clockGnome))
+            if (!manageCollisions(m_gnomes[i], deltaTimeGnomes, m_clocks[i]))
             {
                 m_character[m_gnomes[i]]->setLocation(m_character[m_gnomes[i]]->getLastLoc());
                 m_character[m_gnomes[i]]->setDirection(sf::Keyboard::Up);
@@ -97,6 +94,7 @@ void Controller::findGnome()
         if (typeid(*m_character[i]) == typeid(Gnome))
         {
             m_gnomes.push_back(i);
+            m_clocks.push_back(sf::Clock());
             m_character[i]->setDirection(sf::Keyboard::Up);
         }
     }  
