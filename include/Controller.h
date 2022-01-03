@@ -39,6 +39,7 @@ private:
 	void readTeleports();
 
 	std::vector< int > m_gnomes;
+	std::vector< sf::Clock > m_clocks;
 	sf::RectangleShape m_playerHalo;
 };
 
