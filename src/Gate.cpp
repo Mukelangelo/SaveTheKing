@@ -12,7 +12,7 @@ void Gate::handleCollision(GameObject& player)
 			m_dispatched = CollisionStatus::Not_Valid;
 		else
 		{
-			(*thiefptr).setKey(false);
+			thiefptr->setKey(false);
 			m_dispatched = CollisionStatus::Destroy;
 		}	
 	}

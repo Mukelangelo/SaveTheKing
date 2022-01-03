@@ -10,6 +10,7 @@ void Key::handleCollision(GameObject& player)
 		{
 			thiefptr->setKey(true);
 			m_dispatched = CollisionStatus::Destroy;
+			//thiefptr->se
 		}
 	}
 		
