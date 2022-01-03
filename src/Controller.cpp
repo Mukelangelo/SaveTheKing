@@ -6,8 +6,7 @@ bool key, won;
 Controller::Controller()
     :m_board(), m_currChar(0)
 {
-    loadTextures();
-    
+    loadTextures();    
 }
 
 void Controller::run(sf::RenderWindow& window)
