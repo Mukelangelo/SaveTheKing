@@ -34,7 +34,7 @@ void GameObject::setSpriteScale(double ScaleX, double ScaleY)
 	m_sprite.setScale((ScaleX / 100) , (ScaleY / 100) );
 }
 
-void GameObject::setSpriteTexture(sf::Texture) const
+void GameObject::setSpriteTexture(sf::Texture new_texture) 
 {
-	m_sprite
+	m_sprite.setTexture(new_texture);
 }

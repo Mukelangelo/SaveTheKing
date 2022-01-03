@@ -10,7 +10,9 @@ void Key::handleCollision(GameObject& player)
 		{
 			thiefptr->setKey(true);
 			m_dispatched = CollisionStatus::Destroy;
-			//thiefptr->se
+			sf::Texture img;
+			img.loadFromFile("thiefKey.png");
+			//thiefptr->setSpriteTexture(img);
 		}
 	}
 		

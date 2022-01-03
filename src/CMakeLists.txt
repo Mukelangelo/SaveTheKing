@@ -17,4 +17,5 @@
 											  "Wall.cpp"
 											  "Key.cpp"
 											  "Teleport.cpp"
-											  "Gnome.cpp")
+											  "Gnome.cpp"
+											  "Caption.cpp")

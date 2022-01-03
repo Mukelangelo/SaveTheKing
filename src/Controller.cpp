@@ -4,8 +4,9 @@ int stepCounter;
 bool key, won;
 
 Controller::Controller()
-    :m_board(), m_currChar(0)
-{
+    :m_board(), m_currChar(0) , m_caption()
+{   
+    m_font.loadFromFile("C:/Windows/Fonts/Arial.ttf");
     loadTextures();    
 }
 
@@ -19,13 +20,22 @@ void Controller::run(sf::RenderWindow& window)
     sf::Clock clock;
     sf::Time deltaTimePlayer, deltaTimeGnomes;
 
-    while (window.isOpen()) {
+    m_caption.updateLevel();
+    m_caption.updateTime(-5);
+    while (window.isOpen()) 
+    {
 
         setHalo();  
-        window.clear(sf::Color(179, 218, 255, 255));
+        window.clear();
         m_board.draw(window);
         window.draw(m_playerHalo);
+        m_caption.draw(window);
         window.display();
+
+        if (m_caption.getTime() <= 0)
+        {
+            window.close();
+        }
 
         while (window.pollEvent(event))
         {
@@ -63,7 +73,7 @@ void Controller::run(sf::RenderWindow& window)
                 if (!manageCollisions(m_currChar, deltaTimePlayer, clock))
                     m_character[m_currChar]->setLocation(m_character[m_currChar]->getLastLoc());
 
-                if (m_won)
+                if (m_won || m_caption.getTime() == 0)
                     window.close();
             }
         } 

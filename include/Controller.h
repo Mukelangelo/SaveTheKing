@@ -3,7 +3,7 @@
 #include "Board.h"
 #include <cmath>
 #include <ctime>
-
+#include "Caption.h"
 
 /*
 List of missions :
@@ -41,5 +41,7 @@ private:
 	std::vector< int > m_gnomes;
 	std::vector< sf::Clock > m_clocks;
 	sf::RectangleShape m_playerHalo;
+	Caption m_caption;
+	sf::Font m_font;
 };
 

@@ -11,7 +11,7 @@ public:
 	void draw(sf::RenderWindow& window);
 	sf::Vector2f getLocation() const;
 	sf::Sprite getSprite() const;
-	void setSpriteTexture(sf::Texture);
+	void setSpriteTexture(sf::Texture s) ;
 	void setSpriteScale(double ScaleX, double ScaleY);
 	~GameObject() = default;
 
