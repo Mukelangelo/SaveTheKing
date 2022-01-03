@@ -1,7 +1,8 @@
 #pragma once
 
 #include "MovingObject.h"
-#include <cstdlib>
+#include <stdlib.h> 
+#include <time.h> 
 
 class Gnome : public MovingObject
 {
@@ -13,5 +14,5 @@ public:
 	void setRandomDirection();
 
 private:
-
+	
 };

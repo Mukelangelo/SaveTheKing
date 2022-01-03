@@ -1,9 +1,11 @@
 #include "Gnome.h"
+#include <iostream>
 
 Gnome::Gnome(sf::Vector2f loc, const sf::Texture& texture)
 	:MovingObject(loc, texture)
 {
 	 //m_speedPerSecond = 170.f;
+	srand(time(NULL));
 }
 
 void Gnome::handleCollision(MovingObject& player)
@@ -12,11 +14,11 @@ void Gnome::handleCollision(MovingObject& player)
 
 }
 
-
 void Gnome::setDirection(sf::Keyboard::Key key)
 {
 	setRandomDirection();
 }
+
 void Gnome::setRandomDirection()
 {
 	int direction = rand() % 4;

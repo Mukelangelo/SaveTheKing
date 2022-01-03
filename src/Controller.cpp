@@ -13,9 +13,12 @@ void Controller::run(sf::RenderWindow& window)
 {
     m_board = Board(WINDOW_WIDTH, WINDOW_HEIGHT - BAR_SIZE, sf::Vector2f(0, 0), m_character, m_tiles, m_textures);
     readTeleports();
+    findGnome();
+
     sf::Event event;
     const sf::Time timerLimit = sf::seconds(0.2f);
-    sf::Clock clock;
+    sf::Clock clock, clockGnome;
+    sf::Time deltaTimePlayer, deltaTimeGnomes;
     while (window.isOpen()) {
 
         window.clear(sf::Color(179, 218, 255, 255));
@@ -26,6 +29,9 @@ void Controller::run(sf::RenderWindow& window)
         {
             if (clock.getElapsedTime() > timerLimit)
                 clock.restart();
+            
+            if (clockGnome.getElapsedTime() > timerLimit)
+                clockGnome.restart();
 
             if ((event.type == sf::Event::Closed) ||
                 ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape)))
@@ -33,8 +39,6 @@ void Controller::run(sf::RenderWindow& window)
                 window.close();
                 break;
             }
-
-            sf::Time deltaTime;
             
             if (event.type == sf::Event::KeyPressed)
             {
@@ -56,33 +60,28 @@ void Controller::run(sf::RenderWindow& window)
 
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
                     m_character[m_currChar]->setDirection(sf::Keyboard::Up);
-               
-                /*
-                int gnome = findGnome();
-                m_character[gnome]->setDirection(sf::Keyboard::Up);
 
-                if (!manageCollisions(gnome, deltaTime, clock))
-                {
-                    m_character[gnome]->setLocation(m_character[gnome]->getLastLoc());
-                }
-                */
-
-                if (!manageCollisions(m_currChar, deltaTime, clock))
-                {
+                if (!manageCollisions(m_currChar, deltaTimePlayer, clock))
                     m_character[m_currChar]->setLocation(m_character[m_currChar]->getLastLoc());
-                }
 
                 if (m_won)
                     window.close();
             }
+        } 
+        for (int i = 0; i < m_gnomes.size(); i++)
+        {
+            if (!manageCollisions(m_gnomes[i], deltaTimeGnomes, clockGnome))
+            {
+                m_character[m_gnomes[i]]->setLocation(m_character[m_gnomes[i]]->getLastLoc());
+                m_character[m_gnomes[i]]->setDirection(sf::Keyboard::Up);
+            } 
         }
-        
     }
 }
 
 void Controller::switchCharacter()
 {
-    m_currChar = ++m_currChar % (PLAYABLE + 1);
+    m_currChar = ++m_currChar % (PLAYABLE + m_gnomes.size());
 }
 
 void Controller::loadTextures()
@@ -91,12 +90,15 @@ void Controller::loadTextures()
         m_textures[i].loadFromFile(objectTextures[i]);
 }
 
-int Controller::findGnome()
+void Controller::findGnome()
 {
     for (int i = 0; i < m_character.size(); i++)
     {
         if (typeid(*m_character[i]) == typeid(Gnome))
-            return i;
+        {
+            m_gnomes.push_back(i);
+            m_character[i]->setDirection(sf::Keyboard::Up);
+        }
     }  
 }
 
@@ -106,7 +108,6 @@ bool Controller::manageCollisions(int currChar , sf::Time& deltaTime, sf::Clock&
     m_character[currChar]->setLastLoc(m_character[currChar]->getLocation());
     deltaTime = clock.restart();
     m_character[currChar]->movePlayer(deltaTime);
-
 
     if (!locationAllowed(*m_character[currChar]))
         return false;

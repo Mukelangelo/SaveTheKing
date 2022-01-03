@@ -31,11 +31,12 @@ private:
 	bool locationAllowed(MovingObject& shape);
 	int m_currChar;
 	bool m_won = false;
-	int findGnome();
+	void findGnome();
 
 	std::vector< sf::Vector2f > m_teleport;
 	sf::Vector2f locateTeleport(const StaticObject& teleport);
 	void readTeleports();
 
+	std::vector< int > m_gnomes;
 };
 
