@@ -12,13 +12,14 @@ Controller::Controller()
 
 void Controller::setHalo()
 {
-    m_playerHalo.setOutlineColor(sf::Color::Blue);
+    m_playerHalo.setOutlineColor(sf::Color((10, 20, 255, 100)));
     m_playerHalo.setOutlineThickness(4);
     m_playerHalo.setFillColor(sf::Color::Transparent);
     int sizeY, sizeX;
     sizeX = m_character[m_currChar]->getSprite().getScale().x * 100;
     sizeY = m_character[m_currChar]->getSprite().getScale().y * 100;
     m_playerHalo.setSize(sf::Vector2f(sizeX, sizeY));
+    m_playerHalo.setPosition(m_character[m_currChar]->getLocation());
 }
 
 void Controller::run(sf::RenderWindow& window)
@@ -33,8 +34,7 @@ void Controller::run(sf::RenderWindow& window)
 
     while (window.isOpen()) {
 
-        setHalo();
-        m_playerHalo.setPosition(m_character[m_currChar]->getLocation());
+        setHalo();  
         window.clear(sf::Color(179, 218, 255, 255));
         m_board.draw(window);
         window.draw(m_playerHalo);
