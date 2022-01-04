@@ -4,14 +4,46 @@
 Gnome::Gnome(sf::Vector2f loc, const sf::Texture& texture)
 	:MovingObject(loc, texture)
 {
-	 //m_speedPerSecond = 170.f;
+	m_speedPerSecond = 170.f;
 	srand(time(NULL));
 }
 
-void Gnome::handleCollision(MovingObject& player)
+void Gnome::handleCollision(GameObject& gameObject)
 {
-	if (&player == this) return;
+	if (&gameObject == this)
+		return;
 
+	gameObject.handleCollision(*this);
+}
+
+void Gnome::handleCollision(Wall& gameObject)
+{
+	m_location = this->getLastLoc();
+}
+
+void Gnome::handleCollision(Throne& gameObject)
+{
+	this->setLocation(this->getLastLoc());
+}
+
+void Gnome::handleCollision(Gate& gameObject)
+{
+	this->setLocation(this->getLastLoc());
+}
+
+void Gnome::handleCollision(Fire& gameObject)
+{
+	this->setLocation(this->getLastLoc());
+}
+
+void Gnome::handleCollision(Ogre& gameObject)
+{
+	this->setLocation(this->getLastLoc());
+}
+
+void Gnome::handleCollision(Teleport& gameObject)
+{
+	m_onTP = true;
 }
 
 void Gnome::setDirection(sf::Keyboard::Key key)

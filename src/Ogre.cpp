@@ -1,11 +1,12 @@
 #include "Ogre.h"
 #include "Key.h"
 
-void Ogre::handleCollision(GameObject& player)
+void Ogre::handleCollision(Warrior& gameObject)
 {
-	m_dispatched = CollisionStatus::Good;
-	if (typeid(player) != typeid(Warrior))
-		m_dispatched = CollisionStatus::Not_Valid;
-	else if (typeid(player) == typeid(Warrior))
-		m_dispatched = CollisionStatus::Ogre;
+	m_dispatched = CollisionStatus::Ogre;
 }
+
+void Ogre::handleCollision(King& gameObject) { m_dispatched = CollisionStatus::Not_Valid; }
+void Ogre::handleCollision(Thief& gameObject) { m_dispatched = CollisionStatus::Not_Valid; }
+void Ogre::handleCollision(Mage& gameObject) { m_dispatched = CollisionStatus::Not_Valid; }
+void Ogre::handleCollision(Gnome& gameObject) { m_dispatched = CollisionStatus::Not_Valid; }

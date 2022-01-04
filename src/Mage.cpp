@@ -4,15 +4,35 @@ Mage::Mage(sf::Vector2f loc, const sf::Texture& texture)
 	:MovingObject(loc, texture)
 {}
 
-void Mage::handleCollision(MovingObject& player)
+void Mage::handleCollision(GameObject& gameObject)
 {
-	if (&player == this) return;
-	
+	if (&gameObject == this)
+		return;
+
+	gameObject.handleCollision(*this);
 }
 
-/*bool Mage::onSpecialTile()
+void Mage::handleCollision(Wall& gameObject)
 {
-	if (m_location == m_throne)
-		return true;
+	this->setLocation(this->getLastLoc());
 }
-*/
+
+void Mage::handleCollision(Throne& gameObject)
+{
+	this->setLocation(this->getLastLoc());
+}
+
+void Mage::handleCollision(Gate& gameObject)
+{
+	this->setLocation(this->getLastLoc());
+}
+
+void Mage::handleCollision(Fire& gameObject){}
+
+
+void Mage::handleCollision(Ogre& gameObject)
+{
+	this->setLocation(this->getLastLoc());
+}
+
+void Mage::handleCollision(Teleport& gameObject){}

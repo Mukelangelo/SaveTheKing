@@ -1,10 +1,26 @@
 #include "Fire.h"
 
-void Fire::handleCollision(GameObject& player)
+void Fire::handleCollision(Mage& gameObject)
 {
-	m_dispatched = CollisionStatus::Good;
-	if (typeid(player) != typeid(Mage))
-		m_dispatched = CollisionStatus::Not_Valid;
-	else if (typeid(player) == typeid(Mage))
-		m_dispatched = CollisionStatus::Destroy;
+	m_dispatched = CollisionStatus::Destroy;
+}
+
+void Fire::handleCollision(King& gameObject) 
+{
+	m_dispatched = CollisionStatus::Not_Valid;
+}
+
+void Fire::handleCollision(Thief& gameObject) 
+{
+	m_dispatched = CollisionStatus::Not_Valid; 
+}
+
+void Fire::handleCollision(Warrior& gameObject) 
+{ 
+	m_dispatched = CollisionStatus::Not_Valid; 
+}
+
+void Fire::handleCollision(Gnome& gameObject) 
+{
+	m_dispatched = CollisionStatus::Not_Valid; 
 }

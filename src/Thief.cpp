@@ -14,8 +14,52 @@ bool Thief::getKey()
 	return m_key;
 }
 
-void Thief::handleCollision(MovingObject& player)
+void Thief::handleCollision(GameObject& gameObject)
 {
-	if (&player == this) return;
-	//player.handleCollision(*this);
+	if (&gameObject == this)
+		return;
+
+	gameObject.handleCollision(*this);
 }
+
+void Thief::handleCollision(Gate& gameObject)
+{
+	if (m_key) // add change sprite
+		return;
+	else
+		m_location = this->getLastLoc();
+}
+
+void Thief::handleCollision(Key& gameObject)
+{
+	if (!m_key)
+		m_key = true;
+}
+
+void Thief::handleCollision(Wall& gameObject)
+{
+	m_location = this->getLastLoc();
+}
+
+void Thief::handleCollision(Fire& gameObject)
+{
+	m_location = this->getLastLoc();
+}
+
+void Thief::handleCollision(Throne& gameObject)
+{
+	this->setLocation(this->getLastLoc());
+}
+
+void Thief::handleCollision(Ogre& gameObject)
+{
+	this->setLocation(this->getLastLoc());
+}
+
+void Thief::handleCollision(Teleport& gameObject)
+{
+	m_onTP = true;
+}
+
+
+

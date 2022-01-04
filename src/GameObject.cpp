@@ -1,5 +1,7 @@
 #include "GameObject.h"
 
+
+
 GameObject::GameObject(sf::Vector2f loc, const sf::Texture& texture)
 	: m_location(loc), m_sprite(sf::Sprite(texture))
 {

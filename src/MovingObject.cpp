@@ -33,25 +33,14 @@ void MovingObject::setDirection(sf::Keyboard::Key key)
 	}
 }
 
-sf::Vector2f MovingObject::getDirection()
-{
-	return m_direction;
-}
-
 void MovingObject::setLastLoc(sf::Vector2f loc)
 {
 	m_lastLoc = loc;
 }
+
 sf::Vector2f MovingObject::getLastLoc()
 {
 	return m_lastLoc;
-}
-
-void MovingObject::handleCollision(GameObject& gameObject)
-{
-	if (&gameObject == this) 
-		return ; // can move
-	gameObject.handleCollision(*this);
 }
 
 void MovingObject::teleported()
