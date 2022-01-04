@@ -37,6 +37,7 @@ private:
 	std::vector< sf::Vector2f > m_teleport;
 	sf::Vector2f locateTeleport(const StaticObject& teleport);
 	void readTeleports();
+	void clearLastLevel();
 
 	std::vector< int > m_gnomes;
 	std::vector< sf::Clock > m_clocks;

@@ -11,33 +11,18 @@ Board::Board(int width, int height, sf::Vector2f location,
 	: m_height(height), m_width(width), m_location(location), m_rows(0), m_cols(0), m_character(&vect), m_textures(textures),
 	  m_tiles(&tiles), m_texture(sf::Texture()), m_bg(sf::Sprite())
 {
-	m_file.open("Board.txt", std::ios::in);
+	m_file.open("levelList.txt", std::ios::in);
 	// check if a file exist and not empty
 	// if exist and non empty, open it, if not ask user for board size
 	if (m_file)
-	{
-		std::string line;
-		while (std::getline(m_file, line))
-		{
-			std::vector<char> row;
-			for (char& c : line)
-				if (c != '\n')
-					row.push_back(c);
-			m_matrix.push_back(row);
-		}
-		m_cols = m_matrix[0].size();
-		m_rows = m_matrix.size();
-		buildTiles();
-		m_file.close();
-	}
+		loadNextLevel();
+
 	m_texture.loadFromFile("gamebg.png");
 	resizeObjects();
-	//m_bg.setTexture(m_texture);
 }
 
 void Board::buildTiles()
 {
-	//auto size = float(m_height - 10) / ((m_rows > m_cols ? m_rows : m_cols) + 1);
 	int tileWidth = m_width / m_cols , tileHeight = m_height / m_rows ;
 	for (int i = 0; i < m_rows; i++)
 	{
@@ -149,4 +134,34 @@ void Board::createObject(char c, const sf::Vector2f& vect, const sf::Texture& te
 		}
 		exit(EXIT_FAILURE);
 	}
+}
+
+bool Board::loadNextLevel()
+{
+	m_matrix.clear();
+
+	std::fstream levelFile;
+	std::string line;
+	if (std::getline(m_file, line))
+	{
+		levelFile.open(line, std::ios::in);
+		if (levelFile)
+		{
+			while (std::getline(levelFile, line))
+			{
+				std::vector<char> row;
+				for (char& c : line)
+					if (c != '\n')
+						row.push_back(c);
+				m_matrix.push_back(row);
+			}
+			m_cols = m_matrix[0].size();
+			m_rows = m_matrix.size();
+			buildTiles();
+			levelFile.close();
+			resizeObjects();
+			return true;
+		}
+	}
+	return false;
 }

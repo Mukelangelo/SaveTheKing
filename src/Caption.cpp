@@ -1,6 +1,6 @@
 #include "Caption.h"
 
-Caption::Caption() : m_level(0), m_stageTime(10)
+Caption::Caption() : m_level(0), m_stageTime(0)
 {
 
 	m_font.loadFromFile("C:/Windows/Fonts/Comic.ttf");
@@ -39,9 +39,9 @@ void Caption::updateTime(float time)
 
 void Caption::updateLevel()
 {
-	this->m_level++;
-	this->m_levelText.setString("Level:" + std::to_string(this->m_level));
-	this->m_Timer.restart();
+	m_level++;
+	m_levelText.setString("Level:" + std::to_string(this->m_level));
+	m_Timer.restart();
 
 }
 

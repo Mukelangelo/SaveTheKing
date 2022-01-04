@@ -11,6 +11,6 @@ public:
 	void setKey(bool status);
 	virtual void handleCollision(MovingObject& player) override;
 
-private:
-	bool m_key;
+protected:
+	//bool m_key;
 };
