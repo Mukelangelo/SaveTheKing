@@ -1,5 +1,6 @@
 #include "Controller.h"
 #include <iostream>
+
 int stepCounter;
 bool key, won;
 
@@ -16,15 +17,14 @@ void Controller::run(sf::RenderWindow& window)
     readTeleports();
     findGnome();
     sf::Event event;
-    const sf::Time timerLimit = sf::seconds(0.2f);
+    const sf::Time timerLimit = sf::seconds(0.1f);
     sf::Clock clock;
     sf::Time deltaTimePlayer, deltaTimeGnomes;
 
     m_caption.updateLevel();
-    m_caption.updateTime(-5);
+    m_caption.updateTime(200);
     while (window.isOpen()) 
     {
-
         setHalo();  
         window.clear();
         m_board.draw(window);
@@ -39,8 +39,6 @@ void Controller::run(sf::RenderWindow& window)
 
         while (window.pollEvent(event))
         {
-            if (clock.getElapsedTime() > timerLimit)
-                clock.restart();
 
             if ((event.type == sf::Event::Closed) ||
                 ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape)))
@@ -70,13 +68,18 @@ void Controller::run(sf::RenderWindow& window)
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
                     m_character[m_currChar]->setDirection(sf::Keyboard::Up);
 
-                if (!manageCollisions(m_currChar, deltaTimePlayer, clock))
-                    m_character[m_currChar]->setLocation(m_character[m_currChar]->getLastLoc());
-
-                if (m_won || m_caption.getTime() == 0)
+                if (m_won)
                     window.close();
-            }
-        } 
+            }          
+
+        }      
+        
+        //if (clock.getElapsedTime() >= timerLimit)
+        //    clock.restart();
+
+        if (!manageCollisions(m_currChar, deltaTimePlayer, clock))
+            m_character[m_currChar]->setLocation(m_character[m_currChar]->getLastLoc());
+
 
         for (int i = 0; i < m_gnomes.size(); i++)
         {

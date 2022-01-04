@@ -7,7 +7,7 @@ Button::Button(const sf::Vector2f& size, sf::String text, const sf::Vector2f& po
     : m_button(size), m_color(126, 214,223,255),
     m_font(sf::Font()), m_text(text)
 {
-    m_font.loadFromFile("C:/Windows/Fonts/Arial.ttf");
+    m_font.loadFromFile("C:/Windows/Fonts/Comic.ttf");
     m_button.setFillColor(m_color);
     auto location = sf::Vector2f(pos.x, pos.y + 10);
     m_button.setPosition(location);

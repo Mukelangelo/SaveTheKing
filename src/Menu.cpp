@@ -10,9 +10,9 @@ Menu::Menu()
     m_help_bar.setPosition(sf::Vector2f(300, 50));
     m_help_bar.setOutlineThickness(3);
     m_help_bar.setOutlineColor(sf::Color::Black);
+
     auto texture = sf::Texture();
     texture.loadFromFile("help.png");
-
     m_help_bar.setTexture(&texture);
     auto bg_texture = sf::Texture();
     bg_texture.loadFromFile("bg.png");
@@ -27,7 +27,7 @@ void Menu::run()
     {
         if(m_gameStart)
             game();
-        m_window.clear(sf::Color(179, 218, 255, 255));
+        m_window.clear();
         m_window.draw(m_bg);
         draw();
         if (m_need_help)
