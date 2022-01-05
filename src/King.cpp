@@ -39,5 +39,5 @@ void King::handleCollision(Ogre& gameObject)
 
 void King::handleCollision(Teleport& gameObject) 
 {
-	m_onTP = true;
+	//m_onTP = true;
 }

@@ -12,7 +12,9 @@ void Gate::handleCollision(Thief& gameObject)
 	{
 		thiefptr->setKey(false);
 		m_dispatched = CollisionStatus::Destroy;
-	}	
+	} 
+
+	gameObject.handleCollision(*this);
 }
 
 void Gate::handleCollision(King& gameObject) { m_dispatched = CollisionStatus::Not_Valid; }

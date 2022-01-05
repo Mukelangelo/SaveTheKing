@@ -27,7 +27,7 @@ void Thief::handleCollision(Gate& gameObject)
 	if (m_key) // add change sprite
 		return;
 	else
-		m_location = this->getLastLoc();
+		this->setLocation(this->getLastLoc());
 }
 
 void Thief::handleCollision(Key& gameObject)
@@ -38,12 +38,12 @@ void Thief::handleCollision(Key& gameObject)
 
 void Thief::handleCollision(Wall& gameObject)
 {
-	m_location = this->getLastLoc();
+	this->setLocation(this->getLastLoc());
 }
 
 void Thief::handleCollision(Fire& gameObject)
 {
-	m_location = this->getLastLoc();
+	this->setLocation(this->getLastLoc());
 }
 
 void Thief::handleCollision(Throne& gameObject)

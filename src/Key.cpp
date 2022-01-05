@@ -4,15 +4,14 @@
 void Key::handleCollision(Thief& gameObject)
 {
 	m_dispatched = CollisionStatus::Good;
-	
-	gameObject.handleCollision(*this);
 
 	Thief* thiefptr = dynamic_cast<Thief*> (&gameObject);
 	if (!thiefptr->getKey())
 	{
 		thiefptr->setKey(true);
-			m_dispatched = CollisionStatus::Destroy;
+		m_dispatched = CollisionStatus::Destroy;
 	}
+	gameObject.handleCollision(*this);
 }
 
 void Key::handleCollision(King& gameObject) { m_dispatched = CollisionStatus::Good; }
