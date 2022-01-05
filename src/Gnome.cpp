@@ -16,10 +16,12 @@ void Gnome::handleCollision(GameObject& gameObject)
 	gameObject.handleCollision(*this);
 }
 
+/*
 void Gnome::handleCollision(Wall& gameObject)
 {
 	m_location = this->getLastLoc();
 }
+
 
 void Gnome::handleCollision(Throne& gameObject)
 {
@@ -45,6 +47,7 @@ void Gnome::handleCollision(Teleport& gameObject)
 {
 	m_onTP = true;
 }
+*/
 
 void Gnome::setDirection(sf::Keyboard::Key key)
 {

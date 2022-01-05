@@ -26,5 +26,5 @@ public:
 
 	
 protected:
-	CollisionStatus m_dispatched ;
+	CollisionStatus m_dispatched = CollisionStatus::Not_Valid ;
 };

@@ -6,8 +6,8 @@ Menu::Menu()
     for (int i = 0; i < 3; i++)
         m_buttons[i] = Button(sf::Vector2f(300, 80), m_texts[i], sf::Vector2f(800, 330 + i * 150));
     m_gameStart = m_need_help = false;
-    m_help_bar = sf::RectangleShape(sf::Vector2f(1134, 735));
-    m_help_bar.setPosition(sf::Vector2f(300, 50));
+    m_help_bar = sf::RectangleShape(sf::Vector2f(1280, 720));
+    m_help_bar.setPosition(sf::Vector2f(200, 50));
     m_help_bar.setOutlineThickness(3);
     m_help_bar.setOutlineColor(sf::Color::Black);
 

@@ -12,6 +12,7 @@ void Warrior::handleCollision(GameObject& gameObject)
 	gameObject.handleCollision(*this);
 }
 
+/*
 void Warrior::handleCollision(Wall& gameObject)
 {
 	this->setLocation(this->getLastLoc());
@@ -37,3 +38,5 @@ void Warrior::handleCollision(Key& gameObject) {}
 void Warrior::handleCollision(Ogre& gameObject){}
 
 void Warrior::handleCollision(Teleport& gameObject) {}
+
+*/

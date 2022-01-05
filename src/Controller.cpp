@@ -82,19 +82,14 @@ void Controller::run(sf::RenderWindow& window)
         switch (event.type)
         {
         case sf::Event::KeyPressed:
-            if (!manageCollisions(m_currChar, deltaTimePlayer, clock))
-                m_character[m_currChar]->setLocation(m_character[m_currChar]->getLastLoc());
+            movementManger(m_currChar, deltaTimePlayer, clock);
             break;
         }
 
         for (int i = 0; i < m_gnomes.size(); i++)
-        {
-            if (!manageCollisions(m_gnomes[i], deltaTimeGnomes, m_clocks[i]))
-            {
-                m_character[m_gnomes[i]]->setLocation(m_character[m_gnomes[i]]->getLastLoc());
+            if(!movementManger(m_gnomes[i], deltaTimeGnomes, m_clocks[i]))
                 m_character[m_gnomes[i]]->setDirection(sf::Keyboard::Up);
-            } 
-        }
+        
         if (m_won)
         {
             clearLastLevel();
@@ -103,10 +98,23 @@ void Controller::run(sf::RenderWindow& window)
                window.close();
             m_won = false;
             m_caption.updateLevel();
+            m_caption.resetTime(0);
             m_caption.updateTime(200);
-        }
-            
+        }        
     }
+}
+
+bool Controller::movementManger(int currChar, sf::Time& deltaTime, sf::Clock& clock)
+{
+    m_character[currChar]->setLastLoc(m_character[currChar]->getLocation());
+    deltaTime = clock.restart();
+    m_character[currChar]->movePlayer(deltaTime);
+    if (!manageCollisions(currChar))
+    {
+        m_character[currChar]->setLocation(m_character[currChar]->getLastLoc());
+        return false;
+    }
+    return true;
 }
 
 void Controller::switchCharacter()
@@ -133,12 +141,8 @@ void Controller::findGnome()
     }  
 }
 
-bool Controller::manageCollisions(int currChar , sf::Time& deltaTime, sf::Clock& clock)
+bool Controller::manageCollisions(int currChar)
 {
-    
-    m_character[currChar]->setLastLoc(m_character[currChar]->getLocation());
-    deltaTime = clock.restart();
-    m_character[currChar]->movePlayer(deltaTime);
 
     if (!locationAllowed(*m_character[currChar]))
         return false;
@@ -180,6 +184,7 @@ bool Controller::manageCollisions(int currChar , sf::Time& deltaTime, sf::Clock&
 
             case CollisionStatus::Gift:
                 eraseObject(*tile);
+                //manageGifts(*tile);
                 break;
             }
         }
@@ -257,4 +262,26 @@ void Controller::clearLastLevel()
     m_tiles.clear();
     m_gnomes.clear();
     m_teleport.clear();
+}
+
+void Controller::manageGifts(Gift& gift)
+{
+    switch (gift.getType())
+    {
+    case GiftTypes::RemGnomes:
+        for (int i = 0; i < m_gnomes.size() ; i++)
+        {
+            //eraseObject(m_character[m_gnomes[i]]);
+        }
+        break;
+    case GiftTypes::TimeAdd:
+        m_caption.updateTime(20);
+        break;
+    case GiftTypes::TimeDec:
+        m_caption.updateTime(-20);
+        break;
+
+    default:
+        break;
+    }
 }
