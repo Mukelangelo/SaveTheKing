@@ -8,7 +8,7 @@ public:
 	using GameObject::GameObject;
 
 	CollisionStatus getDispatch();
-	~StaticObject() = default;
+	virtual ~StaticObject() = default;
 
 	virtual void handleCollision(GameObject& gameObject) override {};
 	virtual void handleCollision(Wall& gameObject) override {};

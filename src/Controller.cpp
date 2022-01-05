@@ -171,11 +171,16 @@ bool Controller::manageCollisions(int currChar , sf::Time& deltaTime, sf::Clock&
                 break;
             
             case CollisionStatus::Teleport:
-                m_character[currChar]->setLocation(locateTeleport(*tile));
+                if (!m_character[currChar]->isTp())
+                {
+                    m_character[currChar]->setLocation(locateTeleport(*tile));
+                    m_character[currChar]->teleported();
+                }
                 return true;
 
-            case CollisionStatus::OnTeleport:
-                return true;
+            case CollisionStatus::Gift:
+                eraseObject(*tile);
+                break;
             }
         }
     }
@@ -252,10 +257,4 @@ void Controller::clearLastLevel()
     m_tiles.clear();
     m_gnomes.clear();
     m_teleport.clear();
-}
-
-Controller::~Controller()
-{
-    for (int i = 0; i < m_character.size(); i++)
-       m_character[i].release();
 }

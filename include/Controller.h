@@ -16,7 +16,6 @@ public:
 	Controller();
 	// run the game
 	void run(sf::RenderWindow& window);
-	~Controller();
 
 private:
 	void setHalo();

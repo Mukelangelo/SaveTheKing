@@ -18,6 +18,7 @@
 #include "Ogre.h"
 #include "Fire.h"
 #include "Gnome.h"
+#include "Gift.h"
 
 /*
 List of missions :

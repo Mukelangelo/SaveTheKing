@@ -22,5 +22,5 @@ public:
 	
 
 protected:
-	//bool m_key;
+	bool m_key = false;
 };

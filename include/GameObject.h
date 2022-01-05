@@ -41,7 +41,7 @@ public:
 	sf::Sprite getSprite() const;
 	void setSpriteTexture(sf::Texture s) ;
 	void setSpriteScale(double ScaleX, double ScaleY);
-	~GameObject() = default;
+	virtual ~GameObject() = default;
 
 protected:
 	sf::Vector2f m_location;

@@ -14,6 +14,7 @@ configure_file ("gamebg.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("key.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("gnome.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("thiefKey.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("gift.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("SundayMorning.ttf" ${CMAKE_BINARY_DIR} COPYONLY)
 
 configure_file ("Board.txt" ${CMAKE_BINARY_DIR} COPYONLY)

@@ -30,7 +30,7 @@ public:
 
 	void teleported();
 	bool isTp();
-	~MovingObject() = default;
+	virtual ~MovingObject() = default;
 
 protected:
 	sf::Vector2f m_direction;
@@ -38,5 +38,4 @@ protected:
 	bool m_onTP = false;
 	float m_speedPerSecond;
 
-	bool m_key = false;
 };

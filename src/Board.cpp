@@ -85,6 +85,7 @@ sf::Texture& Board::getTexture(char c)
 	case '!': return m_textures[load_Orge];
 	case '*': return m_textures[load_Fire];
 	case '^': return m_textures[load_Gnome];
+	case '%': return m_textures[load_Gift];
 	}
 }
 
@@ -112,6 +113,7 @@ static std::unique_ptr<StaticObject> createUnmovableObject(char c, const sf::Vec
 	case '#': return std::make_unique<Gate>(vect, texture);
 	case '!': return std::make_unique<Ogre>(vect, texture);
 	case '*': return std::make_unique<Fire>(vect, texture);
+	case '%': return std::make_unique<Gift>(vect, texture);
 	}
 	return nullptr;
 }

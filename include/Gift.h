@@ -2,7 +2,9 @@
 
 #include "StaticObject.h"
 
-class Teleport : public StaticObject
+enum class GiftTypes{TimeAdd, RemGnomes};
+
+class Gift : public StaticObject
 {
 public:
 	using StaticObject::StaticObject;
@@ -13,5 +15,8 @@ public:
 	virtual void handleCollision(Warrior& gameObject) override;
 	virtual void handleCollision(Gnome& gameObject) override;
 
+	//GiftTypes getGift();
+
 private:
+	GiftTypes m_giftType;
 };
