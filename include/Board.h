@@ -37,6 +37,7 @@ public:
 	void draw(sf::RenderWindow& window);
 	sf::Texture& getTexture(char c);
 	void createObject(char c, const sf::Vector2f& vect, const sf::Texture& texture);
+	bool loadNextLevel();
 
 private:
 	std::fstream m_file;

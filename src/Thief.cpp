@@ -1,7 +1,7 @@
 #include "Thief.h"
 
 Thief::Thief(sf::Vector2f loc, const sf::Texture& texture)
-	:MovingObject(loc, texture), m_key(false)
+	:MovingObject(loc, texture)//, m_key(false)
 {}
 
 void Thief::setKey(bool status)

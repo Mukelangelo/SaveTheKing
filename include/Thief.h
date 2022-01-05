@@ -21,6 +21,6 @@ public:
 
 	
 
-private:
-	bool m_key;
+protected:
+	//bool m_key;
 };

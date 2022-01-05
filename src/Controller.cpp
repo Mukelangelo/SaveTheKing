@@ -8,13 +8,14 @@ Controller::Controller()
     :m_board(), m_currChar(0) , m_caption()
 {   
     m_font.loadFromFile("C:/Windows/Fonts/Arial.ttf");
-    loadTextures();    
+    loadTextures();  
+    //m_board = Board(WINDOW_WIDTH, WINDOW_HEIGHT - BAR_SIZE, sf::Vector2f(0, 0), m_character, m_tiles, m_textures);
 }
 
 void Controller::run(sf::RenderWindow& window)
 {
     m_board = Board(WINDOW_WIDTH, WINDOW_HEIGHT - BAR_SIZE, sf::Vector2f(0, 0), m_character, m_tiles, m_textures);
-    readTeleports();
+    //readTeleports();
     findGnome();
     sf::Event event;
     const sf::Time timerLimit = sf::seconds(0.1f);
@@ -25,6 +26,9 @@ void Controller::run(sf::RenderWindow& window)
     m_caption.updateTime(200);
     while (window.isOpen()) 
     {
+        if(m_teleport.size() == 0)
+            readTeleports();
+
         setHalo();  
         window.clear();
         m_board.draw(window);
@@ -34,7 +38,8 @@ void Controller::run(sf::RenderWindow& window)
 
         if (m_caption.getTime() <= 0)
         {
-            window.close();
+            window.clear();
+            return;
         }
 
         while (window.pollEvent(event))
@@ -67,19 +72,20 @@ void Controller::run(sf::RenderWindow& window)
 
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
                     m_character[m_currChar]->setDirection(sf::Keyboard::Up);
-
-                if (m_won)
-                    window.close();
             }          
 
         }      
         
-        //if (clock.getElapsedTime() >= timerLimit)
-        //    clock.restart();
+        if (clock.getElapsedTime() >= timerLimit)
+            clock.restart();
 
-        if (!manageCollisions(m_currChar, deltaTimePlayer, clock))
-            m_character[m_currChar]->setLocation(m_character[m_currChar]->getLastLoc());
-
+        switch (event.type)
+        {
+        case sf::Event::KeyPressed:
+            if (!manageCollisions(m_currChar, deltaTimePlayer, clock))
+                m_character[m_currChar]->setLocation(m_character[m_currChar]->getLastLoc());
+            break;
+        }
 
         for (int i = 0; i < m_gnomes.size(); i++)
         {
@@ -89,6 +95,17 @@ void Controller::run(sf::RenderWindow& window)
                 m_character[m_gnomes[i]]->setDirection(sf::Keyboard::Up);
             } 
         }
+        if (m_won)
+        {
+            clearLastLevel();
+            window.clear();
+            if (!m_board.loadNextLevel())
+               window.close();
+            m_won = false;
+            m_caption.updateLevel();
+            m_caption.updateTime(200);
+        }
+            
     }
 }
 
@@ -229,8 +246,16 @@ void Controller::setHalo()
     m_playerHalo.setPosition(m_character[m_currChar]->getLocation());
 }
 
+void Controller::clearLastLevel()
+{
+    m_character.clear();
+    m_tiles.clear();
+    m_gnomes.clear();
+    m_teleport.clear();
+}
+
 Controller::~Controller()
 {
     for (int i = 0; i < m_character.size(); i++)
-        m_character[i].release();
+       m_character[i].release();
 }

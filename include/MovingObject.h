@@ -37,4 +37,6 @@ protected:
 	sf::Vector2f m_lastLoc;
 	bool m_onTP = false;
 	float m_speedPerSecond;
+
+	bool m_key = false;
 };
