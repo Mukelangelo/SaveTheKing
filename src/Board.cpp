@@ -113,7 +113,7 @@ static std::unique_ptr<StaticObject> createUnmovableObject(char c, const sf::Vec
 	case '#': return std::make_unique<Gate>(vect, texture);
 	case '!': return std::make_unique<Ogre>(vect, texture);
 	case '*': return std::make_unique<Fire>(vect, texture);
-	case '%': return std::make_unique<Gift>(vect, texture);
+	case '%': return std::make_unique<TimeGift>(vect, texture);
 	}
 	return nullptr;
 }

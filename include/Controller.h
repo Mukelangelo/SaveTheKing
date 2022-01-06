@@ -16,9 +16,12 @@ public:
 	Controller();
 	// run the game
 	void run(sf::RenderWindow& window);
+	Caption getCaption();
 
 private:
+	
 	void setHalo();
+	void eraseGnomes();
 	void eraseObject(StaticObject& staticObj);
 	sf::Texture m_textures[NUM_OF_PICS];
 	std::vector< std::unique_ptr <MovingObject > > m_character;
@@ -30,7 +33,7 @@ private:
 	bool movementManger(int currChar, sf::Time& deltaTime, sf::Clock& clock);
 	bool manageCollisions(int charIndex);
 	bool locationAllowed(MovingObject& shape);
-	void manageGifts(Gift& gift);
+	void manageGifts(StaticObject& gift);
 	int m_currChar;
 	bool m_won = false;
 	void findGnome();
@@ -45,5 +48,6 @@ private:
 	sf::RectangleShape m_playerHalo;
 	Caption m_caption;
 	sf::Font m_font;
+	
 };
 

@@ -2,10 +2,7 @@
 
 Caption::Caption() : m_level(0), m_stageTime(0)
 {
-
 	m_font.loadFromFile("C:/Windows/Fonts/Comic.ttf");
-
-
 	setText(m_stageTimeText, 0);
 	setText(m_levelText, 1);
 }
@@ -30,7 +27,7 @@ void Caption::updateTime(float time)
 	m_stageTime += time;
 	m_stageTime -= m_Timer.getElapsedTime().asSeconds();
 
-	m_stageTimeText.setString("Time left: " + std::to_string((int)this->m_stageTime));
+	m_stageTimeText.setString("Time left: " + std::to_string((int)m_stageTime));
 
 
 	m_Timer.restart();
@@ -40,7 +37,7 @@ void Caption::updateTime(float time)
 void Caption::updateLevel()
 {
 	m_level++;
-	m_levelText.setString("Level:" + std::to_string(this->m_level));
+	m_levelText.setString("Level:" + std::to_string(m_level));
 	m_Timer.restart();
 
 }
@@ -68,9 +65,8 @@ void Caption::resetTime(int time)
 void Caption::draw(sf::RenderWindow& window)
 {
 	updateTime(0);
-	window.draw(this->m_levelText);
-	window.draw(this->m_stageTimeText);
-
+	window.draw(m_levelText);
+	window.draw(m_stageTimeText);
 }
 
 void Caption::resetLevelNum()
