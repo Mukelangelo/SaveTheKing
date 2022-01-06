@@ -19,6 +19,7 @@
 #include "Fire.h"
 #include "Gnome.h"
 #include "Gift.h"
+#include "TimeGift.h"
 
 /*
 List of missions :

@@ -10,19 +10,19 @@ public:
 	CollisionStatus getDispatch();
 	virtual ~StaticObject() = default;
 
-	virtual void handleCollision(GameObject& gameObject) override {};
-	virtual void handleCollision(Wall& gameObject) override {};
-	virtual void handleCollision(Throne& gameObject) override {};
-	virtual void handleCollision(Gate& gameObject) override {};
-	virtual void handleCollision(Fire& gameObject) override {};
-	virtual void handleCollision(Key& gameObject) override {};
-	virtual void handleCollision(Ogre& gameObject) override {};
-	virtual void handleCollision(Teleport& gameObject) override {};
-	virtual void handleCollision(King& gameObject) override {};
-	virtual void handleCollision(Thief& gameObject) override {};
-	virtual void handleCollision(Mage& gameObject) override {};
-	virtual void handleCollision(Warrior& gameObject) override {};
-	virtual void handleCollision(Gnome& gameObject) override {};
+	virtual void handleCollision(GameObject& ) override {};
+	virtual void handleCollision(Wall& ) override {};
+	virtual void handleCollision(Throne& ) override {};
+	virtual void handleCollision(Gate& ) override {};
+	virtual void handleCollision(Fire& ) override {};
+	virtual void handleCollision(Key& ) override {};
+	virtual void handleCollision(Ogre& ) override {};
+	virtual void handleCollision(Teleport& ) override {};
+	virtual void handleCollision(King& ) override {};
+	virtual void handleCollision(Thief& ) override {};
+	virtual void handleCollision(Mage& ) override {};
+	virtual void handleCollision(Warrior& ) override {};
+	virtual void handleCollision(Gnome& ) override {};
 
 	
 protected:

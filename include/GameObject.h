@@ -22,19 +22,19 @@ public:
 	GameObject(sf::Vector2f loc, const sf::Texture& texture); 
 	bool checkCollision(const GameObject& other);
 
-	virtual void handleCollision(GameObject& gameObject) = 0;
-	virtual void handleCollision(Wall& gameObject) = 0;
-	virtual void handleCollision(Throne& gameObject) = 0;
-	virtual void handleCollision(Gate& gameObject) = 0;
-	virtual void handleCollision(Fire& gameObject) = 0;
-	virtual void handleCollision(Key& gameObject) = 0;
-	virtual void handleCollision(Ogre& gameObject) = 0;
-	virtual void handleCollision(Teleport& gameObject) = 0;
-	virtual void handleCollision(King& gameObject) = 0;
-	virtual void handleCollision(Thief& gameObject) = 0;
-	virtual void handleCollision(Mage& gameObject) = 0;
-	virtual void handleCollision(Warrior& gameObject) = 0;
-	virtual void handleCollision(Gnome& gameObject) = 0;
+	virtual void handleCollision(GameObject& ) = 0;
+	virtual void handleCollision(Wall& ) = 0;
+	virtual void handleCollision(Throne& ) = 0;
+	virtual void handleCollision(Gate& ) = 0;
+	virtual void handleCollision(Fire& ) = 0;
+	virtual void handleCollision(Key& ) = 0;
+	virtual void handleCollision(Ogre& ) = 0;
+	virtual void handleCollision(Teleport& ) = 0;
+	virtual void handleCollision(King& ) = 0;
+	virtual void handleCollision(Thief& ) = 0;
+	virtual void handleCollision(Mage& ) = 0;
+	virtual void handleCollision(Warrior& ) = 0;
+	virtual void handleCollision(Gnome& ) = 0;
 
 	void draw(sf::RenderWindow& window);
 	sf::Vector2f getLocation() const;
