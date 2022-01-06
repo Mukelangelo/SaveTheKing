@@ -1,7 +1,7 @@
 #pragma once
 
 #include "StaticObject.h"
-#include "Thief.h";
+#include "Thief.h"
 
 class Gate : public StaticObject
 {

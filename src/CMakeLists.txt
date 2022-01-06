@@ -19,4 +19,5 @@
 											  "Teleport.cpp"
 											  "Gnome.cpp"
 											  "Caption.cpp"
-											  "Gift.cpp")
+											  "Gift.cpp"
+											  )
