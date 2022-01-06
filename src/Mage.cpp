@@ -12,6 +12,7 @@ void Mage::handleCollision(GameObject& gameObject)
 	gameObject.handleCollision(*this);
 }
 
+/*
 void Mage::handleCollision(Wall& gameObject)
 {
 	this->setLocation(this->getLastLoc());
@@ -36,3 +37,4 @@ void Mage::handleCollision(Ogre& gameObject)
 }
 
 void Mage::handleCollision(Teleport& gameObject){}
+*/

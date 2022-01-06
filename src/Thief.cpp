@@ -36,6 +36,7 @@ void Thief::handleCollision(Key& gameObject)
 		m_key = true;
 }
 
+/*
 void Thief::handleCollision(Wall& gameObject)
 {
 	this->setLocation(this->getLastLoc());
@@ -60,6 +61,7 @@ void Thief::handleCollision(Teleport& gameObject)
 {
 	m_onTP = true;
 }
+*/
 
 
 

@@ -27,8 +27,10 @@ private:
 	Board m_board;
 	void loadTextures();
 	void switchCharacter();
-	bool manageCollisions(int charIndex , sf::Time& , sf::Clock&);
+	bool movementManger(int currChar, sf::Time& deltaTime, sf::Clock& clock);
+	bool manageCollisions(int charIndex);
 	bool locationAllowed(MovingObject& shape);
+	void manageGifts(Gift& gift);
 	int m_currChar;
 	bool m_won = false;
 	void findGnome();

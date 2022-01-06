@@ -20,4 +20,7 @@
 											  "Gnome.cpp"
 											  "Caption.cpp"
 											  "Gift.cpp"
+											  "RemoveGnomeGift.cpp"
+											  "TimeGift.cpp"
+											  "BadTimeGift.cpp"
 											  )
