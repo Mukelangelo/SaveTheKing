@@ -17,7 +17,7 @@ Caption Controller::getCaption()
 
 void Controller::run(sf::RenderWindow& window)
 {
-    m_board = Board(WINDOW_WIDTH, WINDOW_HEIGHT - BAR_SIZE, sf::Vector2f(0, 0), m_character, m_tiles, m_textures);
+    m_board = Board(WINDOW_WIDTH, WINDOW_HEIGHT - BAR_SIZE, sf::Vector2f(0, 0), m_character, m_tiles);
     findGnome();
     sf::Event event;
     const sf::Time timerLimit = sf::seconds(0.1f);

@@ -90,7 +90,7 @@ static std::unique_ptr<StaticObject> createUnmovableObject(char c, const sf::Vec
 	case '#': return std::make_unique<Gate>(vect, texture);
 	case '!': return std::make_unique<Ogre>(vect, texture);
 	case '*': return std::make_unique<Fire>(vect, texture);
-	case '%': return std::make_unique<TimeGift>(vect, texture);
+	//case '%': return std::make_unique<TimeGift>(vect, texture);
 	}
 	return nullptr;
 }
@@ -111,7 +111,7 @@ void Board::createObject(char c, const sf::Vector2f& vect, const sf::Texture& te
 			m_tiles->push_back(std::move(unmovable));
 			return;
 		}
-		exit(EXIT_FAILURE);
+		//exit(EXIT_FAILURE);
 	}
 }
 
