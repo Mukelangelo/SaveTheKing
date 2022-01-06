@@ -8,13 +8,11 @@ Controller::Controller()
     :m_board(), m_currChar(0) , m_caption()
 {   
     m_font.loadFromFile("C:/Windows/Fonts/Arial.ttf");
-    loadTextures();  
-    //m_board = Board(WINDOW_WIDTH, WINDOW_HEIGHT - BAR_SIZE, sf::Vector2f(0, 0), m_character, m_tiles, m_textures);
 }
 
 void Controller::run(sf::RenderWindow& window)
 {
-    m_board = Board(WINDOW_WIDTH, WINDOW_HEIGHT - BAR_SIZE, sf::Vector2f(0, 0), m_character, m_tiles, m_textures);
+    m_board = Board(WINDOW_WIDTH, WINDOW_HEIGHT - BAR_SIZE, sf::Vector2f(0, 0), m_character, m_tiles);
     //readTeleports();
     findGnome();
     sf::Event event;
@@ -122,12 +120,6 @@ void Controller::switchCharacter()
     m_currChar = ++m_currChar % (PLAYABLE + m_gnomes.size()); 
 }
 
-void Controller::loadTextures()
-{
-    for (int i = 0; i < NUM_OF_PICS; i++)
-        m_textures[i].loadFromFile(objectTextures[i]);
-}
-
 void Controller::findGnome()
 {
     for (int i = 0; i < m_character.size(); i++)
@@ -168,7 +160,7 @@ bool Controller::manageCollisions(int currChar)
                 break;
 
             case CollisionStatus::Ogre:
-                m_tiles.push_back(std::make_unique<Key>(tile->getLocation(), m_textures[load_Key]));
+                m_tiles.push_back(std::make_unique<Key>(tile->getLocation(), *Resources::instance().getTexture('F')));
                 [[fallthrough]];
             case CollisionStatus::Destroy:
                 eraseObject(*tile);

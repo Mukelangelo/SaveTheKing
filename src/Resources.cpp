@@ -1,0 +1,51 @@
+#include "Resources.h"
+
+Resources::Resources()
+{
+	loadTextures();
+	loadBackground();
+}
+
+Resources::~Resources(){}
+
+Resources& Resources::instance()
+{
+	static Resources inst;
+	return inst;
+}
+
+void Resources::loadTextures()
+{
+	for (int i = 0; i < NUM_OF_PICS; i++)
+		m_textures[i].loadFromFile(objectTextures[i]);
+}
+
+sf::Texture* Resources::getTexture(char c)
+{
+	switch (c)
+	{
+	case 'K': return &m_textures[load_King];
+	case 'M': return &m_textures[load_Mage];
+	case 'W': return &m_textures[load_Warrior];
+	case 'T': return &m_textures[load_Thief];
+	case 'X': return &m_textures[load_Teleport];
+	case 'F': return &m_textures[load_Key];
+	case '=': return &m_textures[load_Wall];
+	case '@': return &m_textures[load_Throne];
+	case '#': return &m_textures[load_Gate];
+	case '!': return &m_textures[load_Orge];
+	case '*': return &m_textures[load_Fire];
+	case '^': return &m_textures[load_Gnome];
+	case '%': return &m_textures[load_Gift];
+	}
+}
+
+void Resources::loadBackground()
+{
+	m_bg.loadFromFile("gamebg.png");
+}
+
+sf::Texture* Resources::getBackground()
+{
+	return &m_bg;
+}
