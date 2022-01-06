@@ -23,4 +23,4 @@
 											  "RemoveGnomeGift.cpp"
 											  "TimeGift.cpp"
 											  "BadTimeGift.cpp"
-											  )
+											  "Resources.cpp")
