@@ -10,10 +10,14 @@ Controller::Controller()
     m_font.loadFromFile("C:/Windows/Fonts/Arial.ttf");
 }
 
+Caption Controller::getCaption()
+{
+    return m_caption;
+}
+
 void Controller::run(sf::RenderWindow& window)
 {
-    m_board = Board(WINDOW_WIDTH, WINDOW_HEIGHT - BAR_SIZE, sf::Vector2f(0, 0), m_character, m_tiles);
-    //readTeleports();
+    m_board = Board(WINDOW_WIDTH, WINDOW_HEIGHT - BAR_SIZE, sf::Vector2f(0, 0), m_character, m_tiles, m_textures);
     findGnome();
     sf::Event event;
     const sf::Time timerLimit = sf::seconds(0.1f);
@@ -21,7 +25,8 @@ void Controller::run(sf::RenderWindow& window)
     sf::Time deltaTimePlayer, deltaTimeGnomes;
 
     m_caption.updateLevel();
-    m_caption.updateTime(200);
+    m_caption.updateTime(100);
+
     while (window.isOpen()) 
     {
         if(m_teleport.size() == 0)
@@ -36,7 +41,7 @@ void Controller::run(sf::RenderWindow& window)
 
         if (m_caption.getTime() <= 0)
         {
-            window.clear();
+            window.close();
             return;
         }
 
@@ -176,7 +181,7 @@ bool Controller::manageCollisions(int currChar)
 
             case CollisionStatus::Gift:
                 eraseObject(*tile);
-                //manageGifts(*tile);
+                //tile->handleContoller(*this);
                 break;
             }
         }
@@ -256,24 +261,37 @@ void Controller::clearLastLevel()
     m_teleport.clear();
 }
 
-void Controller::manageGifts(Gift& gift)
+void Controller::manageGifts(StaticObject& tile)
 {
-    switch (gift.getType())
+    /*Gift* giftPtr = &tile;
+    switch(giftPtr->getType())
     {
     case GiftTypes::RemGnomes:
-        for (int i = 0; i < m_gnomes.size() ; i++)
-        {
-            //eraseObject(m_character[m_gnomes[i]]);
-        }
+        eraseGnomes();
         break;
+
     case GiftTypes::TimeAdd:
         m_caption.updateTime(20);
         break;
     case GiftTypes::TimeDec:
         m_caption.updateTime(-20);
         break;
-
     default:
         break;
+    }
+    */
+}
+
+void Controller::eraseGnomes()
+{
+    int i = 0;
+    auto gnomePtr = m_character.begin();
+    for (; gnomePtr != m_character.end(); gnomePtr++)
+    {
+        if ((*gnomePtr)->getLocation() == m_character[m_gnomes[i]]->getLocation())
+        {
+            m_character.erase(gnomePtr);
+            i++;
+        }
     }
 }
