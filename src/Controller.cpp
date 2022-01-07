@@ -176,7 +176,10 @@ bool Controller::manageCollisions(int currChar)
                 //Resources::instance().playSound(0);
                 if (!m_character[currChar]->isTp())
                 {
-                    m_character[currChar]->setLocation(locateTeleport(*tile));
+                    auto newLoc = locateTeleport(*tile);
+                    if (newLoc == sf::Vector2f(0, 0))
+                        return false;
+                    m_character[currChar]->setLocation(newLoc);
                     m_character[currChar]->teleported();
                 }
                 return true;
@@ -188,8 +191,13 @@ bool Controller::manageCollisions(int currChar)
             }
         }
     }
-    if(m_character[currChar]->isTp())
+    if (m_character[currChar]->isTp())
+    {
         m_character[currChar]->teleported();
+        for (int i = 0; i < m_teleport.size(); i++)
+            m_teleport[i].m_isUsed = false;
+    }
+        
     return true;
 }
 
@@ -223,12 +231,22 @@ sf::Vector2f Controller::locateTeleport(const StaticObject& teleport)
     // if the index is even hes friend in index +1
     for (int i = 0; i < m_teleport.size(); ++i)
     {
-        if (teleport.getLocation() == m_teleport[i])
+        if (teleport.getLocation() == m_teleport[i].m_loc)
         {
+            if (m_teleport[i].m_isUsed)
+                return sf::Vector2f(0,0);
+
             if (i % 2 == 0)
-                return m_teleport[++i];
+            {
+                m_teleport[i].m_isUsed = true;
+                return m_teleport[++i].m_loc;
+            }  
             else
-                return m_teleport[--i];
+            {
+                m_teleport[i].m_isUsed = true;
+                return m_teleport[--i].m_loc;
+            }
+                
         }
     }
     return sf::Vector2f();
@@ -239,7 +257,7 @@ void Controller::readTeleports()
     for (auto& tile : m_tiles)
     {
         if (typeid(*tile) == typeid(Teleport))
-            m_teleport.push_back(sf::Vector2f(tile->getLocation()));
+            m_teleport.push_back(TeleportInfo(tile->getLocation()));
     }
 }
 
