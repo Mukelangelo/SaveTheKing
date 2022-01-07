@@ -1,5 +1,4 @@
 #include "Controller.h"
-#include <iostream>
 
 int stepCounter;
 bool key, won;
