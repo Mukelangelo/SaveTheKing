@@ -12,29 +12,26 @@ void Mage::handleCollision(GameObject& gameObject)
 	gameObject.handleCollision(*this);
 }
 
-/*
-void Mage::handleCollision(Wall& gameObject)
+void Mage::DirectionImg(int dir)
 {
-	this->setLocation(this->getLastLoc());
+	switch (dir)
+	{
+	case Up:
+		m_sprite.setTexture(*Resources::instance().getTexture(load_MageUp));
+		break;
+
+	case Down:
+		m_sprite.setTexture(*Resources::instance().getTexture(load_MageDown));
+		break;
+
+	case Left:
+		m_sprite.setTexture(*Resources::instance().getTexture(load_Mage));
+		m_sprite.scale(1, -1);
+		break;
+	case Right:
+		m_sprite.setTexture(*Resources::instance().getTexture(load_Mage));
+		break;
+	default:
+		break;
+	}
 }
-
-void Mage::handleCollision(Throne& gameObject)
-{
-	this->setLocation(this->getLastLoc());
-}
-
-void Mage::handleCollision(Gate& gameObject)
-{
-	this->setLocation(this->getLastLoc());
-}
-
-void Mage::handleCollision(Fire& gameObject){}
-
-
-void Mage::handleCollision(Ogre& gameObject)
-{
-	this->setLocation(this->getLastLoc());
-}
-
-void Mage::handleCollision(Teleport& gameObject){}
-*/

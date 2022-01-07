@@ -13,31 +13,26 @@ void King::handleCollision(GameObject& gameObject)
 	gameObject.handleCollision(*this);
 }
 
-/*
-void King::handleCollision(Wall& gameObject)
+void King::DirectionImg(int dir)
 {
-	m_location = this->getLastLoc();
+	switch (dir)
+	{
+	case Up:
+		m_sprite.setTexture(*Resources::instance().getTexture(load_KingUp)); 
+		break;
+
+	case Down:
+		m_sprite.setTexture(*Resources::instance().getTexture(load_KingDown)); 
+		break;
+
+	case Left:
+		m_sprite.setTexture(*Resources::instance().getTexture(load_King));
+		m_sprite.scale(1, -1);
+		break;
+	case Right:
+		m_sprite.setTexture(*Resources::instance().getTexture(load_King));
+		break;
+	default:
+		break;
+	}
 }
-
-void King::handleCollision(Throne& gameObject)
-{
-}
-
-void King::handleCollision(Gate& gameObject)
-{
-	this->setLocation(this->getLastLoc());
-}
-
-void King::handleCollision(Fire& gameObject) 
-{
-	this->setLocation(this->getLastLoc());
-}
-
-void King::handleCollision(Ogre& gameObject)
-{
-	this->setLocation(this->getLastLoc());
-}
-
-void King::handleCollision(Teleport& gameObject) {}
-
-*/

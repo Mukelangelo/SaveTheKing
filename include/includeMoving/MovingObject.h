@@ -25,6 +25,8 @@ public:
 	virtual void handleCollision(Warrior& ) override {};
 	virtual void handleCollision(Gnome& ) override {};
 	
+	virtual void DirectionImg(int dir) {};
+
 	void setLastLoc(sf::Vector2f loc);
 	sf::Vector2f getLastLoc();
 

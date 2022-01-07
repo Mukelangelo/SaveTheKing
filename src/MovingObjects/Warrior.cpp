@@ -12,31 +12,26 @@ void Warrior::handleCollision(GameObject& gameObject)
 	gameObject.handleCollision(*this);
 }
 
-/*
-void Warrior::handleCollision(Wall& gameObject)
+void Warrior::DirectionImg(int dir)
 {
-	this->setLocation(this->getLastLoc());
+	switch (dir)
+	{
+	case Up:
+		m_sprite.setTexture(*Resources::instance().getTexture(load_WarriorUp));
+		break;
+
+	case Down:
+		m_sprite.setTexture(*Resources::instance().getTexture(load_WarriorDown));
+		break;
+
+	case Left:
+		m_sprite.setTexture(*Resources::instance().getTexture(load_Warrior));
+		m_sprite.scale(1, -1);
+		break;
+	case Right:
+		m_sprite.setTexture(*Resources::instance().getTexture(load_Warrior));
+		break;
+	default:
+		break;
+	}
 }
-
-void Warrior::handleCollision(Throne& gameObject)
-{
-	this->setLocation(this->getLastLoc());
-}
-
-void Warrior::handleCollision(Gate& gameObject)
-{
-	this->setLocation(this->getLastLoc());
-}
-
-void Warrior::handleCollision(Fire& gameObject) 
-{
-	this->setLocation(this->getLastLoc());
-}
-
-void Warrior::handleCollision(Key& gameObject) {}
-
-void Warrior::handleCollision(Ogre& gameObject){}
-
-void Warrior::handleCollision(Teleport& gameObject) {}
-
-*/

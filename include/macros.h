@@ -6,7 +6,7 @@ constexpr auto WINDOW_WIDTH = 1600;
 constexpr auto WINDOW_HEIGHT = 800;
 constexpr auto BAR_SIZE = 100;
 constexpr auto MENU_BUTTONS = 3;
-constexpr auto NUM_OF_PICS = 14;
+constexpr auto NUM_OF_PICS = 20;
 constexpr auto NUM_OF_SOUNDS = 8;
 constexpr auto PLAYABLE = 4;
 
@@ -15,9 +15,17 @@ enum MenuButtons
 	StartGame, Help, Exit
 };
 
+enum Directions
+{
+	Right ,Left, Up , Down 
+};
+
 enum LoadTextures
 {
-	load_King , load_Mage , load_Warrior , load_Thief , load_Wall , load_Throne,
+	load_King , load_KingUp, load_KingDown ,
+	load_Mage , load_MageUp, load_MageDown ,
+	load_Warrior , load_WarriorUp , load_WarriorDown,
+	load_Thief , load_Wall , load_Throne,
 	load_Fire, load_Orge, load_Teleport, load_Gate, load_Key, load_Gnome, load_ThiefKey, load_Gift
 };
 
