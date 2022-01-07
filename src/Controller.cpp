@@ -60,7 +60,7 @@ void Controller::run(sf::RenderWindow& window)
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
                 {
                     switchCharacter();
-                    if(typeid(*m_character[m_currChar]) == typeid(Gnome))
+                    if( m_character[m_currChar] == nullptr || typeid(*m_character[m_currChar]) == typeid(Gnome))
                         switchCharacter();
                 }   
 
@@ -122,7 +122,7 @@ bool Controller::movementManger(int currChar, sf::Time& deltaTime, sf::Clock& cl
 
 void Controller::switchCharacter()
 {
-    m_currChar = ++m_currChar % (PLAYABLE + m_gnomes.size()); 
+    m_currChar = ++m_currChar % (PLAYABLE + m_numOfGnomes); 
 }
 
 void Controller::findGnome()
@@ -135,18 +135,18 @@ void Controller::findGnome()
             m_clocks.push_back(sf::Clock());
             m_character[i]->setDirection(sf::Keyboard::Up);
         }
-    }  
+    }
+    m_numOfGnomes = m_gnomes.size();
 }
 
 bool Controller::manageCollisions(int currChar)
 {
-
     if (!locationAllowed(*m_character[currChar]))
         return false;
 
     for (auto& character : m_character)
     {
-        if (m_character[currChar]->checkCollision(*character))  
+        if (character != nullptr && m_character[currChar]->checkCollision(*character))  
             return false;
     }
 
@@ -165,6 +165,7 @@ bool Controller::manageCollisions(int currChar)
                 break;
 
             case CollisionStatus::Ogre:
+                Resources::instance().playSound(ogre_sound);
                 m_tiles.push_back(std::make_unique<Key>(tile->getLocation(), *Resources::instance().getTexture('F')));
                 [[fallthrough]];
             case CollisionStatus::Destroy:
@@ -172,6 +173,7 @@ bool Controller::manageCollisions(int currChar)
                 break;
             
             case CollisionStatus::Teleport:
+                //Resources::instance().playSound(0);
                 if (!m_character[currChar]->isTp())
                 {
                     m_character[currChar]->setLocation(locateTeleport(*tile));
@@ -180,8 +182,8 @@ bool Controller::manageCollisions(int currChar)
                 return true;
 
             case CollisionStatus::Gift:
+                manageGifts(*tile);
                 eraseObject(*tile);
-                //tile->handleContoller(*this);
                 break;
             }
         }
@@ -263,7 +265,7 @@ void Controller::clearLastLevel()
 
 void Controller::manageGifts(StaticObject& tile)
 {
-    /*Gift* giftPtr = &tile;
+    Gift* giftPtr = dynamic_cast<Gift*> (&tile);
     switch(giftPtr->getType())
     {
     case GiftTypes::RemGnomes:
@@ -279,19 +281,14 @@ void Controller::manageGifts(StaticObject& tile)
     default:
         break;
     }
-    */
 }
 
 void Controller::eraseGnomes()
 {
-    int i = 0;
-    auto gnomePtr = m_character.begin();
-    for (; gnomePtr != m_character.end(); gnomePtr++)
+    for (int i = 0; i < m_gnomes.size(); i++)
     {
-        if ((*gnomePtr)->getLocation() == m_character[m_gnomes[i]]->getLocation())
-        {
-            m_character.erase(gnomePtr);
-            i++;
-        }
+        m_character[m_gnomes[i]].release();
     }
+   
+    m_gnomes.clear();
 }

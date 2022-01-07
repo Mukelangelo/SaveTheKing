@@ -3,6 +3,7 @@
 void Fire::handleCollision(Mage& gameObject)
 {
 	m_dispatched = CollisionStatus::Destroy;
+	Resources::instance().playSound(fire_sound);
 }
 
 void Fire::handleCollision(King& gameObject) 
@@ -24,3 +25,4 @@ void Fire::handleCollision(Gnome& gameObject)
 {
 	m_dispatched = CollisionStatus::Not_Valid; 
 }
+

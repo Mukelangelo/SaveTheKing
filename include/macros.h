@@ -7,6 +7,7 @@ constexpr auto WINDOW_HEIGHT = 800;
 constexpr auto BAR_SIZE = 100;
 constexpr auto MENU_BUTTONS = 3;
 constexpr auto NUM_OF_PICS = 14;
+constexpr auto NUM_OF_SOUNDS = 3;
 constexpr auto PLAYABLE = 4;
 
 enum MenuButtons
@@ -23,4 +24,9 @@ enum LoadTextures
 enum class CollisionStatus
 {
 	Destroy, Good, Not_Valid, Won, Teleport, Gift, Ogre
+};
+
+enum LoadSoundBuffers
+{
+	fire_sound , ogre_sound , gate_sound
 };

@@ -46,6 +46,8 @@ private:
 	sf::RectangleShape m_playerHalo;
 	Caption m_caption;
 	sf::Font m_font;
+	int m_numOfGnomes;
+	
 	
 };
 

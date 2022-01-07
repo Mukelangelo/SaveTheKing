@@ -1,6 +1,7 @@
 #pragma once
 
 #include "macros.h"
+#include "Resources.h"
 
 class King;
 class Mage;

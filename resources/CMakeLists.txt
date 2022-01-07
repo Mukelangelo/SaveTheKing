@@ -17,8 +17,11 @@ configure_file ("thiefKey.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("gift.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("SundayMorning.ttf" ${CMAKE_BINARY_DIR} COPYONLY)
 
-configure_file ("Board.txt" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("levelList.txt" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("levelOne.txt" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("levelTwo.txt" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("levelThree.txt" ${CMAKE_BINARY_DIR} COPYONLY)
+
+configure_file ("fire.wav" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("ogre.wav" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("gate.wav" ${CMAKE_BINARY_DIR} COPYONLY)

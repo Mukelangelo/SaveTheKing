@@ -3,6 +3,7 @@
 Resources::Resources()
 {
 	loadTextures();
+	loadBuffers();
 	loadBackground();
 }
 
@@ -48,4 +49,20 @@ void Resources::loadBackground()
 sf::Texture* Resources::getBackground()
 {
 	return &m_bg;
+}
+
+void Resources::loadBuffers()
+{
+	for (int i = 0; i < NUM_OF_SOUNDS; i++)
+	{
+		if(!m_buffers[i].loadFromFile(soundBuffers[i]))
+			return;
+		m_sounds[i].setBuffer(m_buffers[i]);
+	}
+	
+}
+
+void Resources::playSound(int index)
+{
+	m_sounds[index].play();
 }

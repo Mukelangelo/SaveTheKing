@@ -4,9 +4,9 @@
 #include <vector>
 #include <fstream>
 #include <memory>
+#include <stdlib.h> 
+#include <time.h>
 #include "macros.h"
-#include "MovingObject.h"
-#include "StaticObject.h"
 #include "King.h"
 #include "Mage.h"
 #include "Warrior.h"
@@ -19,15 +19,10 @@
 #include "Ogre.h"
 #include "Fire.h"
 #include "Gnome.h"
-#include "Gift.h"
 #include "TimeGift.h"
+#include "BadTimeGift.h"
+#include "RemoveGnomeGift.h"
 
-/*
-List of missions :
-	read from file and creat ibjects in
-	the right place on window
-	add static objects
-*/
 
 class Board {
 public:
@@ -60,4 +55,6 @@ private:
 	std::vector< std::unique_ptr <StaticObject > >* m_tiles;
 
 	sf::Sprite m_bg;
+
 };
+

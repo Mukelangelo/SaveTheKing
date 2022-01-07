@@ -13,10 +13,12 @@ Board::Board(int width, int height, sf::Vector2f location,
 	m_file.open("levelList.txt", std::ios::in);
 	// check if a file exist and not empty
 	// if exist and non empty, open it, if not ask user for board size
+
 	if (m_file)
 		loadNextLevel();
 
 	resizeObjects();
+	srand(time(NULL));
 }
 
 void Board::buildTiles()
@@ -41,7 +43,8 @@ void Board::resizeObjects()
 
 	for (auto& moveable : *m_character)
 	{
-		moveable->setSpriteScale(newWidth - 8.0, newHeight - 8.0);
+		if(moveable)
+			moveable->setSpriteScale(newWidth - 8.0, newHeight - 8.0);
 	}
 
 	for (auto& unmoveable : *m_tiles)
@@ -54,16 +57,19 @@ void Board::draw(sf::RenderWindow& window)
 {
 	m_bg.setTexture(*Resources::instance().getBackground());
 	window.draw(m_bg);
+	resizeObjects();
+	
+	// print the tiles
+	for (int j = 0; j < m_tiles[0].size(); j++)
+		if (m_tiles[0][j] != nullptr)
+			m_tiles[0][j]->draw(window);
 
 	// print the characters
 	for (int i = 0; i < m_character[0].size(); i++)
 		if (m_character[0][i] != nullptr)
 			m_character[0][i]->draw(window);
 
-	// print the tiles
-	for (int j = 0; j < m_tiles[0].size(); j++)
-		if(m_tiles[0][j] != nullptr)
-			m_tiles[0][j]->draw(window);
+
 }
 
 static std::unique_ptr<MovingObject> createMovableObject(char c, const sf::Vector2f& vect, const sf::Texture& texture)
@@ -79,6 +85,28 @@ static std::unique_ptr<MovingObject> createMovableObject(char c, const sf::Vecto
 	return nullptr;
 }
 
+static std::unique_ptr<Gift> randomizeGift(const sf::Vector2f& vect, const sf::Texture& texture)
+{
+	static bool removedGnomes = false;
+	while (1)
+	{
+		switch (rand() % 3)
+		{
+		case 0:
+			return std::make_unique<TimeGift>(vect, texture);
+		case 1:
+			return std::make_unique<BadTimeGift>(vect, texture);
+		case 2:
+			if (!removedGnomes)
+			{
+				removedGnomes = true;
+				return std::make_unique<RemoveGnomeGift>(vect, texture);	
+			}
+			break;
+		}
+	}
+}
+
 static std::unique_ptr<StaticObject> createUnmovableObject(char c, const sf::Vector2f& vect, const sf::Texture& texture)
 {
 	switch (c)
@@ -90,7 +118,7 @@ static std::unique_ptr<StaticObject> createUnmovableObject(char c, const sf::Vec
 	case '#': return std::make_unique<Gate>(vect, texture);
 	case '!': return std::make_unique<Ogre>(vect, texture);
 	case '*': return std::make_unique<Fire>(vect, texture);
-	//case '%': return std::make_unique<TimeGift>(vect, texture);
+	case '%': return randomizeGift(vect,texture);
 	}
 	return nullptr;
 }
@@ -111,7 +139,6 @@ void Board::createObject(char c, const sf::Vector2f& vect, const sf::Texture& te
 			m_tiles->push_back(std::move(unmovable));
 			return;
 		}
-		//exit(EXIT_FAILURE);
 	}
 }
 
