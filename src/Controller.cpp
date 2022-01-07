@@ -178,7 +178,7 @@ bool Controller::manageCollisions(int currChar)
                 {
                     auto newLoc = locateTeleport(*tile);
                     if (newLoc == sf::Vector2f(0, 0))
-                        return false;
+                        return true;
                     m_character[currChar]->setLocation(newLoc);
                     m_character[currChar]->teleported();
                 }
