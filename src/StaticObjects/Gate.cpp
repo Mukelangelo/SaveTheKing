@@ -10,12 +10,10 @@ void Gate::handleCollision(Thief& gameObject)
 		m_dispatched = CollisionStatus::Not_Valid;
 	else
 	{
-		thiefptr->setKey(false);
+		gameObject.handleCollision(*this);
 		Resources::instance().playSound(gate_sound);
 		m_dispatched = CollisionStatus::Destroy;
 	} 
-
-	gameObject.handleCollision(*this);
 }
 
 void Gate::handleCollision(King& gameObject) { m_dispatched = CollisionStatus::Not_Valid; }

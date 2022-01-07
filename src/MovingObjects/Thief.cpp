@@ -24,44 +24,12 @@ void Thief::handleCollision(GameObject& gameObject)
 
 void Thief::handleCollision(Gate& gameObject)
 {
-	if (m_key) // add change sprite
-		return;
-	else
-		this->setLocation(this->getLastLoc());
+	m_key = false;
+	m_sprite.setTexture(*Resources::instance().getTexture(load_Thief));
 }
 
 void Thief::handleCollision(Key& gameObject)
 {
-	if (!m_key)
-		m_key = true;
+	m_key = true;
+	m_sprite.setTexture(*Resources::instance().getTexture(load_ThiefKey));
 }
-
-/*
-void Thief::handleCollision(Wall& gameObject)
-{
-	this->setLocation(this->getLastLoc());
-}
-
-void Thief::handleCollision(Fire& gameObject)
-{
-	this->setLocation(this->getLastLoc());
-}
-
-void Thief::handleCollision(Throne& gameObject)
-{
-	this->setLocation(this->getLastLoc());
-}
-
-void Thief::handleCollision(Ogre& gameObject)
-{
-	this->setLocation(this->getLastLoc());
-}
-
-void Thief::handleCollision(Teleport& gameObject)
-{
-	m_onTP = true;
-}
-*/
-
-
-

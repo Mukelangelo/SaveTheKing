@@ -41,6 +41,11 @@ sf::Texture* Resources::getTexture(char c)
 	}
 }
 
+sf::Texture* Resources::getTexture(int index)
+{
+	return &m_textures[index];
+}
+
 void Resources::loadBackground()
 {
 	m_bg.loadFromFile("gamebg.png");
