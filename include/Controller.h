@@ -10,6 +10,17 @@ List of missions :
 	check collisions with other objects
 	program gnome
 */
+
+struct TeleportInfo {
+	TeleportInfo(sf::Vector2f loc)
+	{
+		m_loc = loc;
+		m_isUsed = false;
+	}
+	sf::Vector2f m_loc;
+	bool m_isUsed;
+};
+
 class Controller {
 public:
 	// default c-stor
@@ -36,7 +47,8 @@ private:
 	bool m_won = false;
 	void findGnome();
 
-	std::vector< sf::Vector2f > m_teleport;
+	//std::vector< sf::Vector2f > m_teleport;
+	std::vector< TeleportInfo > m_teleport;
 	sf::Vector2f locateTeleport(const StaticObject& teleport);
 	void readTeleports();
 	void clearLastLevel();
