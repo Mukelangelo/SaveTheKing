@@ -32,7 +32,8 @@ private:
 	sf::Texture m_textures[NUM_OF_PICS];
 	sf::Texture m_bg;
 
-	const std::string soundBuffers[NUM_OF_SOUNDS] = { "fire.wav" , "ogre.wav" , "gate.wav" };
+	const std::string soundBuffers[NUM_OF_SOUNDS] = { "startGame.wav" , "victory.wav" , "fire.wav" , "ogre.wav" , "gate.wav" ,
+													 "teleport.wav" , "gnome.wav" ,"countdown.wav" };
 
 	const std::string objectTextures[NUM_OF_PICS] = { "king.png", "mage.png", "warrior.png", "thief.png",
 													"wall.png", "throne.png", "fire.png", "ogre.png",

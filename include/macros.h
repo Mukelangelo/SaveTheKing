@@ -7,7 +7,7 @@ constexpr auto WINDOW_HEIGHT = 800;
 constexpr auto BAR_SIZE = 100;
 constexpr auto MENU_BUTTONS = 3;
 constexpr auto NUM_OF_PICS = 14;
-constexpr auto NUM_OF_SOUNDS = 3;
+constexpr auto NUM_OF_SOUNDS = 8;
 constexpr auto PLAYABLE = 4;
 
 enum MenuButtons
@@ -28,5 +28,5 @@ enum class CollisionStatus
 
 enum LoadSoundBuffers
 {
-	fire_sound , ogre_sound , gate_sound
+	start_sound , victory_sound , fire_sound , ogre_sound , gate_sound , teleport_sound , gnome_sound , countdown_sound
 };

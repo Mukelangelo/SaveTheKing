@@ -11,6 +11,7 @@ void Gate::handleCollision(Thief& gameObject)
 	else
 	{
 		thiefptr->setKey(false);
+		Resources::instance().playSound(gate_sound);
 		m_dispatched = CollisionStatus::Destroy;
 	} 
 

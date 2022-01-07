@@ -8,6 +8,7 @@ Controller::Controller()
     :m_board(), m_currChar(0) , m_caption()
 {   
     m_font.loadFromFile("C:/Windows/Fonts/Arial.ttf");
+    m_numOfGnomes = 0;
 }
 
 Caption Controller::getCaption()
@@ -17,6 +18,7 @@ Caption Controller::getCaption()
 
 void Controller::run(sf::RenderWindow& window)
 {
+    Resources::instance().playSound(start_sound);
     m_board = Board(WINDOW_WIDTH, WINDOW_HEIGHT - BAR_SIZE, sf::Vector2f(0, 0), m_character, m_tiles);
     findGnome();
     sf::Event event;
@@ -39,8 +41,10 @@ void Controller::run(sf::RenderWindow& window)
         m_caption.draw(window);
         window.display();
 
-        if (m_caption.getTime() <= 0)
+        if (m_caption.getTime() <= 4)
         {
+            Resources::instance().playSound(countdown_sound);
+            if(m_caption.getTime() <= 0)
             window.close();
             return;
         }
@@ -161,6 +165,7 @@ bool Controller::manageCollisions(int currChar)
                 return false;
 
             case CollisionStatus::Won:
+                Resources::instance().playSound(victory_sound);
                 m_won = true;
                 break;
 
@@ -173,9 +178,9 @@ bool Controller::manageCollisions(int currChar)
                 break;
             
             case CollisionStatus::Teleport:
-                //Resources::instance().playSound(0);
                 if (!m_character[currChar]->isTp())
                 {
+                    Resources::instance().playSound(teleport_sound);
                     m_character[currChar]->setLocation(locateTeleport(*tile));
                     m_character[currChar]->teleported();
                 }
@@ -285,6 +290,7 @@ void Controller::manageGifts(StaticObject& tile)
 
 void Controller::eraseGnomes()
 {
+    Resources::instance().playSound(gnome_sound);
     for (int i = 0; i < m_gnomes.size(); i++)
     {
         m_character[m_gnomes[i]].release();
