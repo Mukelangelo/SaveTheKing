@@ -44,7 +44,9 @@ void Controller::run(sf::RenderWindow& window)
         if (m_caption.getTime() <= 4)
         {
             Resources::instance().playSound(countdown_sound);
-            if(m_caption.getTime() <= 0)
+        }
+        if (m_caption.getTime() <= 0)
+        {
             window.close();
             return;
         }
@@ -180,6 +182,7 @@ bool Controller::manageCollisions(int currChar)
             case CollisionStatus::Teleport:
                 if (!m_character[currChar]->isTp())
                 {
+                    Resources::instance().playSound(teleport_sound);
                     auto newLoc = locateTeleport(*tile);
                     if (newLoc == sf::Vector2f(0, 0))
                         return true;
