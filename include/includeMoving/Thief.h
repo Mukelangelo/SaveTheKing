@@ -13,6 +13,7 @@ public:
 
 	virtual void handleCollision(Gate& gameObject) override;
 	virtual void handleCollision(Key& gameObject) override;
+	virtual void DirectionImg(int dir) override;
 
 protected:
 	bool m_key = false;

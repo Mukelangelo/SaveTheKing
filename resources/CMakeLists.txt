@@ -1,4 +1,5 @@
-﻿configure_file ("king.png" ${CMAKE_BINARY_DIR} COPYONLY)
+﻿
+configure_file ("king.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("kingUp.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("kingDown.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
@@ -18,6 +19,7 @@ configure_file ("thiefLeft.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("thiefKey.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("thiefLeftKey.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("thiefUpKey.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("thiefDownKey.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 configure_file ("fire.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("gate.png" ${CMAKE_BINARY_DIR} COPYONLY)
