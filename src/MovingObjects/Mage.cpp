@@ -26,7 +26,7 @@ void Mage::DirectionImg(int dir)
 
 	case Left:
 		m_sprite.setTexture(*Resources::instance().getTexture(load_Mage));
-		m_sprite.scale(1, -1);
+		m_sprite.scale(-1, 1);
 		break;
 	case Right:
 		m_sprite.setTexture(*Resources::instance().getTexture(load_Mage));

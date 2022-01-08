@@ -13,7 +13,7 @@ public:
 	void game();
 
 private:
-	Controller m_controller;
+	//Controller m_controller;
 	sf::RenderWindow m_window;
 	Board m_board;
 	void handleButtons(const sf::Vector2f& location);

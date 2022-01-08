@@ -26,7 +26,7 @@ void Warrior::DirectionImg(int dir)
 
 	case Left:
 		m_sprite.setTexture(*Resources::instance().getTexture(load_Warrior));
-		m_sprite.scale(1, -1);
+		m_sprite.scale(-1, 1);
 		break;
 	case Right:
 		m_sprite.setTexture(*Resources::instance().getTexture(load_Warrior));

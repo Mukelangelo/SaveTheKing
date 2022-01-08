@@ -48,12 +48,20 @@ sf::Texture* Resources::getTexture(int index)
 
 void Resources::loadBackground()
 {
-	m_bg.loadFromFile("gamebg.png");
+	auto loadPic = sf::Texture();
+	loadPic.loadFromFile("gamebg.png");
+	m_bg.push_back(loadPic);
+
+	loadPic.loadFromFile("help.png");
+	m_bg.push_back(loadPic);
+
+	loadPic.loadFromFile("bg.png");
+	m_bg.push_back(loadPic);
 }
 
-sf::Texture* Resources::getBackground()
+sf::Texture* Resources::getBackground(int index)
 {
-	return &m_bg;
+	return &m_bg[index];
 }
 
 void Resources::loadBuffers()

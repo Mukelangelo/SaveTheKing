@@ -1,7 +1,7 @@
 #include "Menu.h"
 
 Menu::Menu()
-	: m_window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Save The King"), m_controller()
+	: m_window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Save The King")
 {
     for (int i = 0; i < 3; i++)
         m_buttons[i] = Button(sf::Vector2f(300, 80), m_texts[i], sf::Vector2f(800, 330 + i * 150));
@@ -11,12 +11,8 @@ Menu::Menu()
     m_help_bar.setOutlineThickness(3);
     m_help_bar.setOutlineColor(sf::Color::Black);
 
-    auto texture = sf::Texture();
-    texture.loadFromFile("help.png");
-    m_help_bar.setTexture(&texture);
-    auto bg_texture = sf::Texture();
-    bg_texture.loadFromFile("bg.png");
-    m_bg = sf::Sprite(bg_texture);
+    m_help_bar.setTexture(Resources::instance().getBackground(1));
+    m_bg = sf::Sprite(*Resources::instance().getBackground(2));
     run();
 }
 
@@ -69,7 +65,7 @@ void Menu::run()
 
 void Menu::game()
 {
-    m_controller.run(m_window);
+    Controller().run(m_window);
     m_gameStart = false;
 }
 

@@ -1,24 +1,14 @@
 #include "Controller.h"
 
-int stepCounter;
-bool key, won;
-
 Controller::Controller()
-    :m_board(), m_currChar(0) , m_caption()
-{   
-    m_font.loadFromFile("C:/Windows/Fonts/Arial.ttf");
-    m_numOfGnomes = 0;
-}
-
-Caption Controller::getCaption()
-{
-    return m_caption;
-}
+    :m_board(), m_currChar(0) , m_caption(), m_numOfGnomes(0)
+{}
 
 void Controller::run(sf::RenderWindow& window)
 {
     Resources::instance().playSound(start_sound);
-    m_board = Board(WINDOW_WIDTH, WINDOW_HEIGHT - BAR_SIZE, sf::Vector2f(0, 0), m_character, m_tiles);
+    m_board = Board(WINDOW_WIDTH, WINDOW_HEIGHT - BAR_SIZE, sf::Vector2f(0, 0));
+    m_board.loadNextLevel(m_character, m_tiles);
     findGnome();
     sf::Event event;
     const sf::Time timerLimit = sf::seconds(0.1f);
@@ -35,30 +25,24 @@ void Controller::run(sf::RenderWindow& window)
 
         setHalo();  
         window.clear();
-        m_board.draw(window);
+        m_board.resizeObjects(m_character, m_tiles);
+        m_board.draw(window, m_character, m_tiles);
         window.draw(m_playerHalo);
         m_caption.draw(window);
         window.display();
 
         if (m_caption.getTime() <= 4)
-        {
             Resources::instance().playSound(countdown_sound);
-        }
+
         if (m_caption.getTime() <= 0)
-        {
-            window.close();
             return;
-        }
 
         while (window.pollEvent(event))
         {
 
             if ((event.type == sf::Event::Closed) ||
                 ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape)))
-            {
-                window.close();
-                break;
-            }
+                return;
             
             if (event.type == sf::Event::KeyPressed)
             {
@@ -102,8 +86,8 @@ void Controller::run(sf::RenderWindow& window)
         {
             clearLastLevel();
             window.clear();
-            if (!m_board.loadNextLevel())
-               window.close();
+            if (!m_board.loadNextLevel(m_character, m_tiles))
+                return;
             m_won = false;
             m_caption.updateLevel();
             m_caption.resetTime(0);
@@ -316,4 +300,9 @@ void Controller::eraseGnomes()
     }
    
     m_gnomes.clear();
+}
+
+Caption Controller::getCaption()
+{
+    return m_caption;
 }

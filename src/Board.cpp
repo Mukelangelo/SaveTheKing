@@ -1,27 +1,22 @@
 #include "Board.h"
 
 Board::Board()
-	:m_rows(0), m_cols(0), m_height(0), m_width(0), m_location(sf::Vector2f()), m_character(), m_tiles()
+	:m_rows(0), m_cols(0), m_height(0), m_width(0), m_location(sf::Vector2f())/*, m_character(), m_tiles()*/
 {}
 
-Board::Board(int width, int height, sf::Vector2f location,
-	std::vector < std::unique_ptr <MovingObject >>& vect, 
-	std::vector < std::unique_ptr <StaticObject >>& tiles)
-	: m_height(height), m_width(width), m_location(location), m_rows(0), m_cols(0), m_character(&vect),
-	  m_tiles(&tiles), m_bg(sf::Sprite())
+Board::Board(int width, int height, sf::Vector2f location)
+	: m_height(height), m_width(width), m_location(location), m_rows(0), m_cols(0), m_bg(sf::Sprite())
 {
-	m_file.open("levelList.txt", std::ios::in);
-	// check if a file exist and not empty
-	// if exist and non empty, open it, if not ask user for board size
-
-	if (m_file)
-		loadNextLevel();
-
-	resizeObjects();
 	srand(time(NULL));
+
+	m_file.open("levelList.txt", std::ios::in);
+	if (!m_file)
+		exit(EXIT_FAILURE);
+		//loadNextLevel();
 }
 
-void Board::buildTiles()
+void Board::buildTiles(std::vector < std::unique_ptr <MovingObject >>& vect,
+					   std::vector < std::unique_ptr <StaticObject >>& tiles)
 {
 	int tileWidth = m_width / m_cols , tileHeight = m_height / m_rows ;
 	for (int i = 0; i < m_rows; i++)
@@ -31,43 +26,46 @@ void Board::buildTiles()
 			if (m_matrix[i][j] != ' ')
 			{
 				auto locationVector = sf::Vector2f(m_location.x + j * (tileWidth) +3  , m_location.y + i * (tileHeight) +3 );
-				createObject(m_matrix[i][j], locationVector, *Resources::instance().getTexture(m_matrix[i][j]));
+				createObject(m_matrix[i][j], locationVector, *Resources::instance().getTexture(m_matrix[i][j]), vect, tiles);
 			}
 		}
 	}
 }
-void Board::resizeObjects()
+void Board::resizeObjects(std::vector < std::unique_ptr <MovingObject >>& vect,
+						  std::vector < std::unique_ptr <StaticObject >>& tiles)
 {
 	auto newHeight = m_height / m_rows;
 	auto newWidth = m_width / m_cols ;
 
-	for (auto& moveable : *m_character)
+	for (auto& moveable : vect)
 	{
 		if(moveable)
 			moveable->setSpriteScale(newWidth - 8.0, newHeight - 8.0);
 	}
 
-	for (auto& unmoveable : *m_tiles)
+	for (auto& unmoveable : tiles)
 	{
 		unmoveable->setSpriteScale(newWidth,newHeight);
 	}
 }
 
-void Board::draw(sf::RenderWindow& window)
+void Board::draw(sf::RenderWindow& window,
+				 const std::vector < std::unique_ptr <MovingObject >>& vect,
+				 const std::vector < std::unique_ptr <StaticObject >>& tiles)
 {
-	m_bg.setTexture(*Resources::instance().getBackground());
+	m_bg.setTexture(*Resources::instance().getBackground(0));
 	window.draw(m_bg);
-	resizeObjects();
+	//resizeObjects(vect, tiles);
 	
 	// print the tiles
-	for (int j = 0; j < m_tiles[0].size(); j++)
-		if (m_tiles[0][j] != nullptr)
-			m_tiles[0][j]->draw(window);
+	for (int j = 0; j < tiles.size(); j++)
+		if (tiles[j] != nullptr)
+			tiles[j]->draw(window);
 
 	// print the characters
-	for (int i = 0; i < m_character[0].size(); i++)
-		if (m_character[0][i] != nullptr)
-			m_character[0][i]->draw(window);
+	for (int i = 0; i < vect.size(); i++)
+		if (vect[i] != nullptr)
+			vect[i]->draw(window);
 
 
 }
@@ -123,12 +121,14 @@ static std::unique_ptr<StaticObject> createUnmovableObject(char c, const sf::Vec
 	return nullptr;
 }
 
-void Board::createObject(char c, const sf::Vector2f& vect, const sf::Texture& texture)
+void Board::createObject(char c, const sf::Vector2f& vect, const sf::Texture& texture,
+						 std::vector < std::unique_ptr <MovingObject >>& chararcters,
+						 std::vector < std::unique_ptr <StaticObject >>& tiles)
 {
 	std::unique_ptr<MovingObject> movable = createMovableObject(c, vect, texture);
 	if (movable)
 	{
-		m_character->push_back(std::move(movable));
+		chararcters.push_back(std::move(movable));
 		return;
 	}
 	else
@@ -136,13 +136,14 @@ void Board::createObject(char c, const sf::Vector2f& vect, const sf::Texture& te
 		std::unique_ptr<StaticObject> unmovable = createUnmovableObject(c, vect, texture);
 		if (unmovable)
 		{
-			m_tiles->push_back(std::move(unmovable));
+			tiles.push_back(std::move(unmovable));
 			return;
 		}
 	}
 }
 
-bool Board::loadNextLevel()
+bool Board::loadNextLevel(std::vector < std::unique_ptr <MovingObject >>& vect,
+						  std::vector < std::unique_ptr <StaticObject >>& tiles)
 {
 	m_matrix.clear();
 
@@ -163,9 +164,9 @@ bool Board::loadNextLevel()
 			}
 			m_cols = m_matrix[0].size();
 			m_rows = m_matrix.size();
-			buildTiles();
+			buildTiles(vect, tiles);
 			levelFile.close();
-			resizeObjects();
+			resizeObjects(vect, tiles);
 			return true;
 		}
 	}
