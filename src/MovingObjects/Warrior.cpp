@@ -14,24 +14,5 @@ void Warrior::handleCollision(GameObject& gameObject)
 
 void Warrior::DirectionImg(int dir)
 {
-	switch (dir)
-	{
-	case Up:
-		m_sprite.setTexture(*Resources::instance().getTexture(load_WarriorUp));
-		break;
-
-	case Down:
-		m_sprite.setTexture(*Resources::instance().getTexture(load_WarriorDown));
-		break;
-
-	case Left:
-		m_sprite.setTexture(*Resources::instance().getTexture(load_Warrior));
-		m_sprite.scale(-1, 1);
-		break;
-	case Right:
-		m_sprite.setTexture(*Resources::instance().getTexture(load_Warrior));
-		break;
-	default:
-		break;
-	}
+	m_sprite.setTexture(*Resources::instance().getTexture(load_Warrior + dir));
 }

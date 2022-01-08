@@ -2,14 +2,17 @@
 configure_file ("king.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("kingUp.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("kingDown.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("kingLeft.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 configure_file ("mage.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("mageUp.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("mageDown.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("mageLeft.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 configure_file ("warrior.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("warriorUp.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("warriorDown.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("warriorLeft.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 configure_file ("thief.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("thiefUp.png" ${CMAKE_BINARY_DIR} COPYONLY)

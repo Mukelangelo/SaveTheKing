@@ -36,22 +36,12 @@ private:
 	const std::string soundBuffers[NUM_OF_SOUNDS] = { "startGame.wav" , "victory.wav" , "fire.wav" , "ogre.wav" , "gate.wav" ,
 													 "teleport.wav" , "gnome.wav" ,"countdown.wav" };
 
-	const std::string objectTextures[NUM_OF_PICS] ={"king.png","kingUp.png","kingDown.png" ,
-													"mage.png","mageUp.png","mageDown.png",
-													"warrior.png","warriorUp.png","warriorDown.png",
+	const std::string objectTextures[NUM_OF_PICS] ={"king.png","kingUp.png","kingDown.png" , "kingLeft.png",
+													"mage.png","mageUp.png","mageDown.png", "mageLeft.png",
+													"warrior.png","warriorUp.png","warriorDown.png",  "warriorLeft.png",
 													"thief.png", "thiefUp.png","thiefDown.png","thiefLeft.png",
 													 "thiefKey.png" , "thiefUpKey.png", "thiefDownKey.png" , "thiefLeftKey.png",
 													"wall.png", "throne.png", "fire.png", "ogre.png",
 													"teleport.png", "gate.png", "key.png", "gnome.png",  "gift.png" };
 };
 
-
-/* needed sounds :
-	throne
-	teleport
-	gnome death
-	time add / dec
-	start game sound
-	music of ticking clock
-
-*/

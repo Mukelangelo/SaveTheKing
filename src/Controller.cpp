@@ -16,8 +16,9 @@ void Controller::run(sf::RenderWindow& window)
     sf::Time deltaTimePlayer, deltaTimeGnomes;
 
     m_caption.updateLevel();
-    m_caption.updateTime(100);
+    m_caption.updateTime(10);
 
+    bool played_countdown = false;
     while (window.isOpen()) 
     {
         if(m_teleport.size() == 0)
@@ -31,8 +32,11 @@ void Controller::run(sf::RenderWindow& window)
         m_caption.draw(window);
         window.display();
 
-        if (m_caption.getTime() <= 4)
+        if (m_caption.getTime() <= 4 && !played_countdown)
+        {
             Resources::instance().playSound(countdown_sound);
+            played_countdown = true;
+        }
 
         if (m_caption.getTime() <= 0)
             return;
