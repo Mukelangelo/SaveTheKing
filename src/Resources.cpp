@@ -71,8 +71,8 @@ void Resources::loadBuffers()
 		if(!m_buffers[i].loadFromFile(soundBuffers[i]))
 			return;
 		m_sounds[i].setBuffer(m_buffers[i]);
+		m_sounds[i].setVolume(50);
 	}
-	
 }
 
 void Resources::playSound(int index)

@@ -85,19 +85,22 @@ void Controller::run(sf::RenderWindow& window)
                 m_character[m_gnomes[i]]->setDirection(sf::Keyboard::Up);
         
         if (m_won)
-        {
-            clearLastLevel();
-            window.clear();
-            if (!m_board.loadNextLevel(m_character, m_tiles))
-                return;
-            m_won = false;
-            m_caption.updateLevel();
-            m_caption.resetTime();
-            m_caption.updateTime(200);
-            readTeleports();
-            findGnome();
-        }        
+            handleVictory(window);      
     }
+}
+
+void Controller::handleVictory(sf::RenderWindow& window)
+{
+    clearLastLevel();
+    window.clear();
+    if (!m_board.loadNextLevel(m_character, m_tiles))
+        return;
+    m_won = false;
+    m_caption.updateLevel();
+    m_caption.resetTime();
+    m_caption.updateTime(200);
+    readTeleports();
+    findGnome();
 }
 
 bool Controller::movementManger(int currChar, sf::Time& deltaTime, sf::Clock& clock)
