@@ -57,9 +57,9 @@ void Caption::resetLvl()
 	m_Timer.restart();
 }
 
-void Caption::resetTime(int time)
+void Caption::resetTime()
 {
-	m_stageTime = time;
+	m_stageTime = 0;
 }
 
 void Caption::draw(sf::RenderWindow& window)

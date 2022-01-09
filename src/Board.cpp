@@ -12,7 +12,10 @@ Board::Board(int width, int height, sf::Vector2f location)
 	m_file.open("levelList.txt", std::ios::in);
 	if (!m_file)
 		exit(EXIT_FAILURE);
-		//loadNextLevel();
+
+	m_playerHalo.setOutlineColor(sf::Color((10, 20, 255, 100)));
+	m_playerHalo.setOutlineThickness(4);
+	m_playerHalo.setFillColor(sf::Color::Transparent);
 }
 
 void Board::buildTiles(std::vector < std::unique_ptr <MovingObject >>& vect,
@@ -55,7 +58,7 @@ void Board::draw(sf::RenderWindow& window,
 {
 	m_bg.setTexture(*Resources::instance().getBackground(0));
 	window.draw(m_bg);
-	//resizeObjects(vect, tiles);
+	window.draw(m_playerHalo);
 	
 	// print the tiles
 	for (int j = 0; j < tiles.size(); j++)
@@ -171,4 +174,13 @@ bool Board::loadNextLevel(std::vector < std::unique_ptr <MovingObject >>& vect,
 		}
 	}
 	return false;
+}
+
+void Board::setHalo(const std::unique_ptr < MovingObject >& player)
+{
+	int sizeY, sizeX;
+	sizeX = player->getSprite().getScale().x * 100;
+	sizeY = player->getSprite().getScale().y * 100;
+	m_playerHalo.setSize(sf::Vector2f(sizeX, sizeY));
+	m_playerHalo.setPosition(player->getLocation());
 }

@@ -27,11 +27,9 @@ public:
 	Controller();
 	// run the game
 	void run(sf::RenderWindow& window);
-	Caption getCaption();
 
 private:
 	
-	void setHalo();
 	void eraseGnomes();
 	void eraseObject(StaticObject& staticObj);
 	std::vector< std::unique_ptr <MovingObject > > m_character;
@@ -47,7 +45,6 @@ private:
 	bool m_won = false;
 	void findGnome();
 
-	//std::vector< sf::Vector2f > m_teleport;
 	std::vector< TeleportInfo > m_teleport;
 	sf::Vector2f locateTeleport(const StaticObject& teleport);
 	void readTeleports();
@@ -55,11 +52,8 @@ private:
 
 	std::vector< int > m_gnomes;
 	std::vector< sf::Clock > m_clocks;
-	sf::RectangleShape m_playerHalo;
 	Caption m_caption;
 	sf::Font m_font;
 	int m_numOfGnomes;
-	
-	
 };
 

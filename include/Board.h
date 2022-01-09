@@ -42,6 +42,8 @@ public:
 	void resizeObjects(std::vector < std::unique_ptr <MovingObject >>& vect,
 					   std::vector < std::unique_ptr <StaticObject >>& tiles);
 
+	void setHalo(const std::unique_ptr < MovingObject >& player);
+
 private:
 	std::fstream m_file;
 
@@ -60,6 +62,6 @@ private:
 					std::vector < std::unique_ptr <StaticObject >>& tiles);
 
 	sf::Sprite m_bg;
-
+	sf::RectangleShape m_playerHalo;
 };
 

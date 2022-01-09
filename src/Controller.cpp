@@ -9,26 +9,24 @@ void Controller::run(sf::RenderWindow& window)
     Resources::instance().playSound(start_sound);
     m_board = Board(WINDOW_WIDTH, WINDOW_HEIGHT - BAR_SIZE, sf::Vector2f(0, 0));
     m_board.loadNextLevel(m_character, m_tiles);
+    readTeleports();
     findGnome();
+
     sf::Event event;
     const sf::Time timerLimit = sf::seconds(0.1f);
     sf::Clock clock;
     sf::Time deltaTimePlayer, deltaTimeGnomes;
 
     m_caption.updateLevel();
-    m_caption.updateTime(10);
+    m_caption.updateTime(100);
 
     bool played_countdown = false;
     while (window.isOpen()) 
     {
-        if(m_teleport.size() == 0)
-            readTeleports();
-
-        setHalo();  
         window.clear();
         m_board.resizeObjects(m_character, m_tiles);
+        m_board.setHalo(m_character[m_currChar]);
         m_board.draw(window, m_character, m_tiles);
-        window.draw(m_playerHalo);
         m_caption.draw(window);
         window.display();
 
@@ -94,8 +92,10 @@ void Controller::run(sf::RenderWindow& window)
                 return;
             m_won = false;
             m_caption.updateLevel();
-            m_caption.resetTime(0);
+            m_caption.resetTime();
             m_caption.updateTime(200);
+            readTeleports();
+            findGnome();
         }        
     }
 }
@@ -255,24 +255,13 @@ void Controller::readTeleports()
     }
 }
 
-void Controller::setHalo()
-{
-    m_playerHalo.setOutlineColor(sf::Color((10, 20, 255, 100)));
-    m_playerHalo.setOutlineThickness(4);
-    m_playerHalo.setFillColor(sf::Color::Transparent);
-    int sizeY, sizeX;
-    sizeX = m_character[m_currChar]->getSprite().getScale().x * 100;
-    sizeY = m_character[m_currChar]->getSprite().getScale().y * 100;
-    m_playerHalo.setSize(sf::Vector2f(sizeX, sizeY));
-    m_playerHalo.setPosition(m_character[m_currChar]->getLocation());
-}
-
 void Controller::clearLastLevel()
 {
     m_character.clear();
     m_tiles.clear();
     m_gnomes.clear();
     m_teleport.clear();
+    m_numOfGnomes = 0;
 }
 
 void Controller::manageGifts(StaticObject& tile)
@@ -287,10 +276,9 @@ void Controller::manageGifts(StaticObject& tile)
     case GiftTypes::TimeAdd:
         m_caption.updateTime(20);
         break;
+
     case GiftTypes::TimeDec:
         m_caption.updateTime(-20);
-        break;
-    default:
         break;
     }
 }
@@ -304,9 +292,4 @@ void Controller::eraseGnomes()
     }
    
     m_gnomes.clear();
-}
-
-Caption Controller::getCaption()
-{
-    return m_caption;
 }

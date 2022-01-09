@@ -14,7 +14,7 @@ public:
 	int getLvl() const;
 	float getTime() const;
 	void resetLvl();
-	void resetTime(int);
+	void resetTime();
 	void draw(sf::RenderWindow&);
 	void resetLevelNum();
 
