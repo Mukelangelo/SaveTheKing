@@ -5,6 +5,7 @@ Resources::Resources()
 	loadTextures();
 	loadBuffers();
 	loadBackground();
+	m_font.loadFromFile("C:/Windows/Fonts/Comic.ttf");
 	//setPauseScreen();
 }
 
@@ -112,4 +113,9 @@ void Resources::drawPauseScreen(sf::RenderWindow& window)
 	{
 		window.draw(m_pauseButtons[i]);
 	}	
+}
+
+sf::Font* Resources::getFont()
+{
+	return &m_font;
 }

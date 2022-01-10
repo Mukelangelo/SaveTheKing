@@ -15,6 +15,7 @@ public:
 	sf::Texture* getTexture(char c);
 	sf::Texture* getTexture(int i);
 	sf::Texture* getBackground(int index);
+	sf::Font* getFont();
 	void drawPauseScreen(sf::RenderWindow& window);
 	void playSound(int index);
 
@@ -36,6 +37,7 @@ private:
 
 	sf::Texture m_textures[NUM_OF_PICS];
 	std::vector < sf::Texture > m_bg;
+	sf::Font m_font;
 
 	const std::string soundBuffers[NUM_OF_SOUNDS] = { "startGame.wav" , "victory.wav" , "fire.wav" , "ogre.wav" , "gate.wav" ,
 													 "teleport.wav" , "gnome.wav" ,"countdown.wav" };

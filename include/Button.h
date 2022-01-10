@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Resources.h"
 
 class Button
 {
@@ -20,8 +21,9 @@ public:
 private:
 	sf::RectangleShape m_button;
 	sf::Color m_color;
-	sf::Font m_font;
 	sf::String m_text;
 	sf::ConvexShape m_spare;
 	sf::Text m_buttonText;
+
+	void initButton();
 };

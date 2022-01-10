@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include "macros.h"
+#include "Resources.h"
 
 class Caption
 {
@@ -30,7 +31,6 @@ private:
 
 	sf::Text m_stageTimeText;
 	sf::Text m_levelText;
-	sf::Font m_font;
 
 };
 

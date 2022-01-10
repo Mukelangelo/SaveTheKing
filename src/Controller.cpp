@@ -45,6 +45,7 @@ void Controller::run(sf::RenderWindow& window)
             if ((event.type == sf::Event::Closed) ||
                 ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape)))
             {
+                return;
                 Resources::instance().drawPauseScreen(window);
             }
 

@@ -2,14 +2,13 @@
 
 Caption::Caption() : m_level(0), m_stageTime(0)
 {
-	m_font.loadFromFile("C:/Windows/Fonts/Comic.ttf");
 	setText(m_stageTimeText, 0);
 	setText(m_levelText, 1);
 }
 
 void Caption::setText(sf::Text& text , int i)
 {
-	text.setFont(m_font);
+	text.setFont(*Resources::instance().getFont());
 	text.setCharacterSize(40);
 	text.setPosition( 300 * i + 50 , WINDOW_HEIGHT - BAR_SIZE + 10);
 	text.setColor(sf::Color::Green);
