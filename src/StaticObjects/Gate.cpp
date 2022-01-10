@@ -1,16 +1,12 @@
 #include "includeStatic/Gate.h"
 
-void Gate::handleCollision(Thief& gameObject)
+void Gate::handleCollision(Thief& player)
 {
-	m_dispatched = CollisionStatus::Good;
-	
-	Thief* thiefptr = dynamic_cast<Thief*> (&gameObject);
-
-	if(!thiefptr->getKey())
+	if(!player.getKey())
 		m_dispatched = CollisionStatus::Not_Valid;
 	else
 	{
-		gameObject.handleCollision(*this);
+		player.handleCollision(*this);
 		Resources::instance().playSound(gate_sound);
 		m_dispatched = CollisionStatus::Destroy;
 	} 
