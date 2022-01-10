@@ -44,8 +44,10 @@ void Controller::run(sf::RenderWindow& window)
 
             if ((event.type == sf::Event::Closed) ||
                 ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape)))
-                return;
-            
+            {
+                Resources::instance().drawPauseScreen(window);
+            }
+
             if (event.type == sf::Event::KeyPressed)
             {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
@@ -85,7 +87,11 @@ void Controller::run(sf::RenderWindow& window)
                 m_character[m_gnomes[i]]->setDirection(sf::Keyboard::Up);
         
         if (m_won)
-            handleVictory(window);      
+        {
+            handleVictory(window);
+            if(!m_board.loadNextLevel(m_character, m_tiles))
+                return;
+        }
     }
 }
 
@@ -93,8 +99,6 @@ void Controller::handleVictory(sf::RenderWindow& window)
 {
     clearLastLevel();
     window.clear();
-    if (!m_board.loadNextLevel(m_character, m_tiles))
-        return;
     m_won = false;
     m_caption.updateLevel();
     m_caption.resetTime();

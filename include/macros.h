@@ -15,6 +15,11 @@ enum MenuButtons
 	StartGame, Help, Exit
 };
 
+enum PauseButtons
+{
+	Home , Restart , Music
+};
+
 enum Directions
 {
 	Right, Up , Down, Left

@@ -5,6 +5,7 @@ Resources::Resources()
 	loadTextures();
 	loadBuffers();
 	loadBackground();
+	//setPauseScreen();
 }
 
 Resources::~Resources(){}
@@ -14,6 +15,30 @@ Resources& Resources::instance()
 	static Resources inst;
 	return inst;
 }
+
+void Resources::setPauseScreen()
+{
+	m_pauseScreen.setFillColor(sf::Color::Blue);
+	m_pauseScreen.setPosition(sf::Vector2f(500, 500));
+	m_pauseScreen.setSize(sf::Vector2f(500, 500));
+	auto buttonSize = sf::Vector2f(30, 30);
+	auto buttonPos = sf::Vector2f(550, 450);
+	
+	auto texture = sf::Texture();
+
+	texture.loadFromFile("home-button.png");
+	m_pauseButtons[Home].setTexture(&texture);
+
+	texture.loadFromFile("restart-button.png");
+	m_pauseButtons[Restart].setTexture(&texture);
+
+	texture.loadFromFile("music-button.png");
+	m_pauseButtons[Music].setTexture(&texture);
+
+	m_pauseButtons[Music].setOutlineColor(sf::Color::Green);
+	m_pauseButtons[Music].setOutlineThickness(3);
+}
+
 
 void Resources::loadTextures()
 {
@@ -78,4 +103,13 @@ void Resources::loadBuffers()
 void Resources::playSound(int index)
 {
 	m_sounds[index].play();
+}
+
+void Resources::drawPauseScreen(sf::RenderWindow& window)
+{
+	window.draw(m_pauseScreen);
+	for (int i = 0; i < 3; i++)
+	{
+		window.draw(m_pauseButtons[i]);
+	}	
 }

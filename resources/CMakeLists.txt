@@ -50,3 +50,7 @@ configure_file ("sounds/startGame.wav" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("sounds/teleport.wav" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("sounds/gnome.wav" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("sounds/countdown.wav" ${CMAKE_BINARY_DIR} COPYONLY)
+
+configure_file ("home-button.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("music-button.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("restart-button.png" ${CMAKE_BINARY_DIR} COPYONLY)

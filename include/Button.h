@@ -23,4 +23,5 @@ private:
 	sf::Font m_font;
 	sf::String m_text;
 	sf::ConvexShape m_spare;
+	sf::Text m_buttonText;
 };

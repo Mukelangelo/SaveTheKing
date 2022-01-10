@@ -15,6 +15,7 @@ public:
 	sf::Texture* getTexture(char c);
 	sf::Texture* getTexture(int i);
 	sf::Texture* getBackground(int index);
+	void drawPauseScreen(sf::RenderWindow& window);
 	void playSound(int index);
 
 private:
@@ -28,7 +29,10 @@ private:
 	void loadTextures();
 	void loadBuffers();
 	void loadBackground();
-	
+	void setPauseScreen();
+
+	sf::RectangleShape m_pauseScreen;
+	sf::RectangleShape m_pauseButtons[3];
 
 	sf::Texture m_textures[NUM_OF_PICS];
 	std::vector < sf::Texture > m_bg;

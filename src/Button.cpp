@@ -17,25 +17,25 @@ Button::Button(const sf::Vector2f& size, sf::String text, const sf::Vector2f& po
     m_button.setOutlineColor(sf::Color(96, 163, 188));
     m_button.setOutlineThickness(3);
     m_button.setOrigin(sf::Vector2f(size.x/2, size.y/2));
+
+    m_buttonText = sf::Text(m_text, m_font);
+    m_buttonText.Bold;
+    m_buttonText.setOutlineColor(sf::Color(7, 153, 146, 250));
+    m_buttonText.setOutlineThickness(2);
+    m_buttonText.setCharacterSize(30);
+    m_buttonText.setColor(sf::Color(199, 236, 238.255));
+    m_buttonText.setPosition(m_button.getPosition());
+
+    auto textRect = m_buttonText.getLocalBounds();
+    m_buttonText.setOrigin(textRect.left + textRect.width / 2.0f,
+        textRect.top + textRect.height / 2.0f);
+
 }
 
 void Button::draw(sf::RenderWindow& window)
 {
-    // text in middle of the button
-    auto text = sf::Text(m_text, m_font);
-    text.Bold;
-    text.setOutlineColor(sf::Color(7, 153, 146,250));
-    text.setOutlineThickness(2);
-    text.setCharacterSize(30);
-    text.setColor(sf::Color(199, 236, 238.255));
-    text.setPosition(m_button.getPosition());
-
-    auto textRect = text.getLocalBounds();
-    text.setOrigin(textRect.left + textRect.width / 2.0f,
-        textRect.top + textRect.height / 2.0f);
-
     window.draw(m_button);
-    window.draw(text);
+    window.draw(m_buttonText);
 }
 
 bool Button::handleClick(const sf::Vector2f& location)
