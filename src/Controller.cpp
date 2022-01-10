@@ -162,6 +162,7 @@ bool Controller::manageCollisions(int currChar)
                 Resources::instance().playSound(ogre_sound);
                 m_tiles.push_back(std::make_unique<Key>(tile->getLocation(), *Resources::instance().getTexture('F')));
                 [[fallthrough]];
+
             case CollisionStatus::Destroy:
                 eraseObject(*tile);
                 break;
@@ -191,7 +192,6 @@ bool Controller::manageCollisions(int currChar)
         for (int i = 0; i < m_teleport.size(); i++)
             m_teleport[i].m_isUsed = false;
     }
-        
     return true;
 }
 
@@ -240,7 +240,6 @@ sf::Vector2f Controller::locateTeleport(const StaticObject& teleport)
                 m_teleport[i].m_isUsed = true;
                 return m_teleport[--i].m_loc;
             }
-                
         }
     }
     return sf::Vector2f();
@@ -261,7 +260,6 @@ void Controller::clearLastLevel()
     m_tiles.clear();
     m_gnomes.clear();
     m_teleport.clear();
-    m_numOfGnomes = 0;
 }
 
 void Controller::manageGifts(StaticObject& tile)
@@ -287,9 +285,7 @@ void Controller::eraseGnomes()
 {
     Resources::instance().playSound(gnome_sound);
     for (int i = 0; i < m_gnomes.size(); i++)
-    {
         m_character[m_gnomes[i]].release();
-    }
    
     m_gnomes.clear();
 }
