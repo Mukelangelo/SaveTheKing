@@ -30,6 +30,7 @@ public:
 
 private:
 	
+	void handleVictory(sf::RenderWindow& window);
 	void eraseGnomes();
 	void eraseObject(StaticObject& staticObj);
 	std::vector< std::unique_ptr <MovingObject > > m_character;
