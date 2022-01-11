@@ -63,10 +63,10 @@ void Button::initButton()
     m_buttonText.setString(m_text);
     m_buttonText.setFont(*Resources::instance().getFont());
     m_buttonText.Bold;
-    m_buttonText.setOutlineColor(sf::Color(7, 153, 146, 250));
+    m_buttonText.setOutlineColor(sf::Color(12, 36, 97, 255));
     m_buttonText.setOutlineThickness(2);
-    m_buttonText.setCharacterSize(30);
-    m_buttonText.setColor(sf::Color(199, 236, 238.255));
+    m_buttonText.setCharacterSize(40);
+    m_buttonText.setColor(sf::Color(29, 209, 161, 255));
     m_buttonText.setPosition(m_button.getPosition());
 
     auto textRect = m_buttonText.getLocalBounds();

@@ -5,7 +5,7 @@ Resources::Resources()
 	loadTextures();
 	loadBuffers();
 	loadBackground();
-	m_font.loadFromFile("C:/Windows/Fonts/Comic.ttf");
+	m_font.loadFromFile("font.ttf");
 	setPauseScreen();
 }
 
@@ -30,10 +30,10 @@ void Resources::setPauseScreen()
 	m_pauseText.setFont(m_font);
 	m_pauseText.setString("Pause");
 	m_pauseText.Bold;
-	m_pauseText.setOutlineColor(sf::Color(7, 153, 146, 250));
-	m_pauseText.setOutlineThickness(2);
+	m_pauseText.setOutlineColor(sf::Color(12, 36, 97, 255));
+	m_pauseText.setOutlineThickness(3);
 	m_pauseText.setCharacterSize(80);
-	m_pauseText.setColor(sf::Color(199, 236, 238.255));
+	m_pauseText.setColor(sf::Color(29, 209, 161, 255));
 	m_pauseText.setPosition(sf::Vector2f(660, 260));
 	SetButtons();
 }
