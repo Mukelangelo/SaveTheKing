@@ -17,7 +17,9 @@ public:
 	sf::Texture* getBackground(int index);
 	sf::Font* getFont();
 	void drawPauseScreen(sf::RenderWindow& window);
+	void playMusic();
 	void playSound(int index);
+	int HandleClick(sf::Vector2f location);
 
 private:
 	Resources();
@@ -26,21 +28,29 @@ private:
 
 	sf::SoundBuffer m_buffers[NUM_OF_SOUNDS];
 	sf::Sound m_sounds[NUM_OF_SOUNDS];
+	sf::Music m_music;
 
+	bool Clicked(int index, sf::Vector2f location);
 	void loadTextures();
 	void loadBuffers();
 	void loadBackground();
 	void setPauseScreen();
+	void SetButtons();
 
-	sf::RectangleShape m_pauseScreen;
-	sf::RectangleShape m_pauseButtons[3];
+	sf::RectangleShape m_pauseWindow;
+	sf::RectangleShape m_pauseButtons[MENU_BUTTONS];
+	sf::Text m_pauseText;
+
+	sf::Texture m_pauseTextures[MENU_BUTTONS];
 
 	sf::Texture m_textures[NUM_OF_PICS];
 	std::vector < sf::Texture > m_bg;
 	sf::Font m_font;
 
+	const std::string buttonTextures[MENU_BUTTONS] = { "home-button.png" , "restart-button.png" , "music-button.png" };
+
 	const std::string soundBuffers[NUM_OF_SOUNDS] = { "startGame.wav" , "victory.wav" , "fire.wav" , "ogre.wav" , "gate.wav" ,
-													 "teleport.wav" , "gnome.wav" ,"countdown.wav" };
+													  "teleport.wav" , "gnome.wav" ,"countdown.wav" };
 
 	const std::string objectTextures[NUM_OF_PICS] ={"king.png","kingUp.png","kingDown.png" , "kingLeft.png",
 													"mage.png","mageUp.png","mageDown.png", "mageLeft.png",

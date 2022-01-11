@@ -21,6 +21,9 @@ void Controller::run(sf::RenderWindow& window)
     m_caption.updateTime(100);
 
     bool played_countdown = false;
+
+    Resources::instance().playMusic();
+
     while (window.isOpen()) 
     {
         window.clear();
@@ -44,9 +47,9 @@ void Controller::run(sf::RenderWindow& window)
 
             if ((event.type == sf::Event::Closed) ||
                 ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape)))
-            {
-                return;
-                Resources::instance().drawPauseScreen(window);
+            { 
+                if(!PauseMenu(window))
+                    return;
             }
 
             if (event.type == sf::Event::KeyPressed)
@@ -296,4 +299,58 @@ void Controller::eraseGnomes()
         m_character[m_gnomes[i]].release();
    
     m_gnomes.clear();
+}
+
+bool Controller::PauseMenu(sf::RenderWindow& window)
+{
+    sf::Clock clock;
+    clock.restart();
+    while (window.isOpen())
+    {
+        Resources::instance().drawPauseScreen(window);
+        window.display();
+        if (auto event = sf::Event{}; window.waitEvent(event))
+        {
+            if ((event.type == sf::Event::Closed) ||
+                ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape)))
+            {
+                m_caption.updateTime(clock.getElapsedTime().asSeconds());
+                return true;
+            }
+            
+            switch (event.type)
+            {
+                
+            case sf::Event::MouseButtonReleased:
+                auto location = window.mapPixelToCoords(
+                    { event.mouseButton.x, event.mouseButton.y });
+
+               if(event.mouseButton.button == sf::Mouse::Button::Left)
+               {
+                   auto buttonClicked = Resources::instance().HandleClick(location);
+
+                   if (buttonClicked == Home)
+                       return false;
+                   else if (buttonClicked == Restart)
+                   {
+                       clearLastLevel();
+                       window.clear();
+                       m_caption.resetTime();
+                       m_caption.updateTime(100);
+                       m_board.RestartLevel(m_character, m_tiles);
+                       readTeleports();
+                       findGnome();
+                       return true;
+                   }
+                   else if (buttonClicked != Music)
+                   {
+                       m_caption.updateTime(clock.getElapsedTime().asSeconds());
+                       return true;
+                   }
+               }
+            }
+        }
+    }
+    m_caption.updateTime(clock.getElapsedTime().asSeconds());
+    return true;
 }

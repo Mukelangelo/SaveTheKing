@@ -39,6 +39,9 @@ public:
 	bool loadNextLevel(std::vector < std::unique_ptr <MovingObject >>& vect,
 					   std::vector < std::unique_ptr <StaticObject >>& tiles);
 
+	void RestartLevel(std::vector < std::unique_ptr <MovingObject >>& vect,
+		std::vector < std::unique_ptr <StaticObject >>& tiles);
+	
 	void resizeObjects(std::vector < std::unique_ptr <MovingObject >>& vect,
 					   std::vector < std::unique_ptr <StaticObject >>& tiles);
 

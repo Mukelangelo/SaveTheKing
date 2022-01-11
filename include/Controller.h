@@ -42,6 +42,8 @@ private:
 	bool manageCollisions(int charIndex);
 	bool locationAllowed(MovingObject& shape);
 	void manageGifts(StaticObject& gift);
+	bool PauseMenu(sf::RenderWindow& window);
+
 	int m_currChar;
 	bool m_won = false;
 	void findGnome();
@@ -54,7 +56,6 @@ private:
 	std::vector< int > m_gnomes;
 	std::vector< sf::Clock > m_clocks;
 	Caption m_caption;
-	sf::Font m_font;
 	int m_numOfGnomes;
 };
 

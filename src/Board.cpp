@@ -34,6 +34,7 @@ void Board::buildTiles(std::vector < std::unique_ptr <MovingObject >>& vect,
 		}
 	}
 }
+
 void Board::resizeObjects(std::vector < std::unique_ptr <MovingObject >>& vect,
 						  std::vector < std::unique_ptr <StaticObject >>& tiles)
 {
@@ -101,7 +102,7 @@ static std::unique_ptr<Gift> randomizeGift(const sf::Vector2f& vect, const sf::T
 			if (!removedGnomes)
 			{
 				removedGnomes = true;
-				return std::make_unique<RemoveGnomeGift>(vect, texture);	
+				return std::make_unique<RemoveGnomeGift>(vect, texture);
 			}
 			break;
 		}
@@ -174,6 +175,13 @@ bool Board::loadNextLevel(std::vector < std::unique_ptr <MovingObject >>& vect,
 		}
 	}
 	return false;
+}
+
+void Board::RestartLevel(std::vector < std::unique_ptr <MovingObject >>& vect,
+						 std::vector < std::unique_ptr <StaticObject >>& tiles)
+{
+	buildTiles(vect, tiles);
+	resizeObjects(vect, tiles);
 }
 
 void Board::setHalo(const std::unique_ptr < MovingObject >& player)

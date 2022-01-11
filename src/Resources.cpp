@@ -6,7 +6,7 @@ Resources::Resources()
 	loadBuffers();
 	loadBackground();
 	m_font.loadFromFile("C:/Windows/Fonts/Comic.ttf");
-	//setPauseScreen();
+	setPauseScreen();
 }
 
 Resources::~Resources(){}
@@ -19,32 +19,86 @@ Resources& Resources::instance()
 
 void Resources::setPauseScreen()
 {
-	m_pauseScreen.setFillColor(sf::Color::Blue);
-	m_pauseScreen.setPosition(sf::Vector2f(500, 500));
-	m_pauseScreen.setSize(sf::Vector2f(500, 500));
+	m_pauseWindow.setFillColor(sf::Color(179, 218, 255, 255));
+	m_pauseWindow.setPosition(sf::Vector2f(600, 250));
+	m_pauseWindow.setSize(sf::Vector2f(340, 230));
+	m_pauseWindow.setOutlineThickness(3);
+	m_pauseWindow.setOutlineColor(sf::Color::Black);
 	auto buttonSize = sf::Vector2f(30, 30);
 	auto buttonPos = sf::Vector2f(550, 450);
-	
-	auto texture = sf::Texture();
 
-	texture.loadFromFile("home-button.png");
-	m_pauseButtons[Home].setTexture(&texture);
-
-	texture.loadFromFile("restart-button.png");
-	m_pauseButtons[Restart].setTexture(&texture);
-
-	texture.loadFromFile("music-button.png");
-	m_pauseButtons[Music].setTexture(&texture);
-
-	m_pauseButtons[Music].setOutlineColor(sf::Color::Green);
-	m_pauseButtons[Music].setOutlineThickness(3);
+	m_pauseText.setFont(m_font);
+	m_pauseText.setString("Pause");
+	m_pauseText.Bold;
+	m_pauseText.setOutlineColor(sf::Color(7, 153, 146, 250));
+	m_pauseText.setOutlineThickness(2);
+	m_pauseText.setCharacterSize(80);
+	m_pauseText.setColor(sf::Color(199, 236, 238.255));
+	m_pauseText.setPosition(sf::Vector2f(660, 260));
+	SetButtons();
 }
 
+void Resources::SetButtons()
+{
+	for (int i = 0; i < 3; i++)
+	{
+		m_pauseButtons[i].setTexture(&m_pauseTextures[i]);
+		m_pauseButtons[i].setSize(sf::Vector2f(90, 90));
+		m_pauseButtons[i].setPosition(sf::Vector2f(620 + i * 100, 380));
+	}
+	m_pauseButtons[Music].setOutlineThickness(4);
+	m_pauseButtons[Music].setOutlineColor(sf::Color::Green);
+}
+
+int Resources::HandleClick(sf::Vector2f location)
+{
+	if (Clicked(Home, location)) return Home;
+
+	else if (Clicked(Music, location))
+	{
+		static bool music_on = true;
+		int volume = 20;
+
+		if (music_on)
+		{
+			volume = 0;
+			music_on = false;
+			m_pauseButtons[Music].setOutlineColor(sf::Color::Red);
+		}
+		else
+		{
+			m_pauseButtons[Music].setOutlineColor(sf::Color::Green);
+			music_on = true;
+		}
+
+		for (int i = 0; i < NUM_OF_SOUNDS; i++)
+		{
+			m_sounds[i].setVolume(volume);
+		}
+		m_music.setVolume(volume);
+		return Music;
+	}
+
+	else if (Clicked(Restart, location)) return Restart;
+
+	return -1; // return any number to if no button is clicked - nothing happens
+}
+
+bool Resources::Clicked(int index , sf::Vector2f location)
+{
+	if (m_pauseButtons[index].getGlobalBounds().contains(location))
+		return true;
+
+	return false;
+}
 
 void Resources::loadTextures()
 {
 	for (int i = 0; i < NUM_OF_PICS; i++)
 		m_textures[i].loadFromFile(objectTextures[i]);
+
+	for (int i = 0; i < MENU_BUTTONS; i++)
+		m_pauseTextures[i].loadFromFile(buttonTextures[i]);
 }
 
 sf::Texture* Resources::getTexture(char c)
@@ -97,8 +151,11 @@ void Resources::loadBuffers()
 		if(!m_buffers[i].loadFromFile(soundBuffers[i]))
 			return;
 		m_sounds[i].setBuffer(m_buffers[i]);
-		m_sounds[i].setVolume(50);
+		m_sounds[i].setVolume(20);
 	}
+	m_music.openFromFile("bgMusic2.wav");
+	m_music.setLoop(true);
+	m_music.setVolume(20);
 }
 
 void Resources::playSound(int index)
@@ -108,7 +165,8 @@ void Resources::playSound(int index)
 
 void Resources::drawPauseScreen(sf::RenderWindow& window)
 {
-	window.draw(m_pauseScreen);
+	window.draw(m_pauseWindow);
+	window.draw(m_pauseText);
 	for (int i = 0; i < 3; i++)
 	{
 		window.draw(m_pauseButtons[i]);
@@ -118,4 +176,9 @@ void Resources::drawPauseScreen(sf::RenderWindow& window)
 sf::Font* Resources::getFont()
 {
 	return &m_font;
+}
+
+void Resources::playMusic()
+{
+	m_music.play();
 }

@@ -26,8 +26,6 @@ private:
 	sf::Clock m_Timer;
 	float m_stageTime;
 	int m_level;
-	int m_score;
-	bool m_timelessLevel;
 
 	sf::Text m_stageTimeText;
 	sf::Text m_levelText;
