@@ -37,6 +37,9 @@ void Thief::handleCollision(Key& gameObject)
 void Thief::DirectionImg(int dir)
 {
 	int index;
-	(m_key) ? index = load_ThiefKey : index = load_Thief;
-	m_sprite.setTexture(*Resources::instance().getTexture(index + dir));
+	if (!m_key)
+		index = load_Thief;
+	else
+		index = load_ThiefKey;
+	m_sprite.setTexture(*Resources::instance().getTexture(index , dir));
 }

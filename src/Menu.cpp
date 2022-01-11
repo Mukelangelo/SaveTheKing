@@ -3,12 +3,12 @@
 Menu::Menu()
 	: m_window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Save The King")
 {
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < MENU_BUTTONS ; i++)
         m_buttons[i] = Button(sf::Vector2f(300, 80), m_texts[i], sf::Vector2f(800, 330 + i * 150));
     m_gameStart = m_need_help = false;
     m_help_bar = sf::RectangleShape(sf::Vector2f(1280, 720));
     m_help_bar.setPosition(sf::Vector2f(200, 50));
-    m_help_bar.setOutlineThickness(3);
+    m_help_bar.setOutlineThickness(MENU_BUTTONS);
     m_help_bar.setOutlineColor(sf::Color::Black);
 
     m_help_bar.setTexture(Resources::instance().getBackground(1));

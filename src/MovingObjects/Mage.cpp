@@ -14,5 +14,5 @@ void Mage::handleCollision(GameObject& gameObject)
 
 void Mage::DirectionImg(int dir)
 {
-	m_sprite.setTexture(*Resources::instance().getTexture(load_Mage + dir));
+	m_sprite.setTexture(*Resources::instance().getTexture(load_Mage , dir));
 }

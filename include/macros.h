@@ -6,7 +6,8 @@ constexpr auto WINDOW_WIDTH = 1600;
 constexpr auto WINDOW_HEIGHT = 800;
 constexpr auto BAR_SIZE = 100;
 constexpr auto MENU_BUTTONS = 3;
-constexpr auto NUM_OF_PICS = 29;
+constexpr auto NUM_OF_PICS = 14;
+constexpr auto DIRECTIONS = 4;
 constexpr auto NUM_OF_SOUNDS = 8;
 constexpr auto PLAYABLE = 4;
 
@@ -27,11 +28,7 @@ enum Directions
 
 enum LoadTextures
 {
-	load_King, load_KingUp, load_KingDown, load_KingLeft,
-	load_Mage, load_MageUp, load_MageDown, load_MageLeft,
-	load_Warrior, load_WarriorUp, load_WarriorDown, load_WarriorLeft,
-	load_Thief , load_ThiefUp , load_ThiefDown , load_ThiefLeft ,
-	load_ThiefKey , load_ThiefUpKey, load_ThiefDownKey , load_ThiefLeftKey,
+	load_King, load_Mage, load_Warrior, load_Thief , load_ThiefKey,
 	load_Wall , load_Throne, load_Fire, load_Orge, load_Teleport, load_Gate,
 	load_Key, load_Gnome, load_Gift
 };
