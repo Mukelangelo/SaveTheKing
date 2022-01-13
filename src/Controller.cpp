@@ -95,6 +95,8 @@ void Controller::run(sf::RenderWindow& window)
             handleVictory(window);
             if(!m_board.loadNextLevel(m_character, m_tiles))
                 return;
+            readTeleports();
+            findGnome();
         }
     }
 }
@@ -107,8 +109,7 @@ void Controller::handleVictory(sf::RenderWindow& window)
     m_caption.updateLevel();
     m_caption.resetTime();
     m_caption.updateTime(200);
-    readTeleports();
-    findGnome();
+
 }
 
 bool Controller::movementManger(int currChar, sf::Time& deltaTime, sf::Clock& clock)
