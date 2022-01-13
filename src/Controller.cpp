@@ -97,6 +97,8 @@ void Controller::run(sf::RenderWindow& window)
                 return;
             readTeleports();
             findGnome();
+            if (m_character[m_currChar] == nullptr || typeid(*m_character[m_currChar]) == typeid(Gnome))
+                switchCharacter();
         }
     }
 }
@@ -108,7 +110,7 @@ void Controller::handleVictory(sf::RenderWindow& window)
     m_won = false;
     m_caption.updateLevel();
     m_caption.resetTime();
-    m_caption.updateTime(200);
+    m_caption.updateTime(100);
 
 }
 

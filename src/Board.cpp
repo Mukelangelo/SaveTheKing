@@ -47,7 +47,7 @@ void Board::resizeObjects(std::vector < std::unique_ptr <MovingObject >>& vect,
 	for (auto& moveable : vect)
 	{
 		if(moveable)
-			moveable->setSpriteScale(newWidth - 8.0, newHeight - 8.0); 
+			moveable->setSpriteScale(newWidth - 10.0, newHeight - 10.0); 
 		// moveable ojbects are slightly smaller for smoother pass between tiles
 	}
 
