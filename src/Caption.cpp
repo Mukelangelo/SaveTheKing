@@ -16,9 +16,7 @@ void Caption::setText(sf::Text& text , int i)
 	text.setOutlineThickness(3);
 }
 
-Caption::~Caption()
-{
-}
+Caption::~Caption() {}
 
 void Caption::updateTime(float time)
 {
@@ -51,10 +49,6 @@ float Caption::getTime() const
 	return m_stageTime;
 }
 
-void Caption::resetLvl()
-{
-	m_Timer.restart();
-}
 
 void Caption::resetTime()
 {
@@ -66,9 +60,4 @@ void Caption::draw(sf::RenderWindow& window)
 	updateTime(0);
 	window.draw(m_levelText);
 	window.draw(m_stageTimeText);
-}
-
-void Caption::resetLevelNum()
-{
-	m_level = 0;
 }

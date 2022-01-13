@@ -330,7 +330,11 @@ bool Controller::PauseMenu(sf::RenderWindow& window)
                    auto buttonClicked = Resources::instance().HandleClick(location);
 
                    if (buttonClicked == Home)
+                   {
+                       Resources::instance().playMusic();
                        return false;
+                   }
+
                    else if (buttonClicked == Restart)
                    {
                        clearLastLevel();

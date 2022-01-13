@@ -4,16 +4,15 @@ Button::Button()
 {}
 
 Button::Button(const sf::Vector2f& size, sf::String text, const sf::Vector2f& pos)
-    : m_button(size), m_color(126, 214,223,255),
-     m_text(text)
+    : m_button(size), m_color(126, 214,223,255)    
 {
-    m_button.setFillColor(m_color);
-
+    // initiate button by parameters
     auto location = sf::Vector2f(pos.x, pos.y + 10);
-
     m_button.setPosition(location);
     m_button.setOrigin(sf::Vector2f(size.x / 2, size.y / 2));
-    initButton();
+    m_button.setFillColor(m_color);
+    m_buttonText.setString(text);
+    initButton(); 
 }
 
 void Button::draw(sf::RenderWindow& window)
@@ -30,15 +29,17 @@ bool Button::handleClick(const sf::Vector2f& location)
     return false;
 }
 
-void Button::setString(sf::String text)
+/*void Button::setString(sf::String text)
 {
     m_text = text;
 }
+*/
 
-sf::String Button::getString() const
+/*sf::String Button::getString() const
 {
-    return m_text;
+    return m_buttonText.getString();
 }
+*/
 
 void Button::setColor(sf::Color color)
 {
@@ -60,7 +61,6 @@ void Button::initButton()
     m_button.setOutlineColor(sf::Color(96, 163, 188));
     m_button.setOutlineThickness(3);
 
-    m_buttonText.setString(m_text);
     m_buttonText.setFont(*Resources::instance().getFont());
     m_buttonText.Bold;
     m_buttonText.setOutlineColor(sf::Color(12, 36, 97, 255));

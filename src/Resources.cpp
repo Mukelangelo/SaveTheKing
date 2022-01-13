@@ -186,5 +186,13 @@ sf::Font* Resources::getFont()
 
 void Resources::playMusic()
 {
-	m_music.play();
+	static bool musicOn = false;
+	if (!musicOn)
+	{
+		m_music.play();
+		musicOn = true;
+		return;
+	}
+	m_music.pause();
+	musicOn = false;
 }
