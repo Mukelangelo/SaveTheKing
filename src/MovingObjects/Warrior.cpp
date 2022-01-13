@@ -14,5 +14,5 @@ void Warrior::handleCollision(GameObject& gameObject)
 
 void Warrior::DirectionImg(int dir)
 {
-	m_sprite.setTexture(*Resources::instance().getTexture(load_Warrior + dir));
+	m_sprite.setTexture(*Resources::instance().getTexture(load_Warrior, dir));
 }

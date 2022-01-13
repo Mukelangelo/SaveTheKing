@@ -14,14 +14,13 @@ public:
 
 	int getLvl() const;
 	float getTime() const;
-	void resetLvl();
 	void resetTime();
 	void draw(sf::RenderWindow&);
-	void resetLevelNum();
 
 private:
 
-	void setText(sf::Text& text , int i);
+	// set the text settings and set the position based on i
+	void setText(sf::Text& text , int i );
 
 	sf::Clock m_Timer;
 	float m_stageTime;

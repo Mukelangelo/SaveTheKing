@@ -57,3 +57,5 @@ configure_file ("sounds/bgMusic2.wav" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("home-button.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("music-button.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("restart-button.png" ${CMAKE_BINARY_DIR} COPYONLY)
+
+configure_file ("font.ttf" ${CMAKE_BINARY_DIR} COPYONLY)

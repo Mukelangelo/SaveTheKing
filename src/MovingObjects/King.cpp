@@ -15,5 +15,5 @@ void King::handleCollision(GameObject& gameObject)
 
 void King::DirectionImg(int dir)
 {
-	m_sprite.setTexture(*Resources::instance().getTexture(load_King + dir));
+	m_sprite.setTexture(*Resources::instance().getTexture(load_King , dir));
 }

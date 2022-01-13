@@ -1,7 +1,7 @@
 #include "Board.h"
 
 Board::Board()
-	:m_rows(0), m_cols(0), m_height(0), m_width(0), m_location(sf::Vector2f())/*, m_character(), m_tiles()*/
+	:m_rows(0), m_cols(0), m_height(0), m_width(0), m_location(sf::Vector2f())
 {}
 
 Board::Board(int width, int height, sf::Vector2f location)
@@ -9,10 +9,13 @@ Board::Board(int width, int height, sf::Vector2f location)
 {
 	srand(time(NULL));
 
+	m_bg.setTexture(*Resources::instance().getBackground(0)); // set the background
+
 	m_file.open("levelList.txt", std::ios::in);
 	if (!m_file)
 		exit(EXIT_FAILURE);
 
+	// creat the player halo
 	m_playerHalo.setOutlineColor(sf::Color((10, 20, 255, 100)));
 	m_playerHalo.setOutlineThickness(4);
 	m_playerHalo.setFillColor(sf::Color::Transparent);
@@ -26,7 +29,7 @@ void Board::buildTiles(std::vector < std::unique_ptr <MovingObject >>& vect,
 	{
 		for (int j = 0; j < m_cols ; j++)
 		{
-			if (m_matrix[i][j] != ' ')
+			if (m_matrix[i][j] != ' ') // ignore blank tiles
 			{
 				auto locationVector = sf::Vector2f(m_location.x + j * (tileWidth) +3  , m_location.y + i * (tileHeight) +3 );
 				createObject(m_matrix[i][j], locationVector, *Resources::instance().getTexture(m_matrix[i][j]), vect, tiles);
@@ -44,7 +47,8 @@ void Board::resizeObjects(std::vector < std::unique_ptr <MovingObject >>& vect,
 	for (auto& moveable : vect)
 	{
 		if(moveable)
-			moveable->setSpriteScale(newWidth - 8.0, newHeight - 8.0);
+			moveable->setSpriteScale(newWidth - 8.0, newHeight - 8.0); 
+		// moveable ojbects are slightly smaller for smoother pass between tiles
 	}
 
 	for (auto& unmoveable : tiles)
@@ -57,7 +61,6 @@ void Board::draw(sf::RenderWindow& window,
 				 const std::vector < std::unique_ptr <MovingObject >>& vect,
 				 const std::vector < std::unique_ptr <StaticObject >>& tiles)
 {
-	m_bg.setTexture(*Resources::instance().getBackground(0));
 	window.draw(m_bg);
 	window.draw(m_playerHalo);
 	
@@ -87,6 +90,7 @@ static std::unique_ptr<MovingObject> createMovableObject(char c, const sf::Vecto
 	return nullptr;
 }
 
+// randomly select a gift type to set the tile
 static std::unique_ptr<Gift> randomizeGift(const sf::Vector2f& vect, const sf::Texture& texture)
 {
 	static bool removedGnomes = false;
@@ -125,16 +129,19 @@ static std::unique_ptr<StaticObject> createUnmovableObject(char c, const sf::Vec
 	return nullptr;
 }
 
+
 void Board::createObject(char c, const sf::Vector2f& vect, const sf::Texture& texture,
 						 std::vector < std::unique_ptr <MovingObject >>& chararcters,
 						 std::vector < std::unique_ptr <StaticObject >>& tiles)
 {
 	std::unique_ptr<MovingObject> movable = createMovableObject(c, vect, texture);
+
 	if (movable)
 	{
 		chararcters.push_back(std::move(movable));
 		return;
 	}
+	
 	else
 	{
 		std::unique_ptr<StaticObject> unmovable = createUnmovableObject(c, vect, texture);
@@ -145,6 +152,7 @@ void Board::createObject(char c, const sf::Vector2f& vect, const sf::Texture& te
 		}
 	}
 }
+
 
 bool Board::loadNextLevel(std::vector < std::unique_ptr <MovingObject >>& vect,
 						  std::vector < std::unique_ptr <StaticObject >>& tiles)
@@ -177,6 +185,7 @@ bool Board::loadNextLevel(std::vector < std::unique_ptr <MovingObject >>& vect,
 	return false;
 }
 
+
 void Board::RestartLevel(std::vector < std::unique_ptr <MovingObject >>& vect,
 						 std::vector < std::unique_ptr <StaticObject >>& tiles)
 {
@@ -184,11 +193,13 @@ void Board::RestartLevel(std::vector < std::unique_ptr <MovingObject >>& vect,
 	resizeObjects(vect, tiles);
 }
 
+
 void Board::setHalo(const std::unique_ptr < MovingObject >& player)
 {
+	// player Halo size is determined by the player's sprite scale
 	int sizeY, sizeX;
-	sizeX = player->getSprite().getScale().x * 100;
+	sizeX = player->getSprite().getScale().x * 100; 
 	sizeY = player->getSprite().getScale().y * 100;
 	m_playerHalo.setSize(sf::Vector2f(sizeX, sizeY));
-	m_playerHalo.setPosition(player->getLocation());
+	m_playerHalo.setPosition(player->getLocation()); // update position to the player position
 }

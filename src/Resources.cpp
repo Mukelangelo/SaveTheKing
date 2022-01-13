@@ -5,7 +5,7 @@ Resources::Resources()
 	loadTextures();
 	loadBuffers();
 	loadBackground();
-	m_font.loadFromFile("C:/Windows/Fonts/Comic.ttf");
+	m_font.loadFromFile("font.ttf");
 	setPauseScreen();
 }
 
@@ -30,10 +30,10 @@ void Resources::setPauseScreen()
 	m_pauseText.setFont(m_font);
 	m_pauseText.setString("Pause");
 	m_pauseText.Bold;
-	m_pauseText.setOutlineColor(sf::Color(7, 153, 146, 250));
-	m_pauseText.setOutlineThickness(2);
+	m_pauseText.setOutlineColor(sf::Color(12, 36, 97, 255));
+	m_pauseText.setOutlineThickness(3);
 	m_pauseText.setCharacterSize(80);
-	m_pauseText.setColor(sf::Color(199, 236, 238.255));
+	m_pauseText.setColor(sf::Color(29, 209, 161, 255));
 	m_pauseText.setPosition(sf::Vector2f(660, 260));
 	SetButtons();
 }
@@ -95,7 +95,8 @@ bool Resources::Clicked(int index , sf::Vector2f location)
 void Resources::loadTextures()
 {
 	for (int i = 0; i < NUM_OF_PICS; i++)
-		m_textures[i].loadFromFile(objectTextures[i]);
+		for (int j = 0; j< DIRECTIONS ; j++)
+			m_textures[i][j].loadFromFile(objectTextures[i][j]);
 
 	for (int i = 0; i < MENU_BUTTONS; i++)
 		m_pauseTextures[i].loadFromFile(buttonTextures[i]);
@@ -105,25 +106,30 @@ sf::Texture* Resources::getTexture(char c)
 {
 	switch (c)
 	{
-	case 'K': return &m_textures[load_King];
-	case 'M': return &m_textures[load_Mage];
-	case 'W': return &m_textures[load_Warrior];
-	case 'T': return &m_textures[load_Thief];
-	case 'X': return &m_textures[load_Teleport];
-	case 'F': return &m_textures[load_Key];
-	case '=': return &m_textures[load_Wall];
-	case '@': return &m_textures[load_Throne];
-	case '#': return &m_textures[load_Gate];
-	case '!': return &m_textures[load_Orge];
-	case '*': return &m_textures[load_Fire];
-	case '^': return &m_textures[load_Gnome];
-	case '%': return &m_textures[load_Gift];
+	case 'K': return &m_textures[load_King][0];
+	case 'M': return &m_textures[load_Mage][0];
+	case 'W': return &m_textures[load_Warrior][0];
+	case 'T': return &m_textures[load_Thief][0];
+	case 'X': return &m_textures[load_Teleport][0];
+	case 'F': return &m_textures[load_Key][0];
+	case '=': return &m_textures[load_Wall][0];
+	case '@': return &m_textures[load_Throne][0];
+	case '#': return &m_textures[load_Gate][0];
+	case '!': return &m_textures[load_Orge][0];
+	case '*': return &m_textures[load_Fire][0];
+	case '^': return &m_textures[load_Gnome][0];
+	case '%': return &m_textures[load_Gift][0];
 	}
+}
+
+sf::Texture* Resources::getTexture(int index , int dir)
+{
+	return &m_textures[index][dir];
 }
 
 sf::Texture* Resources::getTexture(int index)
 {
-	return &m_textures[index];
+	return &m_textures[index][0];
 }
 
 void Resources::loadBackground()
@@ -180,5 +186,13 @@ sf::Font* Resources::getFont()
 
 void Resources::playMusic()
 {
-	m_music.play();
+	static bool musicOn = false;
+	if (!musicOn)
+	{
+		m_music.play();
+		musicOn = true;
+		return;
+	}
+	m_music.pause();
+	musicOn = false;
 }
