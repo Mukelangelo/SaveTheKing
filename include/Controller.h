@@ -43,6 +43,7 @@ private:
 	bool locationAllowed(MovingObject& shape);
 	void manageGifts(StaticObject& gift);
 	bool PauseMenu(sf::RenderWindow& window);
+	void printMessege(const sf::String text , sf::RenderWindow& window);
 
 	int m_currChar;
 	bool m_won = false;

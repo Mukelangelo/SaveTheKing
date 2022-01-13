@@ -21,6 +21,7 @@ Board::Board(int width, int height, sf::Vector2f location)
 	m_playerHalo.setFillColor(sf::Color::Transparent);
 }
 
+// create the tiles and characters vectors.
 void Board::buildTiles(std::vector < std::unique_ptr <MovingObject >>& vect,
 					   std::vector < std::unique_ptr <StaticObject >>& tiles)
 {

@@ -6,7 +6,7 @@ Controller::Controller()
 
 void Controller::run(sf::RenderWindow& window)
 {
-    Resources::instance().playSound(start_sound);
+    Resources::instance().playSound(start_sound); 
     m_board = Board(WINDOW_WIDTH, WINDOW_HEIGHT - BAR_SIZE, sf::Vector2f(0, 0));
     m_board.loadNextLevel(m_character, m_tiles);
     findGnome();
@@ -18,9 +18,9 @@ void Controller::run(sf::RenderWindow& window)
     sf::Time deltaTimePlayer, deltaTimeGnomes;
 
     m_caption.updateLevel();
-    m_caption.updateTime(100);
+    m_caption.updateTime(20);
 
-    bool played_countdown = false;
+    bool played_countdown = false; 
 
     Resources::instance().playMusic();
 
@@ -34,22 +34,27 @@ void Controller::run(sf::RenderWindow& window)
         window.display();
 
         if (m_caption.getTime() <= 4 && !played_countdown)
-        {
+        { //when timer in on the last 5 seconds , a coundown sound is played
             Resources::instance().playSound(countdown_sound);
             played_countdown = true;
         }
 
-        if (m_caption.getTime() <= 0)
+        if (m_caption.getTime() <= 0) // time <= 0 means game over
+        {
+            //printMessege("Sorry , you lost :(", window);
             return;
+        }
 
         while (window.pollEvent(event))
         {
 
             if ((event.type == sf::Event::Closed) ||
                 ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape)))
-            { 
-                if(!PauseMenu(window))
+            {
+                if (!PauseMenu(window))
                     return;
+                for (int i = 0; i < m_numOfGnomes; i++)
+                    m_clocks[i].restart();     
             }
 
             if (event.type == sf::Event::KeyPressed)
@@ -86,18 +91,23 @@ void Controller::run(sf::RenderWindow& window)
             break;
         }
 
-        for (int i = 0; i < m_gnomes.size(); i++)
+        for (int i = 0; i < m_gnomes.size(); i++) // move gnomes
             if(!movementManger(m_gnomes[i], deltaTimeGnomes, m_clocks[i]))
                 m_character[m_gnomes[i]]->setDirection(sf::Keyboard::Up);
         
         if (m_won)
         {
             handleVictory(window);
-            if(!m_board.loadNextLevel(m_character, m_tiles))
+            if (!m_board.loadNextLevel(m_character, m_tiles))
+            {
+                //printMessege("yay,YOU WON :)", window);
                 return;
+            }
             findGnome();
             readTeleports();
-            if (m_character[m_currChar] == nullptr || typeid(*m_character[m_currChar]) == typeid(Gnome))
+
+            // make sure the current player isnt a gnome
+            while (m_character[m_currChar] == nullptr || typeid(*m_character[m_currChar]) == typeid(Gnome))
                 switchCharacter();
         }
     }
@@ -111,7 +121,6 @@ void Controller::handleVictory(sf::RenderWindow& window)
     m_caption.updateLevel();
     m_caption.resetTime();
     m_caption.updateTime(100);
-
 }
 
 bool Controller::movementManger(int currChar, sf::Time& deltaTime, sf::Clock& clock)
@@ -308,6 +317,7 @@ bool Controller::PauseMenu(sf::RenderWindow& window)
 {
     sf::Clock clock;
     clock.restart();
+
     while (window.isOpen())
     {
         Resources::instance().drawPauseScreen(window);
@@ -360,4 +370,32 @@ bool Controller::PauseMenu(sf::RenderWindow& window)
     }
     m_caption.updateTime(clock.getElapsedTime().asSeconds());
     return true;
+}
+
+void printMessege(const sf::String text, sf::RenderWindow& window)
+{
+    auto messege = sf::Text(text, *Resources::instance().getFont());
+    messege.Bold;
+    messege.setOutlineColor(sf::Color(12, 36, 97, 255));
+    messege.setOutlineThickness(3);
+    messege.setCharacterSize(40);
+    messege.setColor(sf::Color(29, 209, 161, 255));
+    messege.setPosition(sf::Vector2f(WINDOW_WIDTH / 2.f, WINDOW_HEIGHT / 2.f));
+    window.draw(messege);
+
+    auto event = sf::Event{};
+
+    while (window.pollEvent(event))
+    {
+        if ((event.type == sf::Event::Closed) ||
+            ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape)))
+        {
+            return;
+        }
+
+        if (event.type == sf::Event::KeyPressed)
+        {
+            return;
+        }
+    }
 }
