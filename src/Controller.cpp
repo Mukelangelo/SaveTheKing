@@ -9,8 +9,8 @@ void Controller::run(sf::RenderWindow& window)
     Resources::instance().playSound(start_sound);
     m_board = Board(WINDOW_WIDTH, WINDOW_HEIGHT - BAR_SIZE, sf::Vector2f(0, 0));
     m_board.loadNextLevel(m_character, m_tiles);
-    readTeleports();
     findGnome();
+    readTeleports();
 
     sf::Event event;
     const sf::Time timerLimit = sf::seconds(0.1f);
@@ -57,7 +57,7 @@ void Controller::run(sf::RenderWindow& window)
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
                 {
                     switchCharacter();
-                    if( m_character[m_currChar] == nullptr || typeid(*m_character[m_currChar]) == typeid(Gnome))
+                    while( m_character[m_currChar] == nullptr || typeid(*m_character[m_currChar]) == typeid(Gnome))
                         switchCharacter();
                 }   
 
@@ -95,8 +95,8 @@ void Controller::run(sf::RenderWindow& window)
             handleVictory(window);
             if(!m_board.loadNextLevel(m_character, m_tiles))
                 return;
-            readTeleports();
             findGnome();
+            readTeleports();
             if (m_character[m_currChar] == nullptr || typeid(*m_character[m_currChar]) == typeid(Gnome))
                 switchCharacter();
         }
