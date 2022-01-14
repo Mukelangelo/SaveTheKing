@@ -124,7 +124,6 @@ static std::unique_ptr<StaticObject> createUnmovableObject(char c, const sf::Vec
 {
 	switch (c)
 	{
-	//case 'X': return std::make_unique<Teleport>(vect, texture);
 	case 'F': return std::make_unique<Key>(vect, texture);
 	case '=': return std::make_unique<Wall>(vect, texture);
 	case '@': return std::make_unique<Throne>(vect, texture);
@@ -135,7 +134,6 @@ static std::unique_ptr<StaticObject> createUnmovableObject(char c, const sf::Vec
 	}
 	return nullptr;
 }
-
 
 void Board::createObject(char c, const sf::Vector2f& vect, const sf::Texture& texture,
 						 std::vector < std::unique_ptr <MovingObject >>& chararcters,

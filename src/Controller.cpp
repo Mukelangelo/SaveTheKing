@@ -18,7 +18,7 @@ void Controller::run(sf::RenderWindow& window)
     sf::Time deltaTimePlayer, deltaTimeGnomes;
 
     m_caption.updateLevel();
-    m_caption.updateTime(100);
+    m_caption.updateTime(STAGE_TIME);
 
     bool played_countdown = false; 
 
@@ -41,7 +41,7 @@ void Controller::run(sf::RenderWindow& window)
 
         if (m_caption.getTime() <= 0) // time <= 0 means game over
         {
-            printMessege("Sorry , you lost :(", window);
+            m_caption.printMessege(" Sorry , you lost :( \n Press space Key to restart", window);
             return;
         }
 
@@ -53,8 +53,9 @@ void Controller::run(sf::RenderWindow& window)
             {
                 if (!PauseMenu(window))
                     return;
-                for (int i = 0; i < m_numOfGnomes; i++)
-                    m_clocks[i].restart();     
+                // restart the clocks of the gnomes so they wont move while paused the game
+                for (int i = 0; i < m_numOfGnomes; i++) 
+                    m_clocks[i].restart();
             }
 
             if (event.type == sf::Event::KeyPressed)
@@ -97,11 +98,11 @@ void Controller::run(sf::RenderWindow& window)
         
         if (m_won)
         {
-            printMessege("Level cleard, Good Job!!!", window);
+            m_caption.printMessege(" Level cleard, Good Job!!! \n Press space Key to continue", window);
             handleVictory(window);
-            if (!m_board.loadNextLevel(m_character, m_tiles))
+            if (!m_board.loadNextLevel(m_character, m_tiles)) // if last level is won
             {
-                printMessege("yay,YOU WON :)", window);
+                m_caption.printMessege(" yay,YOU WON :) \n Press space Key to continue", window);
                 return;
             }
             findGnome();
@@ -121,17 +122,19 @@ void Controller::handleVictory(sf::RenderWindow& window)
     m_won = false;
     m_caption.updateLevel();
     m_caption.resetTime();
-    m_caption.updateTime(100);
+    m_caption.updateTime(STAGE_TIME + (m_caption.getLvl() - 1) * 40);
 }
+
 
 bool Controller::movementManger(int currChar, sf::Time& deltaTime, sf::Clock& clock)
 {
-    m_character[currChar]->setLastLoc(m_character[currChar]->getLocation());
+    m_character[currChar]->setLastLoc(); // set last location as current location
     deltaTime = clock.restart();
     m_character[currChar]->movePlayer(deltaTime);
-    if (!manageCollisions(currChar))
+
+    if (!manageCollisions(currChar)) // check if any collision has accured with this character and handle it
     {
-        m_character[currChar]->setLocation(m_character[currChar]->getLastLoc());
+        m_character[currChar]->setLocation(m_character[currChar]->getLastLoc()); // return to last 'safe' tile
         return false;
     }
     return true;
@@ -167,14 +170,14 @@ bool Controller::manageCollisions(int currChar)
             return false;
     }
 
-    for (auto& tile : m_tiles )
+    for (auto& tile : m_tiles ) // check collisions with tiles
     {
         if (tile != nullptr && m_character[currChar]->checkCollision(*tile))
         {
             m_character[currChar]->handleCollision(*tile);
             switch (tile->getDispatch())
             {                
-            case CollisionStatus::Not_Valid:
+            case CollisionStatus::Not_Valid: 
                 return false;
 
             case CollisionStatus::Won:
@@ -200,7 +203,7 @@ bool Controller::manageCollisions(int currChar)
                         return true;
                     m_character[currChar]->setLocation(newLoc);
                     m_character[currChar]->teleported();
-                    m_character[currChar]->setLastLoc(m_character[currChar]->getLocation());
+                    m_character[currChar]->setLastLoc();
                 }
                 return true;
 
@@ -218,19 +221,6 @@ bool Controller::manageCollisions(int currChar)
             m_teleport[i].m_isUsed = false;
     }
     return true;
-}
-
-void Controller::eraseObject(StaticObject& staticObj)
-{
-    auto staticPtr = m_tiles.begin();
-    for (; staticPtr != m_tiles.end(); staticPtr++)
-    {
-        if ((*staticPtr)->getLocation() == staticObj.getLocation())
-        {
-            m_tiles.erase(staticPtr);
-            break;
-        }
-    }
 }
 
 bool Controller::locationAllowed(MovingObject& shape) 
@@ -255,7 +245,9 @@ sf::Vector2f Controller::locateTeleport(const StaticObject& teleport)
             if (m_teleport[i].m_isUsed)
                 return sf::Vector2f(0,0);
 
-            if (i % 2 == 0)
+            // teleports are stored in a vector and linked by a following (odd,even) index couples ,
+            //  for exmaple : m_teleport[0] and m_teleport[1] are linked.
+            if (i % 2 == 0) 
             {
                 m_teleport[i].m_isUsed = true;
                 return m_teleport[++i].m_loc;
@@ -306,6 +298,19 @@ void Controller::manageGifts(StaticObject& tile)
     }
 }
 
+void Controller::eraseObject(StaticObject& staticObj)
+{
+    auto staticPtr = m_tiles.begin();
+    for (; staticPtr != m_tiles.end(); staticPtr++)
+    {
+        if ((*staticPtr)->getLocation() == staticObj.getLocation())
+        {
+            m_tiles.erase(staticPtr);
+            break;
+        }
+    }
+}
+
 void Controller::eraseGnomes()
 {
     Resources::instance().playSound(gnome_sound);
@@ -352,13 +357,8 @@ bool Controller::PauseMenu(sf::RenderWindow& window)
 
                    else if (buttonClicked == Restart)
                    {
-                       clearLastLevel();
                        window.clear();
-                       m_caption.resetTime();
-                       m_caption.updateTime(100);
-                       m_board.RestartLevel(m_character, m_tiles);
-                       readTeleports();
-                       findGnome();
+                       restartLvl();
                        return true;
                    }
                    else if (buttonClicked != Music)
@@ -374,30 +374,13 @@ bool Controller::PauseMenu(sf::RenderWindow& window)
     return true;
 }
 
-void Controller::printMessege(const sf::String text, sf::RenderWindow& window)
+
+void Controller::restartLvl()
 {
-    auto message = sf::Text(text, *Resources::instance().getFont());
-    message.Bold;
-    message.setOutlineColor(sf::Color(12, 36, 97, 255));
-    message.setOutlineThickness(3);
-    message.setCharacterSize(40);
-    message.setColor(sf::Color(29, 209, 161, 255));
-    message.setPosition(sf::Vector2f(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2));
-    message.setOrigin(sf::Vector2f(message.getGlobalBounds().width / 2, message.getGlobalBounds().height / 2));
-
-    sf::Text msg = message;
-    msg.setPosition(message.getPosition() + sf::Vector2f(0, 50));
-    msg.setString("Press Space Key to continue...");
-    window.clear(sf::Color(179, 218, 255, 255));
-    window.draw(message);
-    window.draw(msg);
-    window.display();
-    auto event = sf::Event{};
-
-    while (window.waitEvent(event))
-    {
-        if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Space)
-            || (event.type == sf::Event::Closed))
-            return;
-    }
+    clearLastLevel();
+    m_caption.resetTime();
+    m_caption.updateTime(STAGE_TIME + (m_caption.getLvl() - 1) * 20);
+    m_board.RestartLevel(m_character, m_tiles);
+    readTeleports();
+    findGnome();
 }

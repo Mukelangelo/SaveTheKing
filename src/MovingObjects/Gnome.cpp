@@ -3,7 +3,8 @@
 Gnome::Gnome(sf::Vector2f loc, const sf::Texture& texture)
 	:MovingObject(loc, texture)
 {
-	m_speedPerSecond = 170.f;
+	m_speedPerSecond = m_sprite.getScale().x * 200; 
+	// gnomes need to be faster than normal players
 	srand(time(NULL));
 }
 
@@ -14,39 +15,6 @@ void Gnome::handleCollision(GameObject& gameObject)
 
 	gameObject.handleCollision(*this);
 }
-
-/*
-void Gnome::handleCollision(Wall& gameObject)
-{
-	m_location = this->getLastLoc();
-}
-
-
-void Gnome::handleCollision(Throne& gameObject)
-{
-	this->setLocation(this->getLastLoc());
-}
-
-void Gnome::handleCollision(Gate& gameObject)
-{
-	this->setLocation(this->getLastLoc());
-}
-
-void Gnome::handleCollision(Fire& gameObject)
-{
-	this->setLocation(this->getLastLoc());
-}
-
-void Gnome::handleCollision(Ogre& gameObject)
-{
-	this->setLocation(this->getLastLoc());
-}
-
-void Gnome::handleCollision(Teleport& gameObject)
-{
-	m_onTP = true;
-}
-*/
 
 void Gnome::setDirection(sf::Keyboard::Key key)
 {

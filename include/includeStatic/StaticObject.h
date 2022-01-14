@@ -23,8 +23,9 @@ public:
 	virtual void handleCollision(Mage& ) override {};
 	virtual void handleCollision(Warrior& ) override {};
 	virtual void handleCollision(Gnome& ) override {};
-
-	
+		
 protected:
-	CollisionStatus m_dispatched = CollisionStatus::Not_Valid ;
+
+	// m_dispatched determines the actions needed to be done after the collision
+	CollisionStatus m_dispatched = CollisionStatus::Not_Valid ; 
 };

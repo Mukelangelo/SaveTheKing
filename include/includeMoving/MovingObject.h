@@ -25,19 +25,21 @@ public:
 	virtual void handleCollision(Warrior& ) override {};
 	virtual void handleCollision(Gnome& ) override {};
 	
-	virtual void DirectionImg(int ) {};
+	// change the sprite by the direction
+	virtual void DirectionImg(int dir ) {}; 
 
-	void setLastLoc(sf::Vector2f loc);
+	// set & get the last location of the obj , used to return when a invalid movement is done
+	void setLastLoc();
 	sf::Vector2f getLastLoc();
 
-	void teleported();
-	bool isTp();
+	void teleported(); // switch the OnTp member.
+	bool isTp(); // check if player is on teleport tile
 	virtual ~MovingObject() = default;
 
 protected:
-	sf::Vector2f m_direction;
-	sf::Vector2f m_lastLoc;
-	bool m_onTP = false;
-	float m_speedPerSecond;
+	sf::Vector2f m_direction; // movement direction
+	sf::Vector2f m_lastLoc; // last location before the last movement
+	bool m_onTP = false; // if player is on teleport
+	float m_speedPerSecond; 
 
 };

@@ -26,9 +26,7 @@ void Caption::updateTime(float time)
 
 	m_stageTimeText.setString("Time left: " + std::to_string((int)m_stageTime));
 
-
 	m_Timer.restart();
-
 }
 
 void Caption::updateLevel()
@@ -49,7 +47,6 @@ float Caption::getTime() const
 	return m_stageTime;
 }
 
-
 void Caption::resetTime()
 {
 	m_stageTime = 0;
@@ -60,4 +57,32 @@ void Caption::draw(sf::RenderWindow& window)
 	updateTime(0);
 	window.draw(m_levelText);
 	window.draw(m_stageTimeText);
+}
+
+void Caption::printMessege(const sf::String text, sf::RenderWindow& window)
+{
+	//set the message settings
+	auto message = sf::Text(text, *Resources::instance().getFont());
+	message.Bold;
+	message.setOutlineColor(sf::Color(12, 36, 97, 255));
+	message.setOutlineThickness(3);
+	message.setCharacterSize(70);
+	message.setColor(sf::Color(29, 209, 161, 255));
+	message.setPosition(sf::Vector2f(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2.5));
+	message.setOrigin(sf::Vector2f(message.getGlobalBounds().width / 2, message.getGlobalBounds().height / 2));
+	
+	// print the background
+	sf::Sprite bg;
+	bg.setTexture(*Resources::instance().getBackground(0));
+	window.draw(bg);
+	window.draw(message);
+	window.display();
+	auto event = sf::Event{};
+
+	while (window.waitEvent(event)) // wait until Space is pressed
+	{
+		if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Space)
+			|| (event.type == sf::Event::Closed))
+			return;
+	}
 }

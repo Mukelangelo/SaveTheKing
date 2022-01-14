@@ -9,13 +9,16 @@ public:
 	Caption();
 	~Caption();
 
-	void updateTime(float);
-	void updateLevel();
+	void updateTime(float timeToAdd); // add amount of time to the timer
+	void updateLevel(); // increase the level
 
-	int getLvl() const;
-	float getTime() const;
-	void resetTime();
-	void draw(sf::RenderWindow&);
+	int getLvl() const; // get current level
+	float getTime() const; //get current time left
+	void resetTime(); // reset the timer to 0
+	void draw(sf::RenderWindow&); 
+
+	// print an end messege ( next level / lose / victory)
+	void printMessege(const sf::String text, sf::RenderWindow& window);
 
 private:
 
@@ -30,4 +33,3 @@ private:
 	sf::Text m_levelText;
 
 };
-

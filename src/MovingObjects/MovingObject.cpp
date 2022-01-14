@@ -3,7 +3,8 @@
 MovingObject::MovingObject(sf::Vector2f loc, const sf::Texture& texture)
 	: GameObject(loc, texture), m_lastLoc(loc)
 {
-	m_speedPerSecond = 130.f;
+	m_speedPerSecond = m_sprite.getScale().x * 180; 
+	// make the speed proportional to the sprite size.
 }
 
 void MovingObject::movePlayer(sf::Time deltaTime)
@@ -42,9 +43,9 @@ void MovingObject::setDirection(sf::Keyboard::Key key)
 	}
 }
 
-void MovingObject::setLastLoc(sf::Vector2f loc)
+void MovingObject::setLastLoc()
 {
-	m_lastLoc = loc;
+	m_lastLoc = m_location;
 }
 
 sf::Vector2f MovingObject::getLastLoc()
