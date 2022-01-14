@@ -16,7 +16,11 @@ Menu::Menu()
     m_help_bar.setTexture(Resources::instance().getBackground(1)); 
 
     m_bg = sf::Sprite(*Resources::instance().getBackground(2));
-    run();
+
+    // set window icon 
+    auto icon = sf::Image{};
+    icon.loadFromFile("ogre.png");
+    m_window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 }
 
 void Menu::run()
