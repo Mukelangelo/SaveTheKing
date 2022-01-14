@@ -98,13 +98,13 @@ void Controller::run(sf::RenderWindow& window)
         
         if (m_won)
         {
-            m_caption.printMessege(" Level cleard, Good Job!!! \n Press space Key to continue", window);
             handleVictory(window);
             if (!m_board.loadNextLevel(m_character, m_tiles)) // if last level is won
             {
                 m_caption.printMessege(" yay,YOU WON :) \n Press space Key to continue", window);
                 return;
             }
+            m_caption.printMessege(" Level cleard, Good Job!!! \n Press space Key to continue", window);
             findGnome();
             readTeleports();
 
@@ -122,7 +122,7 @@ void Controller::handleVictory(sf::RenderWindow& window)
     m_won = false;
     m_caption.updateLevel();
     m_caption.resetTime();
-    m_caption.updateTime(STAGE_TIME + (m_caption.getLvl() - 1) * 40);
+    m_caption.updateTime(STAGE_TIME);
 }
 
 
@@ -379,7 +379,7 @@ void Controller::restartLvl()
 {
     clearLastLevel();
     m_caption.resetTime();
-    m_caption.updateTime(STAGE_TIME + (m_caption.getLvl() - 1) * 20);
+    m_caption.updateTime(STAGE_TIME);
     m_board.RestartLevel(m_character, m_tiles);
     readTeleports();
     findGnome();

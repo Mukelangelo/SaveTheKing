@@ -1,5 +1,7 @@
 #include "Board.h"
 
+static bool removedGnomes = false;
+
 Board::Board()
 	:m_rows(0), m_cols(0), m_height(0), m_width(0), m_location(sf::Vector2f())
 {}
@@ -33,7 +35,7 @@ void Board::buildTiles(std::vector < std::unique_ptr <MovingObject >>& vect,
 		{
 			if (m_matrix[i][j] != ' ') // ignore blank tiles
 			{
-				auto locationVector = sf::Vector2f(m_location.x + j * (tileWidth) +3  , m_location.y + i * (tileHeight) +3 );
+				auto locationVector = sf::Vector2f(m_location.x + j * (tileWidth ) +3  , m_location.y + i * (tileHeight) +3 );
 				createObject(m_matrix[i][j], locationVector, *Resources::instance().getTexture(m_matrix[i][j]), vect, tiles);
 				if(m_matrix[i][j] == 'X')
 					teleports.push_back(locationVector);
@@ -48,8 +50,8 @@ void Board::buildTiles(std::vector < std::unique_ptr <MovingObject >>& vect,
 void Board::resizeObjects(std::vector < std::unique_ptr <MovingObject >>& vect,
 						  std::vector < std::unique_ptr <StaticObject >>& tiles)
 {
-	auto newHeight = m_height / m_rows;
-	auto newWidth = m_width / m_cols ;
+	auto newHeight = m_height / (m_rows + 1);
+	auto newWidth = m_width / (m_cols + 1);
 
 	for (auto& moveable : vect)
 	{
@@ -84,23 +86,9 @@ void Board::draw(sf::RenderWindow& window,
 
 }
 
-static std::unique_ptr<MovingObject> createMovableObject(char c, const sf::Vector2f& vect, const sf::Texture& texture)
-{
-	switch (c)
-	{
-	case 'K': return std::make_unique<King>(vect, texture);
-	case 'M': return std::make_unique<Mage>(vect, texture);
-	case 'W': return std::make_unique<Warrior>(vect, texture);
-	case 'T': return std::make_unique<Thief>(vect, texture);
-	case '^': return std::make_unique<Gnome>(vect, texture);
-	}
-	return nullptr;
-}
-
 // randomly select a gift type to set the tile
 static std::unique_ptr<Gift> randomizeGift(const sf::Vector2f& vect, const sf::Texture& texture)
 {
-	static bool removedGnomes = false;
 	while (1)
 	{
 		switch (rand() % 3)
@@ -118,6 +106,19 @@ static std::unique_ptr<Gift> randomizeGift(const sf::Vector2f& vect, const sf::T
 			break;
 		}
 	}
+}
+
+static std::unique_ptr<MovingObject> createMovableObject(char c, const sf::Vector2f& vect, const sf::Texture& texture)
+{
+	switch (c)
+	{
+	case 'K': return std::make_unique<King>(vect, texture);
+	case 'M': return std::make_unique<Mage>(vect, texture);
+	case 'W': return std::make_unique<Warrior>(vect, texture);
+	case 'T': return std::make_unique<Thief>(vect, texture);
+	case '^': return std::make_unique<Gnome>(vect, texture);
+	}
+	return nullptr;
 }
 
 static std::unique_ptr<StaticObject> createUnmovableObject(char c, const sf::Vector2f& vect, const sf::Texture& texture)
@@ -184,6 +185,7 @@ bool Board::loadNextLevel(std::vector < std::unique_ptr <MovingObject >>& vect,
 			buildTiles(vect, tiles);
 			levelFile.close();
 			resizeObjects(vect, tiles);
+			removedGnomes = false;
 			return true;
 		}
 	}
@@ -196,6 +198,7 @@ void Board::RestartLevel(std::vector < std::unique_ptr <MovingObject >>& vect,
 {
 	buildTiles(vect, tiles);
 	resizeObjects(vect, tiles);
+	removedGnomes = false;
 }
 
 

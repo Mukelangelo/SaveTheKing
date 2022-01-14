@@ -3,7 +3,7 @@
 Gnome::Gnome(sf::Vector2f loc, const sf::Texture& texture)
 	:MovingObject(loc, texture)
 {
-	m_speedPerSecond = m_sprite.getScale().x * 200; 
+	m_speedPerSecond = m_sprite.getScale().x * 250; 
 	// gnomes need to be faster than normal players
 	srand(time(NULL));
 }

@@ -3,7 +3,7 @@
 MovingObject::MovingObject(sf::Vector2f loc, const sf::Texture& texture)
 	: GameObject(loc, texture), m_lastLoc(loc)
 {
-	m_speedPerSecond = m_sprite.getScale().x * 180; 
+	m_speedPerSecond = m_sprite.getScale().x * 200; 
 	// make the speed proportional to the sprite size.
 }
 
