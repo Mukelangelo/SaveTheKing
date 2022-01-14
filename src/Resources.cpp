@@ -81,9 +81,10 @@ int Resources::HandleClick(sf::Vector2f location)
 
 	else if (Clicked(Restart, location)) return Restart;
 
-	return -1; // return any number to if no button is clicked - nothing happens
+	return -1; // return any number so if no button is clicked - nothing happens
 }
 
+// return if the button is clicked
 bool Resources::Clicked(int index , sf::Vector2f location)
 {
 	if (m_pauseButtons[index].getGlobalBounds().contains(location))
@@ -186,7 +187,7 @@ sf::Font* Resources::getFont()
 
 void Resources::playMusic()
 {
-	static bool musicOn = false;
+	static bool musicOn = false; // check if the music is played.
 	if (!musicOn)
 	{
 		m_music.play();

@@ -5,9 +5,8 @@ class RemoveGnomeGift : public Gift
 {
 public:
 	using Gift::Gift;
-	//~RemoveGnomeGift();
 	using Gift::handleCollision;
 	
 protected:
-	void setType() override;
+	void setType() override; // set type of gift
 };

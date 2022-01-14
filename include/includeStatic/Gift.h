@@ -19,5 +19,5 @@ public:
 
 protected:
 	virtual void setType();
-	GiftTypes m_giftType;
+	GiftTypes m_giftType; 
 };

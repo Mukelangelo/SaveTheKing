@@ -43,48 +43,14 @@ void Controller::run(sf::RenderWindow& window)
         {
             m_caption.printMessege(" Sorry , you lost :( \n Press space Key to restart", window);
             return;
-        }
-
-        while (window.pollEvent(event))
-        {
-
-            if ((event.type == sf::Event::Closed) ||
-                ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape)))
-            {
-                if (!PauseMenu(window))
-                    return;
-                // restart the clocks of the gnomes so they wont move while paused the game
-                for (int i = 0; i < m_numOfGnomes; i++) 
-                    m_clocks[i].restart();
-            }
-
-            if (event.type == sf::Event::KeyPressed)
-            {
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
-                {
-                    switchCharacter();
-                    while( m_character[m_currChar] == nullptr || typeid(*m_character[m_currChar]) == typeid(Gnome))
-                        switchCharacter();
-                }   
-
-                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-                    m_character[m_currChar]->setDirection(sf::Keyboard::Right);
-
-                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-                    m_character[m_currChar]->setDirection(sf::Keyboard::Down);
-
-                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-                    m_character[m_currChar]->setDirection(sf::Keyboard::Left);
-
-                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-                    m_character[m_currChar]->setDirection(sf::Keyboard::Up);
-            }          
-
-        }      
+        }    
         
+        if(!eventsHandler(event,window))
+            return;
+
         if (clock.getElapsedTime() >= timerLimit)
             clock.restart();
-
+        
         switch (event.type)
         {
         case sf::Event::KeyPressed:
@@ -95,11 +61,12 @@ void Controller::run(sf::RenderWindow& window)
         for (int i = 0; i < m_gnomes.size(); i++) // move gnomes
             if(!movementManger(m_gnomes[i], deltaTimeGnomes, m_clocks[i]))
                 m_character[m_gnomes[i]]->setDirection(sf::Keyboard::Up);
+        // gnomes change direction only when they collide with an object , the next direction is random.
         
         if (m_won)
         {
             handleVictory(window);
-            if (!m_board.loadNextLevel(m_character, m_tiles)) // if last level is won
+            if (!m_board.loadNextLevel(m_character, m_tiles)) // if player won the last level
             {
                 m_caption.printMessege(" yay,YOU WON :) \n Press space Key to continue", window);
                 return;
@@ -115,6 +82,48 @@ void Controller::run(sf::RenderWindow& window)
     }
 }
 
+// this func will handle the keyboard and mouse events and return if exit button was pressed
+bool Controller::eventsHandler(sf::Event& event , sf::RenderWindow& window)
+{
+    while (window.pollEvent(event))
+    {
+        if ((event.type == sf::Event::Closed) ||
+            ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape)))
+        {
+            if (!PauseMenu(window)) // if 'exit' was pressed
+                return false;
+
+            // restart the clocks of the gnomes so they wont move after the game was paused
+            for (int i = 0; i < m_numOfGnomes; i++)
+                m_clocks[i].restart();
+        }
+
+        if (event.type == sf::Event::KeyPressed)
+        {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
+            {
+                switchCharacter();
+                while (m_character[m_currChar] == nullptr || typeid(*m_character[m_currChar]) == typeid(Gnome))
+                    switchCharacter();
+            }
+
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+                m_character[m_currChar]->setDirection(sf::Keyboard::Right);
+
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+                m_character[m_currChar]->setDirection(sf::Keyboard::Down);
+
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+                m_character[m_currChar]->setDirection(sf::Keyboard::Left);
+
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+                m_character[m_currChar]->setDirection(sf::Keyboard::Up);
+        }
+
+    }
+    return true;
+}
+
 void Controller::handleVictory(sf::RenderWindow& window)
 {
     clearLastLevel();
@@ -124,7 +133,6 @@ void Controller::handleVictory(sf::RenderWindow& window)
     m_caption.resetTime();
     m_caption.updateTime(STAGE_TIME);
 }
-
 
 bool Controller::movementManger(int currChar, sf::Time& deltaTime, sf::Clock& clock)
 {
@@ -373,7 +381,6 @@ bool Controller::PauseMenu(sf::RenderWindow& window)
     m_caption.updateTime(clock.getElapsedTime().asSeconds());
     return true;
 }
-
 
 void Controller::restartLvl()
 {

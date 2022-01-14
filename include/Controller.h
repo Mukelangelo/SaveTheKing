@@ -26,7 +26,7 @@ public:
 private:
 	
 	void restartLvl();
-
+	bool eventsHandler(sf::Event& event , sf::RenderWindow& window);
 	void handleVictory(sf::RenderWindow& window);
 
 	// erase objects from matching arrays

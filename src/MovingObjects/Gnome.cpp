@@ -18,7 +18,7 @@ void Gnome::handleCollision(GameObject& gameObject)
 
 void Gnome::setDirection(sf::Keyboard::Key key)
 {
-	setRandomDirection();
+	setRandomDirection(); // gnome directions set randomly 
 }
 
 void Gnome::setRandomDirection()
