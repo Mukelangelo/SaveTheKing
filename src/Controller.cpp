@@ -18,7 +18,7 @@ void Controller::run(sf::RenderWindow& window)
     sf::Time deltaTimePlayer, deltaTimeGnomes;
 
     m_caption.updateLevel();
-    m_caption.updateTime(20);
+    m_caption.updateTime(100);
 
     bool played_countdown = false; 
 
@@ -41,7 +41,7 @@ void Controller::run(sf::RenderWindow& window)
 
         if (m_caption.getTime() <= 0) // time <= 0 means game over
         {
-            //printMessege("Sorry , you lost :(", window);
+            printMessege("Sorry , you lost :(", window);
             return;
         }
 
@@ -97,10 +97,11 @@ void Controller::run(sf::RenderWindow& window)
         
         if (m_won)
         {
+            printMessege("Level cleard, Good Job!!!", window);
             handleVictory(window);
             if (!m_board.loadNextLevel(m_character, m_tiles))
             {
-                //printMessege("yay,YOU WON :)", window);
+                printMessege("yay,YOU WON :)", window);
                 return;
             }
             findGnome();
@@ -199,6 +200,7 @@ bool Controller::manageCollisions(int currChar)
                         return true;
                     m_character[currChar]->setLocation(newLoc);
                     m_character[currChar]->teleported();
+                    m_character[currChar]->setLastLoc(m_character[currChar]->getLocation());
                 }
                 return true;
 
@@ -372,30 +374,30 @@ bool Controller::PauseMenu(sf::RenderWindow& window)
     return true;
 }
 
-void printMessege(const sf::String text, sf::RenderWindow& window)
+void Controller::printMessege(const sf::String text, sf::RenderWindow& window)
 {
-    auto messege = sf::Text(text, *Resources::instance().getFont());
-    messege.Bold;
-    messege.setOutlineColor(sf::Color(12, 36, 97, 255));
-    messege.setOutlineThickness(3);
-    messege.setCharacterSize(40);
-    messege.setColor(sf::Color(29, 209, 161, 255));
-    messege.setPosition(sf::Vector2f(WINDOW_WIDTH / 2.f, WINDOW_HEIGHT / 2.f));
-    window.draw(messege);
+    auto message = sf::Text(text, *Resources::instance().getFont());
+    message.Bold;
+    message.setOutlineColor(sf::Color(12, 36, 97, 255));
+    message.setOutlineThickness(3);
+    message.setCharacterSize(40);
+    message.setColor(sf::Color(29, 209, 161, 255));
+    message.setPosition(sf::Vector2f(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2));
+    message.setOrigin(sf::Vector2f(message.getGlobalBounds().width / 2, message.getGlobalBounds().height / 2));
 
+    sf::Text msg = message;
+    msg.setPosition(message.getPosition() + sf::Vector2f(0, 50));
+    msg.setString("Press Space Key to continue...");
+    window.clear(sf::Color(179, 218, 255, 255));
+    window.draw(message);
+    window.draw(msg);
+    window.display();
     auto event = sf::Event{};
 
-    while (window.pollEvent(event))
+    while (window.waitEvent(event))
     {
-        if ((event.type == sf::Event::Closed) ||
-            ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape)))
-        {
+        if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Space)
+            || (event.type == sf::Event::Closed))
             return;
-        }
-
-        if (event.type == sf::Event::KeyPressed)
-        {
-            return;
-        }
     }
 }

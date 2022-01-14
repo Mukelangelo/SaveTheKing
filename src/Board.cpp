@@ -26,6 +26,7 @@ void Board::buildTiles(std::vector < std::unique_ptr <MovingObject >>& vect,
 					   std::vector < std::unique_ptr <StaticObject >>& tiles)
 {
 	int tileWidth = m_width / m_cols , tileHeight = m_height / m_rows ;
+	std::vector < sf::Vector2f > teleports;
 	for (int i = 0; i < m_rows; i++)
 	{
 		for (int j = 0; j < m_cols ; j++)
@@ -34,9 +35,14 @@ void Board::buildTiles(std::vector < std::unique_ptr <MovingObject >>& vect,
 			{
 				auto locationVector = sf::Vector2f(m_location.x + j * (tileWidth) +3  , m_location.y + i * (tileHeight) +3 );
 				createObject(m_matrix[i][j], locationVector, *Resources::instance().getTexture(m_matrix[i][j]), vect, tiles);
+				if(m_matrix[i][j] == 'X')
+					teleports.push_back(locationVector);
 			}
 		}
+
 	}
+	for (int i = 0; i < teleports.size(); i++)
+		tiles.push_back(std::make_unique<Teleport>(teleports[i], *Resources::instance().getTexture('X')));
 }
 
 void Board::resizeObjects(std::vector < std::unique_ptr <MovingObject >>& vect,
@@ -118,7 +124,7 @@ static std::unique_ptr<StaticObject> createUnmovableObject(char c, const sf::Vec
 {
 	switch (c)
 	{
-	case 'X': return std::make_unique<Teleport>(vect, texture);
+	//case 'X': return std::make_unique<Teleport>(vect, texture);
 	case 'F': return std::make_unique<Key>(vect, texture);
 	case '=': return std::make_unique<Wall>(vect, texture);
 	case '@': return std::make_unique<Throne>(vect, texture);
