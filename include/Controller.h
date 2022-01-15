@@ -47,7 +47,7 @@ private:
 	bool manageCollisions(int charIndex);
 
 	// check if the location is out of board bounds
-	bool locationAllowed(MovingObject& shape); 
+	bool locationAllowed(const MovingObject& shape);
 
 	void manageGifts(StaticObject& gift); // handle the gifts the player collected
 

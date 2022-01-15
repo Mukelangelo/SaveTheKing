@@ -20,7 +20,7 @@ public:
 	void drawPauseScreen(sf::RenderWindow& window);
 	void playMusic();
 	void playSound(int index);
-	int HandleClick(sf::Vector2f location);
+	int HandleClick(const sf::Vector2f location);
 
 private:
 	Resources();
@@ -31,7 +31,7 @@ private:
 	sf::Sound m_sounds[NUM_OF_SOUNDS];
 	sf::Music m_music;
 
-	bool Clicked(int index, sf::Vector2f location);
+	bool Clicked(int index, const sf::Vector2f location);
 	void loadTextures();
 	void loadBuffers();
 	void loadBackground();

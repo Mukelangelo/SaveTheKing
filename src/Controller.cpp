@@ -231,7 +231,7 @@ bool Controller::manageCollisions(int currChar)
     return true;
 }
 
-bool Controller::locationAllowed(MovingObject& shape) 
+bool Controller::locationAllowed(const MovingObject& shape)
 {
     auto temp = shape.getSprite().getGlobalBounds();
     if (temp.width + temp.left > WINDOW_WIDTH || temp.left < 0 ||

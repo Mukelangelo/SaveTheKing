@@ -29,18 +29,6 @@ bool Button::handleClick(const sf::Vector2f& location)
     return false;
 }
 
-/*void Button::setString(sf::String text)
-{
-    m_text = text;
-}
-*/
-
-/*sf::String Button::getString() const
-{
-    return m_buttonText.getString();
-}
-*/
-
 void Button::setColor(sf::Color color)
 {
     m_button.setFillColor(color);

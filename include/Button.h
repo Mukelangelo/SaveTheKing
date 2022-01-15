@@ -13,13 +13,6 @@ public:
 
 	void draw(sf::RenderWindow& window);
 
-	// change the text on the button
-	//void setString(sf::String text);
-
-	// get the written text on the button
-	//sf::String getString() const;
-
-
 	// set color to the button by parameter or to default color
 	void setColor(sf::Color color);
 	void setColor();

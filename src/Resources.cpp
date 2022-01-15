@@ -50,7 +50,7 @@ void Resources::SetButtons()
 	m_pauseButtons[Music].setOutlineColor(sf::Color::Green);
 }
 
-int Resources::HandleClick(sf::Vector2f location)
+int Resources::HandleClick(const sf::Vector2f location)
 {
 	if (Clicked(Home, location)) return Home;
 
@@ -85,7 +85,7 @@ int Resources::HandleClick(sf::Vector2f location)
 }
 
 // return if the button is clicked
-bool Resources::Clicked(int index , sf::Vector2f location)
+bool Resources::Clicked(int index , const sf::Vector2f location)
 {
 	if (m_pauseButtons[index].getGlobalBounds().contains(location))
 		return true;
