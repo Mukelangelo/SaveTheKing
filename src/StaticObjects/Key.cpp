@@ -10,7 +10,7 @@ void Key::handleCollision(Thief& player)
 	}
 }
 
-void Key::handleCollision(King& ) { m_dispatched = CollisionStatus::Not_Valid; }
-void Key::handleCollision(Mage& ) { m_dispatched = CollisionStatus::Not_Valid; }
-void Key::handleCollision(Warrior& ) { m_dispatched = CollisionStatus::Not_Valid; }
-void Key::handleCollision(Gnome& ) { m_dispatched = CollisionStatus::Not_Valid; }
+void Key::handleCollision(King& ) { m_dispatched = CollisionStatus::Good; }
+void Key::handleCollision(Mage& ) { m_dispatched = CollisionStatus::Good; }
+void Key::handleCollision(Warrior& ) { m_dispatched = CollisionStatus::Good; }
+void Key::handleCollision(Gnome& ) { m_dispatched = CollisionStatus::Good; }
