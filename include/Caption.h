@@ -20,7 +20,12 @@ public:
 	// print an end messege ( next level / lose / victory)
 	void printMessege(const sf::String text, sf::RenderWindow& window);
 
+	int HandleClick(const sf::Vector2f location);
+
 private:
+
+	bool Clicked(int index, const sf::Vector2f location);
+
 
 	// set the text settings and set the position based on i
 	void setText(sf::Text& text , int i );

@@ -86,3 +86,27 @@ void Caption::printMessege(const sf::String text, sf::RenderWindow& window)
 			return;
 	}
 }
+
+int Caption::HandleClick(const sf::Vector2f location)
+{
+	if (Clicked(Home, location)) return Home;
+
+	else if (Clicked(Music, location))
+	{
+		Resources::instance().setVolume();
+		return Music;
+	}
+
+	else if (Clicked(Restart, location)) return Restart;
+
+	return -1; // return any number so if no button is clicked - nothing happens
+}
+
+// return if the button is clicked
+bool Caption::Clicked(int index, const sf::Vector2f location)
+{
+	if (Resources::instance().getPauseButtons(index)->getGlobalBounds().contains(location))
+		return true;
+
+	return false;
+}

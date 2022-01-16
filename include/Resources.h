@@ -16,11 +16,12 @@ public:
 	sf::Texture* getTexture(int i , int j);
 	sf::Texture* getTexture(int i);
 	sf::Texture* getBackground(int index);
+	sf::RectangleShape* getPauseButtons(int index);
 	sf::Font* getFont();
 	void drawPauseScreen(sf::RenderWindow& window);
 	void playMusic();
 	void playSound(int index);
-	int HandleClick(const sf::Vector2f location);
+	void setVolume();
 
 private:
 	Resources();
@@ -31,7 +32,6 @@ private:
 	sf::Sound m_sounds[NUM_OF_SOUNDS];
 	sf::Music m_music;
 
-	bool Clicked(int index, const sf::Vector2f location);
 	void loadTextures();
 	void loadBuffers();
 	void loadBackground();

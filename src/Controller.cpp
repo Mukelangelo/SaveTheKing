@@ -355,7 +355,7 @@ bool Controller::PauseMenu(sf::RenderWindow& window)
 
                if(event.mouseButton.button == sf::Mouse::Button::Left)
                {
-                   auto buttonClicked = Resources::instance().HandleClick(location);
+                   auto buttonClicked = m_caption.HandleClick(location);
 
                    if (buttonClicked == Home)
                    {

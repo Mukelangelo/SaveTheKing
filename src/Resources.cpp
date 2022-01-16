@@ -40,7 +40,7 @@ void Resources::setPauseScreen()
 
 void Resources::SetButtons()
 {
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < MENU_BUTTONS ; i++)
 	{
 		m_pauseButtons[i].setTexture(&m_pauseTextures[i]);
 		m_pauseButtons[i].setSize(sf::Vector2f(90, 90));
@@ -50,48 +50,7 @@ void Resources::SetButtons()
 	m_pauseButtons[Music].setOutlineColor(sf::Color::Green);
 }
 
-int Resources::HandleClick(const sf::Vector2f location)
-{
-	if (Clicked(Home, location)) return Home;
 
-	else if (Clicked(Music, location))
-	{
-		static bool music_on = true;
-		int volume = 20;
-
-		if (music_on)
-		{
-			volume = 0;
-			music_on = false;
-			m_pauseButtons[Music].setOutlineColor(sf::Color::Red);
-		}
-		else
-		{
-			m_pauseButtons[Music].setOutlineColor(sf::Color::Green);
-			music_on = true;
-		}
-
-		for (int i = 0; i < NUM_OF_SOUNDS; i++)
-		{
-			m_sounds[i].setVolume(volume);
-		}
-		m_music.setVolume(volume);
-		return Music;
-	}
-
-	else if (Clicked(Restart, location)) return Restart;
-
-	return -1; // return any number so if no button is clicked - nothing happens
-}
-
-// return if the button is clicked
-bool Resources::Clicked(int index , const sf::Vector2f location)
-{
-	if (m_pauseButtons[index].getGlobalBounds().contains(location))
-		return true;
-
-	return false;
-}
 
 void Resources::loadTextures()
 {
@@ -133,6 +92,16 @@ sf::Texture* Resources::getTexture(int index)
 	return &m_textures[index][0];
 }
 
+sf::Texture* Resources::getBackground(int index)
+{
+	return &m_bg[index];
+}
+
+sf::RectangleShape* Resources::getPauseButtons(int index)
+{
+	return &m_pauseButtons[index];
+}
+
 void Resources::loadBackground()
 {
 	auto loadPic = sf::Texture();
@@ -144,11 +113,6 @@ void Resources::loadBackground()
 
 	loadPic.loadFromFile("bg.png");
 	m_bg.push_back(loadPic);
-}
-
-sf::Texture* Resources::getBackground(int index)
-{
-	return &m_bg[index];
 }
 
 void Resources::loadBuffers()
@@ -168,6 +132,30 @@ void Resources::loadBuffers()
 void Resources::playSound(int index) 
 {
 	m_sounds[index].play();
+}
+
+void Resources::setVolume()
+{
+	static bool music_on = true;
+	int volume = 20;
+
+	if (music_on)
+	{
+		volume = 0;
+		music_on = false;
+		m_pauseButtons[Music].setOutlineColor(sf::Color::Red);
+	}
+	else
+	{
+		m_pauseButtons[Music].setOutlineColor(sf::Color::Green);
+		music_on = true;
+	}
+
+	for (int i = 0; i < NUM_OF_SOUNDS; i++)
+	{
+		m_sounds[i].setVolume(volume);
+	}
+	m_music.setVolume(volume);
 }
 
 void Resources::drawPauseScreen(sf::RenderWindow& window)
