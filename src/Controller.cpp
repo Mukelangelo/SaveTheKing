@@ -177,14 +177,14 @@ bool Controller::manageCollisions(int currChar)
         if (character != nullptr && m_character[currChar]->checkCollision(*character))
             return false;
 
-
-        for (auto& tile : m_tiles) // check collisions with tiles
+    }
+    for (auto& tile : m_tiles) // check collisions with tiles
+    {
+        if (tile != nullptr && m_character[currChar]->checkCollision(*tile))
         {
-            if (tile != nullptr && m_character[currChar]->checkCollision(*tile))
-            {
                 m_character[currChar]->handleCollision(*tile);
                 switch (tile->getDispatch())
-                {
+            {
                 case CollisionStatus::Not_Valid:
                     return false;
 
@@ -205,21 +205,25 @@ bool Controller::manageCollisions(int currChar)
                 case CollisionStatus::Teleport:
                     if (!m_character[currChar]->isTp())
                     {
-                        Resources::instance().playSound(teleport_sound);
                         auto newLoc = locateTeleport(*tile);
                         if (newLoc == sf::Vector2f(0, 0))
                             return true;
-                        m_character[currChar]->setLocation(newLoc);
+                        Resources::instance().playSound(teleport_sound);
                         m_character[currChar]->teleported();
+                        m_character[currChar]->setLocation(newLoc);
                         m_character[currChar]->setLastLoc();
                     }
                     return true;
-
+                case CollisionStatus::Block:
+                {
+                    auto temp = locateTeleport(*tile);
+                    m_character[currChar]->teleported();
+                    return true;
+                }
                 case CollisionStatus::Gift:
                     manageGifts(*tile);
                     eraseObject(*tile);
                     break;
-                }
             }
         }
     }
@@ -259,12 +263,14 @@ sf::Vector2f Controller::locateTeleport(const StaticObject& teleport)
             if (i % 2 == 0) 
             {
                 m_teleport[i].m_isUsed = true;
-                return m_teleport[++i].m_loc;
+                m_teleport[++i].m_isUsed = true;
+                return m_teleport[i].m_loc;
             }  
             else
             {
                 m_teleport[i].m_isUsed = true;
-                return m_teleport[--i].m_loc;
+                m_teleport[--i].m_isUsed = true;
+                return m_teleport[i].m_loc;
             }
         }
     }

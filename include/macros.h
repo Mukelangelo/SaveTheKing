@@ -36,7 +36,7 @@ enum LoadTextures
 
 enum class CollisionStatus
 {
-	Destroy, Good, Not_Valid, Won, Teleport, Gift, Ogre
+	Destroy, Good, Not_Valid, Won, Teleport, Gift, Ogre, Block
 };
 
 enum LoadSoundBuffers
