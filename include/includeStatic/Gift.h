@@ -15,9 +15,9 @@ public:
 	virtual void handleCollision(Thief& gameObject) override;
 	virtual void handleCollision(Warrior& gameObject) override;
 	virtual void handleCollision(Gnome& gameObject) override;
-	GiftTypes getType();
+	GiftTypes getType() const;
 
 protected:
-	virtual void setType();
+	virtual void setType() = 0;
 	GiftTypes m_giftType; 
 };

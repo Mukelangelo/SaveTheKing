@@ -1,14 +1,10 @@
 #include "includeStatic/Gift.h"
 
-GiftTypes Gift::getType()
+GiftTypes Gift::getType() const
 {
 	return m_giftType;
 }
 
-void Gift::setType()
-{
-	m_giftType = GiftTypes::TimeDec;
-}
 void Gift::handleCollision(King& gameObject)
 {
 	m_dispatched = CollisionStatus::Gift;

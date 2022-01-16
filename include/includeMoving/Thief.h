@@ -5,16 +5,17 @@
 class Thief : public MovingObject
 {
 public:
-	Thief(sf::Vector2f loc, const sf::Texture& texture);
+	using MovingObject::MovingObject;
 	virtual void handleCollision(GameObject& gameObject) override;
 
-	bool getKey();
+	bool getKey() const;
 	void setKey(bool status);
 
 	virtual void handleCollision(Gate& gameObject) override;
 	virtual void handleCollision(Key& gameObject) override;
-	virtual void DirectionImg(int dir) override;
-
+	
 protected:
+
+	virtual void DirectionImg(int dir) override;
 	bool m_key = false;
 };

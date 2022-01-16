@@ -128,7 +128,7 @@ sf::Texture* Resources::getTexture(int index , int dir)
 	return &m_textures[index][dir];
 }
 
-sf::Texture* Resources::getTexture(int index)
+sf::Texture* Resources::getTexture(int index) 
 {
 	return &m_textures[index][0];
 }
@@ -165,7 +165,7 @@ void Resources::loadBuffers()
 	m_music.setVolume(20);
 }
 
-void Resources::playSound(int index)
+void Resources::playSound(int index) 
 {
 	m_sounds[index].play();
 }

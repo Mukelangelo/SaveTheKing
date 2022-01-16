@@ -5,10 +5,11 @@
 class King : public MovingObject
 {
 public:
-	King(sf::Vector2f loc, const sf::Texture& texture);
+
+	using MovingObject::MovingObject;
 	virtual void handleCollision(GameObject& gameObject) override;
 	
-	virtual void DirectionImg(int dir) override;
 
-private:
+protected:
+	virtual void DirectionImg(int dir) override;
 };

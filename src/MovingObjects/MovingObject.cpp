@@ -48,7 +48,7 @@ void MovingObject::setLastLoc()
 	m_lastLoc = m_location;
 }
 
-sf::Vector2f MovingObject::getLastLoc()
+sf::Vector2f MovingObject::getLastLoc() const
 {
 	return m_lastLoc;
 }

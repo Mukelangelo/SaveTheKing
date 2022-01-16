@@ -6,10 +6,9 @@
 class Warrior : public MovingObject
 {
 public:
-	Warrior(sf::Vector2f loc, const sf::Texture& texture);
+	using MovingObject::MovingObject;
 	virtual void handleCollision(GameObject& gameObject) override;
 
+protected:
 	virtual void DirectionImg(int dir) override;
-
-private:
 };

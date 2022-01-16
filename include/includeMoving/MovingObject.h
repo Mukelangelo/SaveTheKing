@@ -4,13 +4,14 @@
 class MovingObject : public GameObject
 {
 public:
-	//using GameObject::GameObject;
+	
 	MovingObject(sf::Vector2f loc, const sf::Texture& texture);
 
 	void movePlayer(sf::Time deltaTime);
 	void setLocation(const sf::Vector2f& loc);
 	virtual void setDirection(sf::Keyboard::Key key);
 	
+	// handle collisions with all diffrent tiles and players
 	virtual void handleCollision(GameObject& ) override {};
 	virtual void handleCollision(Wall& ) override {};
 	virtual void handleCollision(Throne& ) override {};
@@ -25,18 +26,19 @@ public:
 	virtual void handleCollision(Warrior& ) override {};
 	virtual void handleCollision(Gnome& ) override {};
 	
-	// change the sprite by the direction
-	virtual void DirectionImg(int dir ) {}; 
-
 	// set & get the last location of the obj , used to return when a invalid movement is done
 	void setLastLoc();
-	sf::Vector2f getLastLoc();
+	sf::Vector2f getLastLoc() const;
 
 	void teleported(); // switch the OnTp member.
 	bool isTp(); // check if player is on teleport tile
 	virtual ~MovingObject() = default;
 
 protected:
+
+	// change the sprite by the direction
+	virtual void DirectionImg(int dir) {};
+
 	sf::Vector2f m_direction; // movement direction
 	sf::Vector2f m_lastLoc; // last location before the last movement
 	bool m_onTP = false; // if player is on teleport

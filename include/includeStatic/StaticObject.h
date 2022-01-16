@@ -7,9 +7,10 @@ class StaticObject : public GameObject
 public:
 	using GameObject::GameObject;
 
-	CollisionStatus getDispatch();
+	CollisionStatus getDispatch() const;
 	virtual ~StaticObject() = default;
 
+	// handle collisions with all tiles and players
 	virtual void handleCollision(GameObject& ) override {};
 	virtual void handleCollision(Wall& ) override {};
 	virtual void handleCollision(Throne& ) override {};

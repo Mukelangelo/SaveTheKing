@@ -1,15 +1,11 @@
 #include "includeMoving/Thief.h"
 
-Thief::Thief(sf::Vector2f loc, const sf::Texture& texture)
-	:MovingObject(loc, texture)//, m_key(false)
-{}
-
 void Thief::setKey(bool status)
 {
 	m_key = status;
 }
 
-bool Thief::getKey()
+bool Thief::getKey() const
 {
 	return m_key;
 }

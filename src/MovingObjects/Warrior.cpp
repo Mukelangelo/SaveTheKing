@@ -1,9 +1,5 @@
 #include "includeMoving/Warrior.h"
 
-Warrior::Warrior(sf::Vector2f loc, const sf::Texture& texture)
-	:MovingObject(loc, texture)
-{}
-
 void Warrior::handleCollision(GameObject& gameObject)
 {
 	if (&gameObject == this)
