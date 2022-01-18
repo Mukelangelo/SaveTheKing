@@ -8,6 +8,7 @@ void Mage::handleCollision(GameObject& gameObject)
 	gameObject.handleCollision(*this);
 }
 
+//=======================================================================================
 void Mage::DirectionImg(int dir)
 {
 	m_sprite.setTexture(*Resources::instance().getTexture(load_Mage , dir));

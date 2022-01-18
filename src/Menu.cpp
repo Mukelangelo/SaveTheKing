@@ -23,6 +23,7 @@ Menu::Menu()
     m_window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 }
 
+//=======================================================================================
 void Menu::run()
 {
     bool need_help = false;
@@ -40,6 +41,7 @@ void Menu::run()
     }
 }
 
+//=======================================================================================
 void Menu::eventsHandler()
 {
     for (auto event = sf::Event{}; m_window.pollEvent(event);)
@@ -77,18 +79,21 @@ void Menu::eventsHandler()
     }
 }
 
+//=======================================================================================
 void Menu::game()
 {
     Controller().run(m_window);
     m_gameOn = false;  // once we exit the game we set the gameOn to be false
 }
 
+//=======================================================================================
 void Menu::draw()
 {
     for (int i = 0; i < MENU_BUTTONS; i++)
         m_buttons[i].draw(m_window);
 }
 
+//=======================================================================================
 void Menu::handleButtons(const sf::Vector2f& location)
 {
     for (int i = 0; i < MENU_BUTTONS; i++)
@@ -115,6 +120,7 @@ void Menu::handleButtons(const sf::Vector2f& location)
     }
 }
 
+//=======================================================================================
 void Menu::handleHover(const sf::Vector2f& location)
 {
     m_buttons[m_lastHover].setColor(); // return to default color

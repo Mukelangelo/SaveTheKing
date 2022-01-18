@@ -4,6 +4,7 @@ Controller::Controller()
     :m_board(), m_currChar(0) , m_caption(), m_numOfGnomes(0)
 {}
 
+//=======================================================================================
 void Controller::run(sf::RenderWindow& window)
 {
     Resources::instance().playSound(start_sound); 
@@ -82,6 +83,7 @@ void Controller::run(sf::RenderWindow& window)
     }
 }
 
+//=======================================================================================
 // this func will handle the keyboard and mouse events and return if exit button was pressed
 bool Controller::eventsHandler(sf::Event& event , sf::RenderWindow& window)
 {
@@ -124,6 +126,8 @@ bool Controller::eventsHandler(sf::Event& event , sf::RenderWindow& window)
     return true;
 }
 
+//=======================================================================================
+
 void Controller::handleVictory(sf::RenderWindow& window)
 {
     clearLastLevel();
@@ -134,6 +138,7 @@ void Controller::handleVictory(sf::RenderWindow& window)
     m_caption.updateTime(STAGE_TIME);
 }
 
+//=======================================================================================
 bool Controller::movementManger(int currChar, sf::Time& deltaTime, sf::Clock& clock)
 {
     m_character[currChar]->setLastLoc(); // set last location as current location
@@ -148,11 +153,13 @@ bool Controller::movementManger(int currChar, sf::Time& deltaTime, sf::Clock& cl
     return true;
 }
 
+//=======================================================================================
 void Controller::switchCharacter()
 {
     m_currChar = ++m_currChar % (PLAYABLE + m_numOfGnomes); 
 }
 
+//=======================================================================================
 void Controller::findGnome()
 {
     for (int i = 0; i < m_character.size(); i++)
@@ -167,6 +174,7 @@ void Controller::findGnome()
     m_numOfGnomes = m_gnomes.size();
 }
 
+//=======================================================================================
 bool Controller::manageCollisions(int currChar)
 {
     if (!locationAllowed(*m_character[currChar]))
@@ -231,6 +239,7 @@ bool Controller::manageCollisions(int currChar)
     return true;
 }
 
+//=======================================================================================
 bool Controller::locationAllowed(const MovingObject& shape)
 {
     auto temp = shape.getSprite().getGlobalBounds();
@@ -241,6 +250,7 @@ bool Controller::locationAllowed(const MovingObject& shape)
     return true;
 }
 
+//=======================================================================================
 sf::Vector2f Controller::locateTeleport(const StaticObject& teleport)
 {
     // every teleport built in a vector, the friend of a teleport is hes neighbor in the vecotr,
@@ -270,6 +280,7 @@ sf::Vector2f Controller::locateTeleport(const StaticObject& teleport)
     return sf::Vector2f();
 }
 
+//=======================================================================================
 void Controller::readTeleports()
 {
     for (auto& tile : m_tiles)
@@ -279,6 +290,7 @@ void Controller::readTeleports()
     }
 }
 
+//=======================================================================================
 void Controller::clearLastLevel()
 {
     m_character.clear();
@@ -287,6 +299,7 @@ void Controller::clearLastLevel()
     m_teleport.clear();
 }
 
+//=======================================================================================
 void Controller::manageGifts(StaticObject& tile)
 {
     Gift* giftPtr = dynamic_cast<Gift*> (&tile);
@@ -306,6 +319,7 @@ void Controller::manageGifts(StaticObject& tile)
     }
 }
 
+//=======================================================================================
 void Controller::eraseObject(StaticObject& staticObj)
 {
     auto staticPtr = m_tiles.begin();
@@ -319,6 +333,7 @@ void Controller::eraseObject(StaticObject& staticObj)
     }
 }
 
+//=======================================================================================
 void Controller::eraseGnomes()
 {
     Resources::instance().playSound(gnome_sound);
@@ -328,6 +343,7 @@ void Controller::eraseGnomes()
     m_gnomes.clear();
 }
 
+//=======================================================================================
 bool Controller::PauseMenu(sf::RenderWindow& window)
 {
     sf::Clock clock;
@@ -382,6 +398,7 @@ bool Controller::PauseMenu(sf::RenderWindow& window)
     return true;
 }
 
+//=======================================================================================
 void Controller::restartLvl()
 {
     clearLastLevel();

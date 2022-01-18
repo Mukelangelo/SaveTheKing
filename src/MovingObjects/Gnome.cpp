@@ -8,6 +8,7 @@ Gnome::Gnome(sf::Vector2f loc, const sf::Texture& texture)
 	srand(time(NULL));
 }
 
+//=======================================================================================
 void Gnome::handleCollision(GameObject& gameObject)
 {
 	if (&gameObject == this)
@@ -16,11 +17,13 @@ void Gnome::handleCollision(GameObject& gameObject)
 	gameObject.handleCollision(*this);
 }
 
+//=======================================================================================
 void Gnome::setDirection(sf::Keyboard::Key key)
 {
 	setRandomDirection(); // gnome directions set randomly 
 }
 
+//=======================================================================================
 void Gnome::setRandomDirection()
 {
 	int direction = rand() % 4;

@@ -9,14 +9,17 @@ Resources::Resources()
 	setPauseScreen();
 }
 
+//=======================================================================================
 Resources::~Resources(){}
 
+//=======================================================================================
 Resources& Resources::instance()
 {
 	static Resources inst;
 	return inst;
 }
 
+//=======================================================================================
 void Resources::setPauseScreen()
 {
 	m_pauseWindow.setFillColor(sf::Color(179, 218, 255, 255));
@@ -38,6 +41,7 @@ void Resources::setPauseScreen()
 	SetButtons();
 }
 
+//=======================================================================================
 void Resources::SetButtons()
 {
 	for (int i = 0; i < MENU_BUTTONS ; i++)
@@ -50,8 +54,7 @@ void Resources::SetButtons()
 	m_pauseButtons[Music].setOutlineColor(sf::Color::Green);
 }
 
-
-
+//=======================================================================================
 void Resources::loadTextures()
 {
 	for (int i = 0; i < NUM_OF_PICS; i++)
@@ -62,6 +65,7 @@ void Resources::loadTextures()
 		m_pauseTextures[i].loadFromFile(buttonTextures[i]);
 }
 
+//=======================================================================================
 sf::Texture* Resources::getTexture(char c)
 {
 	switch (c)
@@ -82,26 +86,31 @@ sf::Texture* Resources::getTexture(char c)
 	}
 }
 
+//=======================================================================================
 sf::Texture* Resources::getTexture(int index , int dir)
 {
 	return &m_textures[index][dir];
 }
 
+//=======================================================================================
 sf::Texture* Resources::getTexture(int index) 
 {
 	return &m_textures[index][0];
 }
 
+//=======================================================================================
 sf::Texture* Resources::getBackground(int index)
 {
 	return &m_bg[index];
 }
 
+//=======================================================================================
 sf::RectangleShape* Resources::getPauseButtons(int index)
 {
 	return &m_pauseButtons[index];
 }
 
+//=======================================================================================
 void Resources::loadBackground()
 {
 	auto loadPic = sf::Texture();
@@ -115,6 +124,7 @@ void Resources::loadBackground()
 	m_bg.push_back(loadPic);
 }
 
+//=======================================================================================
 void Resources::loadBuffers()
 {
 	for (int i = 0; i < NUM_OF_SOUNDS; i++)
@@ -129,11 +139,13 @@ void Resources::loadBuffers()
 	m_music.setVolume(20);
 }
 
+//=======================================================================================
 void Resources::playSound(int index) 
 {
 	m_sounds[index].play();
 }
 
+//=======================================================================================
 void Resources::setVolume()
 {
 	static bool music_on = true;
@@ -158,6 +170,7 @@ void Resources::setVolume()
 	m_music.setVolume(volume);
 }
 
+//=======================================================================================
 void Resources::drawPauseScreen(sf::RenderWindow& window)
 {
 	window.draw(m_pauseWindow);
@@ -168,11 +181,13 @@ void Resources::drawPauseScreen(sf::RenderWindow& window)
 	}	
 }
 
+//=======================================================================================
 sf::Font* Resources::getFont()
 {
 	return &m_font;
 }
 
+//=======================================================================================
 void Resources::playMusic()
 {
 	static bool musicOn = false; // check if the music is played.

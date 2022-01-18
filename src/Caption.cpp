@@ -5,6 +5,7 @@ Caption::Caption() : m_level(0), m_stageTime(0)
 	setText(m_stageTimeText, 0);
 	setText(m_levelText, 1);
 }
+//=======================================================================================
 
 void Caption::setText(sf::Text& text , int i)
 {
@@ -16,6 +17,7 @@ void Caption::setText(sf::Text& text , int i)
 	text.setOutlineThickness(3);
 }
 
+//=======================================================================================
 Caption::~Caption() {}
 
 void Caption::updateTime(float time)
@@ -29,6 +31,7 @@ void Caption::updateTime(float time)
 	m_Timer.restart();
 }
 
+//=======================================================================================
 void Caption::updateLevel()
 {
 	m_level++;
@@ -37,21 +40,25 @@ void Caption::updateLevel()
 
 }
 
+//=======================================================================================
 int Caption::getLvl() const
 {
 	return this->m_level;
 }
 
+//=======================================================================================
 float Caption::getTime() const
 {
 	return m_stageTime;
 }
 
+//=======================================================================================
 void Caption::resetTime()
 {
 	m_stageTime = 0;
 }
 
+//=======================================================================================
 void Caption::draw(sf::RenderWindow& window)
 {
 	updateTime(0);
@@ -59,6 +66,7 @@ void Caption::draw(sf::RenderWindow& window)
 	window.draw(m_stageTimeText);
 }
 
+//=======================================================================================
 void Caption::printMessege(const sf::String text, sf::RenderWindow& window)
 {
 	//set the message settings
@@ -87,6 +95,7 @@ void Caption::printMessege(const sf::String text, sf::RenderWindow& window)
 	}
 }
 
+//=======================================================================================
 int Caption::HandleClick(const sf::Vector2f location)
 {
 	if (Clicked(Home, location)) return Home;
@@ -102,6 +111,7 @@ int Caption::HandleClick(const sf::Vector2f location)
 	return -1; // return any number so if no button is clicked - nothing happens
 }
 
+//=======================================================================================
 // return if the button is clicked
 bool Caption::Clicked(int index, const sf::Vector2f location)
 {
