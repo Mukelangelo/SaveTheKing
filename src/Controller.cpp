@@ -182,51 +182,56 @@ bool Controller::manageCollisions(int currChar)
 
     for (auto& character : m_character)
     {
-        if (character != nullptr && m_character[currChar]->checkCollision(*character))  
+        if (character != nullptr && m_character[currChar]->checkCollision(*character))
             return false;
-    }
 
-    for (auto& tile : m_tiles ) // check collisions with tiles
+    }
+    for (auto& tile : m_tiles) // check collisions with tiles
     {
         if (tile != nullptr && m_character[currChar]->checkCollision(*tile))
         {
-            m_character[currChar]->handleCollision(*tile);
-            switch (tile->getDispatch())
-            {                
-            case CollisionStatus::Not_Valid: 
-                return false;
+                m_character[currChar]->handleCollision(*tile);
+                switch (tile->getDispatch())
+            {
+                case CollisionStatus::Not_Valid:
+                    return false;
 
-            case CollisionStatus::Won:
-                Resources::instance().playSound(victory_sound);
-                m_won = true;
-                break;
+                case CollisionStatus::Won:
+                    Resources::instance().playSound(victory_sound);
+                    m_won = true;
+                    break;
 
-            case CollisionStatus::Ogre:
-                Resources::instance().playSound(ogre_sound);
-                m_tiles.push_back(std::make_unique<Key>(tile->getLocation(), *Resources::instance().getTexture('F')));
-                [[fallthrough]];
+                case CollisionStatus::Ogre:
+                    Resources::instance().playSound(ogre_sound);
+                    m_tiles.push_back(std::make_unique<Key>(tile->getLocation(), *Resources::instance().getTexture('F')));
+                    [[fallthrough]];
 
-            case CollisionStatus::Destroy:
-                eraseObject(*tile);
-                break;
-            
-            case CollisionStatus::Teleport:
-                if (!m_character[currChar]->isTp())
+                case CollisionStatus::Destroy:
+                    eraseObject(*tile);
+                    break;
+
+                case CollisionStatus::Teleport:
+                    if (!m_character[currChar]->isTp())
+                    {
+                        auto newLoc = locateTeleport(*tile);
+                        if (newLoc == sf::Vector2f(0, 0))
+                            return true;
+                        Resources::instance().playSound(teleport_sound);
+                        m_character[currChar]->teleported();
+                        m_character[currChar]->setLocation(newLoc);
+                        m_character[currChar]->setLastLoc();
+                    }
+                    return true;
+                case CollisionStatus::Block:
                 {
-                    Resources::instance().playSound(teleport_sound);
-                    auto newLoc = locateTeleport(*tile);
-                    if (newLoc == sf::Vector2f(0, 0))
-                        return true;
-                    m_character[currChar]->setLocation(newLoc);
+                    auto temp = locateTeleport(*tile);
                     m_character[currChar]->teleported();
-                    m_character[currChar]->setLastLoc();
+                    return true;
                 }
-                return true;
-
-            case CollisionStatus::Gift:
-                manageGifts(*tile);
-                eraseObject(*tile);
-                break;
+                case CollisionStatus::Gift:
+                    manageGifts(*tile);
+                    eraseObject(*tile);
+                    break;
             }
         }
     }
@@ -268,12 +273,14 @@ sf::Vector2f Controller::locateTeleport(const StaticObject& teleport)
             if (i % 2 == 0) 
             {
                 m_teleport[i].m_isUsed = true;
-                return m_teleport[++i].m_loc;
+                m_teleport[++i].m_isUsed = true;
+                return m_teleport[i].m_loc;
             }  
             else
             {
                 m_teleport[i].m_isUsed = true;
-                return m_teleport[--i].m_loc;
+                m_teleport[--i].m_isUsed = true;
+                return m_teleport[i].m_loc;
             }
         }
     }
