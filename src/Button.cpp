@@ -3,6 +3,7 @@
 Button::Button()
 {}
 
+//=======================================================================================
 Button::Button(const sf::Vector2f& size, sf::String text, const sf::Vector2f& pos)
     : m_button(size), m_color(126, 214,223,255)    
 {
@@ -15,12 +16,14 @@ Button::Button(const sf::Vector2f& size, sf::String text, const sf::Vector2f& po
     initButton(); 
 }
 
+//=======================================================================================
 void Button::draw(sf::RenderWindow& window)
 {
     window.draw(m_button);
     window.draw(m_buttonText);
 }
 
+//=======================================================================================
 bool Button::handleClick(const sf::Vector2f& location)
 {
     if (m_button.getGlobalBounds().contains(location))
@@ -29,21 +32,25 @@ bool Button::handleClick(const sf::Vector2f& location)
     return false;
 }
 
+//=======================================================================================
 void Button::setColor(sf::Color color)
 {
     m_button.setFillColor(color);
 }
 
+//=======================================================================================
 void Button::setColor()
 {
     m_button.setFillColor(m_color);
 }
 
+//=======================================================================================
 sf::FloatRect Button::getGlobalBounds() const
 {
     return m_button.getGlobalBounds();
 }
 
+//=======================================================================================
 void Button::initButton()
 {
     m_button.setOutlineColor(sf::Color(96, 163, 188));
